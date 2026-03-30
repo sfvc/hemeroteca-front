@@ -1,4 +1,4 @@
-{/* Campos */}
+import EditorialHero from "../components/home/EditorialHero";
 
 type InfoCardsProps = {
   title: string;
@@ -21,7 +21,7 @@ function InfoCard({
   const panelLight = "bg-white text-white";
 
   return (
-    <article className="w-full max-w-7xl mx-auto mb-14">
+    <article className="mx-auto mb-14 w-full max-w-7xl">
       <div className="relative overflow-hidden bg-white">
         <div
           className={`grid items-stretch md:grid-cols-12 ${
@@ -30,34 +30,34 @@ function InfoCard({
               : ""
           }`}
         >
-          {/* TITULO Y DESCRIPCION */}
           <div
-            className={`text-side relative md:col-span-5 flex items-center ${
+            className={`text-side relative flex items-center md:col-span-5 ${
               variant === "brand" ? panelBrand : panelLight
             }`}
           >
-            <div className="w-full px-6 sm:px-10 md:px-12 py-10 sm:py-12 font-serif">
+            <div className="w-full px-6 py-10 font-serif sm:px-10 sm:py-12 md:px-12">
               <div className="max-w-xl">
-                <h3 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+                <h3 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
                   {title}
                 </h3>
 
-                <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-600">
+                <p className="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
                   {description}
                 </p>
               </div>
             </div>
           </div>
-          <div className="visual-side relative md:col-span-7 p-4 sm:p-5">
-            <div className="grid h-full grid-cols-6 grid-rows-2 gap-4 min-h-105 md:min-h-130">
-              {/* Imagen principal */}
-              <div className="col-span-12 row-span-2 md:col-span-8 relative overflow-hidden">
+
+          <div className="visual-side relative p-4 sm:p-5 md:col-span-7">
+            <div className="grid h-full min-h-105 grid-cols-6 grid-rows-2 gap-4 md:min-h-130">
+              <div className="relative col-span-12 row-span-2 overflow-hidden md:col-span-8">
                 <img
                   src={image}
                   alt={title}
                   className="h-full w-full object-cover"
                   loading="lazy"
                 />
+
                 <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-black/0 to-black/0" />
 
                 {eyebrow ? (
@@ -79,83 +79,47 @@ function InfoCard({
 export default function Nosotros() {
   return (
     <section className="bg-white">
-      {/* HEADER */}
-      <header className="border-b border-slate-300 bg-white mt-30">
-        <div className="border-b border-slate-200">
-          <div className="mx-auto flex w-full max-w-350 items-center justify-between px-4 py-3 text-xs sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 text-slate-600">
-              <span className="font-semibold uppercase tracking-[0.2em]">
-                Hemeroteca digital
-              </span>
-              <span className="hidden sm:inline">|</span>
-              <span className="hidden sm:inline">Catamarca Capital</span>
-            </div>
-          </div>
-        </div>
+      <main className="w-full px-6 pb-14 pt-8 lg:px-10 xl:px-16">
+        <EditorialHero />
 
-        <div className="mx-auto w-full max-w-350 px-4 pt-6 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-4 border-b border-slate-300 pb-6 md:grid-cols-3">
-            <div className="hidden md:block"></div>
-
-            <div className="text-center">
-              <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-slate-500">
-                Desarrollo
-              </p>
-              <h1 className="mt-2 font-serif text-5xl font-black uppercase tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
-                Sobre Nosotros
-              </h1>
-            </div>
+        <div className="mx-auto w-full max-w-7xl py-8 sm:py-14 lg:py-16">
+          <div className="mb-10 border-b border-slate-300 pb-6 text-center sm:mb-14">
+            <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-slate-500">
+              Desarrollo
+            </p>
+            <h1 className="mt-2 font-serif text-5xl font-black uppercase tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+              Sobre Nosotros
+            </h1>
           </div>
 
-          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-b border-slate-200 py-4 text-sm font-medium text-slate-700">
-            <a href="#" className="hover:text-slate-950">
-              Inicio
-            </a>
-            <a href="#" className="hover:text-slate-950">
-              Archivo General
-            </a>
-            <a href="#" className="hover:text-slate-950">
-              Eventos
-            </a>
-            <a href="#" className="hover:text-slate-950">
-              Turismo
-            </a>
-            <a href="#" className="hover:text-slate-950">
-              Nosotros
-            </a>
-          </nav>
+          <div className="space-y-10 sm:space-y-14 lg:space-y-16">
+            <InfoCard
+              title="¿Quiénes somos en Hemeroteca Digital?"
+              description={`Consulta las colecciones digitales de diarios, periódicos y revistas de Catamarca que estamos preservando y poniendo en línea. También podés solicitar una noticia en particular para recibirla por correo electrónico.`}
+              image="/HM.png"
+              variant="brand"
+            />
+
+            <Divider />
+
+            <InfoCard
+              title="¿Quiénes desarrollamos Hemeroteca Digital?"
+              description={`En el Nodo Tecnológico de la Secretaría Municipal de Modernización del Gobierno de Catamarca, trabajamos para preservar y difundir el patrimonio periodístico de nuestra provincia a través de la Hemeroteca Digital. Nuestro equipo se dedica a digitalizar, catalogar y poner a disposición del público las colecciones de diarios, periódicos y revistas que forman parte de la historia de Catamarca.`}
+              image="https://www.catamarcaciudad.gob.ar/wp-content/uploads/nodo-tecnologico.jpeg"
+              variant="light"
+            />
+
+            <Divider />
+
+            <InfoCard
+              title="¿Dónde estamos ubicados?"
+              description={`Nosotros en la Biblioteca Municipal estamos ubicados en los siguientes puntos de la ciudad de Catamarca:`}
+              image="/ubiHemeroteca.png"
+              variant="brand"
+            />
+          </div>
         </div>
-      </header>
-
-      {/* Contenido */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-1 sm:py-14 lg:py-16">
-        <div className="space-y-10 sm:space-y-14 lg:space-y-16">
-          <InfoCard
-            title="¿Quiénes somos en Hemeroteca Digital?"
-            description={`Consulta las colecciones digitales de diarios, periódicos y revistas de Catamarca que estamos preservando y poniendo en línea. También podés solicitar una noticia en particular para recibirla por correo electrónico.`}
-            image="/HM.png"
-            variant="brand"
-          />
-
-          <Divider />
-
-          <InfoCard
-            title="¿Quiénes desarrollamos Hemeroteca Digital?"
-            description={`En el Nodo Tecnológico de la Secretaría Municipal de Modernización del Gobierno de Catamarca, trabajamos para preservar y difundir el patrimonio periodístico de nuestra provincia a través de la Hemeroteca Digital. Nuestro equipo se dedica a digitalizar, catalogar y poner a disposición del público las colecciones de diarios, periódicos y revistas que forman parte de la historia de Catamarca.`}
-            image="https://www.catamarcaciudad.gob.ar/wp-content/uploads/nodo-tecnologico.jpeg"
-            variant="light"
-          />
-
-          <Divider />
-
-          <InfoCard
-            title="¿Dónde estamos ubicados?"
-            description={`Nosotros en la Biblioteca Municipal estamos ubicados en los siguientes puntos de la ciudad de Catamarca:`}
-            image="/ubiHemeroteca.png"
-            variant="brand"
-          />
-        </div>
-      </div>
+      </main>
     </section>
   );
 }
@@ -163,7 +127,7 @@ export default function Nosotros() {
 function Divider() {
   return (
     <div className="flex justify-center">
-      <div className="h-px w-full max-w-xs sm:max-w-md lg:max-w-lg bg-slate-200 rounded-full" />
+      <div className="h-px w-full max-w-xs rounded-full bg-slate-200 sm:max-w-md lg:max-w-lg" />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import EditorialHero from "../components/home/EditorialHero";
 import {
   Music2,
   Flag,
@@ -23,10 +24,6 @@ type NewNotice = {
   icon: React.ElementType;
   tone: string;
 };
-
-{
-  /* Campos de las noticias */
-}
 
 const featuredNews: NewNotice[] = [
   {
@@ -101,46 +98,45 @@ const featuredNews: NewNotice[] = [
 export default function Noticias() {
   const mainNews = featuredNews[0];
 
-  {
-    /* Header de las noticias de abajo */
-  }
-
   return (
-    <section className="min-h-screen bg-white text-slate-900 mt-32">
-      <main className="mx-auto w-full max-w-350 px-4 pb-14 sm:px-6 lg:px-8">
-        <HeroNews news={mainNews} />
+    <section className="min-h-screen bg-white text-slate-900">
+      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-8">
+        <EditorialHero />
 
-        <section className="mt-12 border-t border-slate-300 pt-8">
-          <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto]">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-500">
-                Cobertura destacada
-              </p>
-              <h2 className="mt-2 font-serif text-4xl font-black uppercase leading-none sm:text-5xl">
-                En otras Noticias...
-              </h2>
+        <div className="mt-8">
+          <HeroNews news={mainNews} />
+
+          <section className="mt-12 border-t border-slate-300 pt-8">
+            <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto]">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-500">
+                  Cobertura destacada
+                </p>
+                <h2 className="mt-2 font-serif text-4xl font-black uppercase leading-none sm:text-5xl">
+                  En otras Noticias...
+                </h2>
+              </div>
+
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-slate-950"
+              >
+                Ver archivo completo
+                <ChevronRight className="h-4 w-4" />
+              </a>
             </div>
 
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-slate-950"
-            >
-              Ver archivo completo
-              <ChevronRight className="h-4 w-4" />
-            </a>
-          </div>
-
-          <div className="mt-8 space-y-8">
-            {featuredNews.map((news) => (
-              <NewsCard key={news.id} news={news} />
-            ))}
-          </div>
-        </section>
+            <div className="mt-8 space-y-8">
+              {featuredNews.map((news) => (
+                <NewsCard key={news.id} news={news} />
+              ))}
+            </div>
+          </section>
+        </div>
       </main>
     </section>
   );
 }
-
 {
   /* Noticia principal (tiene los mismos datos de la primera noticia de abajo) */
 }

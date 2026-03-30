@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const navItems = useMemo<NavItem[]>(
     () => [
-      { label: "Articulos", route: "/articulos", icon: Newspaper },
+      { label: "Noticias", route: "/noticias", icon: Newspaper },
       { label: "Nosotros", route: "/nosotros", icon: Users },
     ],
     [],
