@@ -1,4 +1,3 @@
-import { useState } from "react";
 import EditorialHero from "../components/home/EditorialHero";
 import NoticiaPrincipal from "../components/home/NoticiaPrincipal";
 import SeccionesSecundarias from "../components/home/SeccionesSecundarias";
@@ -8,7 +7,6 @@ import ResenasHome from "../components/home/Reseñas";
 import UbicacionHome from "../components/home/Ubicacion";
 
 export default function Home() {
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   return (
     <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
