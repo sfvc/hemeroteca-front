@@ -35,7 +35,7 @@ function Stars({ n }: { n: number }) {
 }
 
 export default function ResenasHome() {
-  const [open, setOpen] = useState(false);
+  const [open] = useState(false);
 
   return (
     <>
