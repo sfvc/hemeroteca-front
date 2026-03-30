@@ -1,10 +1,10 @@
-import EditorialHero from "../components/home/EditorialHero";
+import EditorialHero from "../components/home/EditorialNavbar";
 import NoticiaPrincipal from "../components/home/NoticiaPrincipal";
 import SeccionesSecundarias from "../components/home/SeccionesSecundarias";
 import TablonNovedades from "../components/home/TablonNovedades";
-import GaleriaHome from "../components/home/CarruselSecundario";
-import ResenasHome from "../components/home/Reseñas";
-import UbicacionHome from "../components/home/Ubicacion";
+import CarruselSecundario from "../components/home/CarruselSecundario";
+import Reseñas from "../components/home/Reseñas";
+import Ubicaciones from "../components/home/Ubicacion";
 
 export default function Home() {
 
@@ -29,9 +29,9 @@ export default function Home() {
         </section>
 
         <section className="mt-14 space-y-10">
-          <GaleriaHome />
-          <ResenasHome />
-          <UbicacionHome />
+          <CarruselSecundario />
+          <Reseñas />
+          <Ubicaciones />
         </section>
       </main>
     </div>

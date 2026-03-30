@@ -1,4 +1,4 @@
-import EditorialHero from "../components/home/EditorialHero";
+import EditorialHero from "../components/home/EditorialNavbar";
 import {
   Music2,
   Flag,
@@ -225,7 +225,7 @@ function HeroNews({ news }: { news: NewNotice }) {
       {/* Noticias adicionales de la derecha */}
 
       <aside className="space-y-5 lg:col-span-4">
-        <div className="rounded-[28px] border border-slate-200 bg-slate-100 p-6 ">
+        <div className="rounded-[28px] border-2 border-slate-300 bg-slate-50 p-6 ">
           <p className="text-xs font-extrabold uppercase text-orange-600">
             Novedad
           </p>
@@ -239,7 +239,7 @@ function HeroNews({ news }: { news: NewNotice }) {
             y inscribete antes de quedarte sin cupos!
           </p>
         </div>
-        <div className="rounded-[28px] border border-slate-200 bg-slate-100 p-6">
+        <div className="rounded-[28px] border-2 border-slate-300 bg-slate-50 p-6">
           <p className="text-xs font-extrabold uppercase text-orange-600">
             Novedad
           </p>
@@ -254,7 +254,7 @@ function HeroNews({ news }: { news: NewNotice }) {
             expectativas mientras esperamos el estreno de Avengers Doomsday.
           </p>
         </div>
-        <div className="rounded-[28px] border border-slate-200 bg-slate-100 p-6">
+        <div className="rounded-[28px] border-2 border-slate-300 bg-slate-50 p-6">
           <p className="text-xs font-extrabold uppercase text-orange-600">
             Novedad
           </p>

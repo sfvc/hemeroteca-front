@@ -4,7 +4,7 @@ const featured = {
   category: "MUSICA",
   title: "Airbag en Catamarca!",
   description:
-    "",
+    "Airbag aterriza en Catamarca con un recital que promete convocar a fanáticos de toda la región. La fecha genera muchísima expectativa entre el público joven y se perfila como uno de los eventos musicales más fuertes de la temporada. Será una noche para disfrutar de los grandes éxitos de la banda y vivir una experiencia única en el Estadio Bicentenario.",
   image: "/airbagBanner2.png",
 };
 
@@ -35,10 +35,10 @@ export default function NoticiaPrincipal() {
             {featured.description}
           </p>
         </div>
-          <button className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3">
-                Ver mas
-                <ChevronRight className="h-5 w-5" />
-              </button>
+        <button className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3">
+          Ver mas
+          <ChevronRight className="h-5 w-5" />
+        </button>
       </div>
     </section>
   );

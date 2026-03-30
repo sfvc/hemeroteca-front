@@ -50,12 +50,12 @@ export default function ResenasHome() {
             </h3>
           </div>
 
-          <button
+          {/* <button
             onClick={() => setOpen(true)}
             className="text-sm font-semibold text-slate-600 hover:text-slate-900"
           >
             Ver todas →
-          </button>
+          </button> */}
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
@@ -77,7 +77,7 @@ export default function ResenasHome() {
 
       {/* MODAL */}
       {open && (
-        <div className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-90 bg-black/60 backdrop-blur-sm p-4">
           <div className="mx-auto max-w-3xl rounded-2xl bg-white p-6">
             <h3 className="text-xl font-bold mb-4">Todas las reseñas</h3>
 

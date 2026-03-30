@@ -67,7 +67,7 @@ export default function EditorialHero() {
             Inicio
           </Link>
 
-          <Link to="/" className={navClass("/")}>
+          <Link to="/login" className={navClass("/login")}>
             Archivo General
           </Link>
 
