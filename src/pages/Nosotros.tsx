@@ -83,14 +83,6 @@ export default function Nosotros() {
         <EditorialHero />
 
         <div className="mx-auto w-full max-w-7xl py-8 sm:py-14 lg:py-16">
-          <div className="mb-10 border-b border-slate-300 pb-6 text-center sm:mb-14">
-            <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-slate-500">
-              Desarrollo
-            </p>
-            <h1 className="mt-2 font-serif text-5xl font-black uppercase tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
-              Sobre Nosotros
-            </h1>
-          </div>
 
           <div className="space-y-10 sm:space-y-14 lg:space-y-16">
             <InfoCard
