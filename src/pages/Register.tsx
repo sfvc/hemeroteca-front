@@ -98,7 +98,7 @@ export default function RegisterHemeroteca() {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-4">
-            ¿Ya tenés cuenta?
+            ¿Ya tenes cuenta?
             <a
               href="/login"
               className="text-orange-600 font-semibold hover:underline"
