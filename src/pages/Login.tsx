@@ -1,7 +1,7 @@
 // import React from "react";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginHemeroteca() {
   const navigate = useNavigate();
@@ -102,12 +102,12 @@ export default function LoginHemeroteca() {
 
           <p className="text-center text-sm text-gray-500 mt-4">
             ¿No tenes cuenta?
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="text-orange-600 font-semibold hover:underline"
             >
               Registrate
-            </a>
+            </Link>
           </p>
         </div>
       </main>
