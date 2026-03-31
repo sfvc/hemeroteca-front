@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const featured = {
   category: "MUSICA",
@@ -9,6 +10,7 @@ const featured = {
 };
 
 export default function NoticiaPrincipal() {
+  const navigate = useNavigate();
   return (
     <section className="overflow-hidden rounded-[28px] bg-white">
       <div className="relative overflow-hidden">
@@ -35,7 +37,10 @@ export default function NoticiaPrincipal() {
             {featured.description}
           </p>
         </div>
-        <button className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3">
+        <button
+          onClick={() => navigate("/noticias")}
+          className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3 cursor-pointer"
+        >
           Ver mas
           <ChevronRight className="h-5 w-5" />
         </button>

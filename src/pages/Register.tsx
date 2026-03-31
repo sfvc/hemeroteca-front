@@ -1,8 +1,10 @@
 // import React from "react";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterHemeroteca() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-white text-[#0b1328]">
       {/* HEADER */}
@@ -28,7 +30,7 @@ export default function RegisterHemeroteca() {
         <div className="rounded-3xl p-8 bg-[url('/hemerotecaVintage.png')] bg-cover bg-center relative overflow-hidden">
           {/* BOTON VOLVER */}
           <button
-            onClick={() => window.history.back()}
+            onClick={() => navigate("/")}
             className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-orange-600 px-3 py-2 rounded-full transition"
           >
             <ArrowLeft size={18} />
@@ -88,6 +90,8 @@ export default function RegisterHemeroteca() {
               <input type="checkbox" className="accent-orange-600" />
               Acepto los términos y condiciones
             </div>
+
+            {/* Al registrarte se les redirige a AGM o a la AGM del mismo sistema si es que las fusionamos a las paginas */}
 
             <button
               type="submit"

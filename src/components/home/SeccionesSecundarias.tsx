@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const secondaryNews = [
   {
@@ -6,14 +7,14 @@ const secondaryNews = [
     category: "Tutorial",
     title: "Detras de La  Foto",
     description: "Aqui va uno de los 2 videos con fondo de tele viejo",
-    image: "/VintageMini.png",
+    image: "/hemerotecaVintage.png",
   },
   {
     id: 2,
     category: "Tutorial",
     title: "Practicas de Conservacion",
     description: "Aqui va uno de los 2 videos con fondo de tele viejo",
-    image: "/VintageMini.png",
+    image: "/hemerotecaVintage.png",
   },
   {
     id: 3,
@@ -21,7 +22,7 @@ const secondaryNews = [
     title: "Nuestras Colecciones",
     description:
       "Aqui puedes ver todas nuestras colecciones de Libros, revistas, diarios y mas! Ingresa a la AGM (Archivo General Municipal) a investigar, ver y descargar cualquier contenido que quieras!.",
-    image: "/VintageMini.png",
+    image: "/hemerotecaVintage.png",
   },
   {
     id: 4,
@@ -29,11 +30,13 @@ const secondaryNews = [
     title: "AGM: Archivo general Municipal",
     description:
       "Para los adictos a saber cada detalle de nuestra historia y cultura. Investiga y recorre la biblioteca municipal leyendo libros, periodicos, aprendiendo sobre personajes y mas!",
-    image: "/VintageMini.png",
+    image: "/hemerotecaVintage.png",
   },
 ];
 
 export default function SeccionesSecundarias() {
+  const navigate = useNavigate();
+
   return (
     <section>
       <div className="mb-5 border-b border-slate-300 pb-3"></div>
@@ -65,7 +68,10 @@ export default function SeccionesSecundarias() {
                 {item.description}
               </p>
 
-              <button className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3">
+              <button
+                onClick={() => navigate("/login")}
+                className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3 cursor-pointer"
+              >
                 Ver mas
                 <ChevronRight className="h-5 w-5" />
               </button>

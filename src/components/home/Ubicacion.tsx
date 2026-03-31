@@ -40,13 +40,13 @@ export default function UbicacionHome() {
             </div>
           </div>
 
-          <a
+          {/* <a
             href="https://maps.google.com"
             target="_blank"
             className="mt-6 inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
           >
             Cómo llegar
-          </a>
+          </a> */}
         </div>
       </div>
     </section>

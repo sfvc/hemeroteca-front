@@ -1,8 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function EditorialHero() {
+  const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (route: string) => {
     if (route === "/") return location.pathname === "/";
@@ -35,13 +39,21 @@ export default function EditorialHero() {
             </span>
           </div>
 
+          {/* Turnos: para solicitar turno no hace falta loguearse pero para hacer un pedido digital si */}
+
           <div className="hidden sm:flex items-center gap-3">
-            <button className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white transition-all duration-300 bg-slate-700 hover:bg-gray-300 hover:text-slate-900 cursor-pointer">
+            <button
+              onClick={() => setOpenModal(true)}
+              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white transition-all duration-300 bg-slate-700 hover:bg-gray-300 hover:text-slate-900 cursor-pointer"
+            >
               Solicitar Turno
             </button>
 
-            <button className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white transition-all duration-300 bg-slate-700 hover:bg-gray-300 hover:text-slate-900 cursor-pointer">
-              Solicitar Turno Digital
+            <button
+              onClick={() => navigate("/login")}
+              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white transition-all duration-300 bg-slate-700 hover:bg-gray-300 hover:text-slate-900 cursor-pointer"
+            >
+              Hacer Pedido Digital
             </button>
           </div>
         </div>
@@ -80,6 +92,83 @@ export default function EditorialHero() {
           </Link>
         </nav>
       </div>
+
+      {/* FORM en modal */}
+
+      {openModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 relative">
+            {/* Botón cerrar */}
+            <button
+              onClick={() => setOpenModal(false)}
+              className="absolute top-3 right-3 text-slate-800 hover:text-red-600 cursor-pointer"
+            >
+              ✕
+            </button>
+
+            {/* Titulo */}
+            <h2 className="text-2xl font-bold text-slate-900 mb-4 font-serif">
+              Solicitar Turno
+            </h2>
+
+            {/* Formulario */}
+            <form className="space-y-4">
+              {/* Dia */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700">
+                  Día
+                </label>
+                <input
+                  type="date"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                />
+              </div>
+
+              {/* Hora */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700">
+                  Hora
+                </label>
+                <input
+                  type="time"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                />
+              </div>
+
+              {/* Quien solicita */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700">
+                  ¿Quién solicita?
+                </label>
+                <input
+                  type="text"
+                  placeholder="Nombre y apellido"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                />
+              </div>
+
+              {/* Que solicita */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700">
+                  ¿Qué solicita?
+                </label>
+                <textarea
+                  placeholder="Detalle del pedido"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                />
+              </div>
+
+              {/* Boton que envia solicitud al mail de la hemeroteca */}
+              <button
+                type="submit"
+                className="w-full rounded-xl bg-orange-500 py-2 font-semibold text-white hover:bg-orange-600 transition"
+              >
+                Enviar solicitud
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

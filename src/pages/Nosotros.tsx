@@ -103,12 +103,6 @@ export default function Nosotros() {
 
             <Divider />
 
-            <InfoCard
-              title="¿Dónde estamos ubicados?"
-              description={`Nosotros en la Biblioteca Municipal estamos ubicados en los siguientes puntos de la ciudad de Catamarca:`}
-              image="/ubiHemeroteca.png"
-              variant="brand"
-            />
           </div>
         </div>
       </main>

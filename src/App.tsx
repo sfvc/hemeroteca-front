@@ -5,8 +5,9 @@ import Home from "./pages/Home";
 import Noticias from "./pages/Noticias";
 import Nosotros from "./pages/Nosotros";
 import Footer from "./components/Footer";
-import Login from "./pages/Login"
-import Register from "./pages/Register"
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       {/* <Navbar /> */}
 
       <main className="">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/noticias" element={<Noticias />} />
