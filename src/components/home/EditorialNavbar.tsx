@@ -1,12 +1,41 @@
 import { Link, useLocation } from "react-router-dom";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchBotonDerecho, fetchBotonIzquierdo } from "../../services/koha-service";
+import Carrousel from "../Carrousel";
+
+type Boton = {
+  id: number;
+  titulo: string;
+  link: string;
+  activo: boolean | null;
+  color_fondo?: string | null;
+  color_texto?: string | null;
+};
 
 export default function EditorialHero() {
   const [openModal, setOpenModal] = useState(false);
+  const [botonIzquierdo, setBotonIzquierdo] = useState<Boton | null>(null);
+  const [botonDerecho, setBotonDerecho] = useState<Boton | null>(null);
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchBotones = async () => {
+      const left = await fetchBotonIzquierdo();
+      const right = await fetchBotonDerecho();
+
+      const leftActivo = left?.find((item: Boton) => item.activo === true);
+      const rightActivo = right?.find((item: Boton) => item.activo === true);
+
+      setBotonIzquierdo(leftActivo || null);
+      setBotonDerecho(rightActivo || null);
+    };
+
+    fetchBotones();
+  }, []);
 
   const isActive = (route: string) => {
     if (route === "/") return location.pathname === "/";
@@ -14,11 +43,31 @@ export default function EditorialHero() {
   };
 
   const navClass = (route: string) =>
-    `transition ${
-      isActive(route)
-        ? "text-slate-950 font-bold"
-        : "text-slate-700 hover:text-slate-950"
+    `transition ${isActive(route)
+      ? "text-slate-950 font-bold"
+      : "text-slate-700 hover:text-slate-950"
     }`;
+
+  const handleNavigation = (link: string) => {
+    if (!link) return;
+
+    const isExternal = link.startsWith("http");
+
+    if (isExternal) {
+      window.open(link, "_blank", "noopener,noreferrer");
+    } else {
+      navigate(link);
+    }
+  };
+
+  const getButtonStyle = (boton: Boton) => {
+    if (!boton.activo) return {};
+
+    return {
+      backgroundColor: boton.color_fondo || "#334155",
+      color: boton.color_texto || "#ffffff",
+    };
+  };
 
   return (
     <header className="w-full border-b border-slate-300 bg-white">
@@ -39,22 +88,42 @@ export default function EditorialHero() {
             </span>
           </div>
 
-          {/* Turnos: para solicitar turno no hace falta loguearse pero para hacer un pedido digital si */}
-
           <div className="hidden sm:flex items-center gap-3">
-            <button
-              onClick={() => setOpenModal(true)}
-              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white transition-all duration-300 bg-slate-700 hover:bg-gray-300 hover:text-slate-900 cursor-pointer"
-            >
-              Solicitar Turno
-            </button>
+            {/* BOTON IZQUIERDO */}
+            {botonIzquierdo && (
+              <button
+                onClick={() => {
+                  if (!botonIzquierdo.activo) return;
+                  handleNavigation(botonIzquierdo.link);
+                }}
+                disabled={!botonIzquierdo.activo}
+                style={getButtonStyle(botonIzquierdo)}
+                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonIzquierdo.activo
+                  ? "hover:opacity-80 cursor-pointer"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+              >
+                {botonIzquierdo.titulo}
+              </button>
+            )}
 
-            <button
-              onClick={() => navigate("/login")}
-              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium text-white transition-all duration-300 bg-slate-700 hover:bg-gray-300 hover:text-slate-900 cursor-pointer"
-            >
-              Hacer Pedido Digital
-            </button>
+            {/* BOTON DERECHO */}
+            {botonDerecho && (
+              <button
+                onClick={() => {
+                  if (!botonDerecho.activo) return;
+                  handleNavigation(botonDerecho.link);
+                }}
+                disabled={!botonDerecho.activo}
+                style={getButtonStyle(botonDerecho)}
+                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonDerecho.activo
+                  ? "hover:opacity-80 cursor-pointer"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
+              >
+                {botonDerecho.titulo}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -92,6 +161,8 @@ export default function EditorialHero() {
           </Link>
         </nav>
       </div>
+
+      <Carrousel />
 
       {/* FORM en modal */}
 

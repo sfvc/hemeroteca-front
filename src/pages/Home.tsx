@@ -1,5 +1,4 @@
 import EditorialHero from "../components/home/EditorialNavbar";
-import NoticiaPrincipal from "../components/home/NoticiaPrincipal";
 import SeccionesSecundarias from "../components/home/SeccionesSecundarias";
 import TablonNovedades from "../components/home/TablonNovedades";
 import CarruselSecundario from "../components/home/CarruselSecundario";
@@ -15,8 +14,6 @@ export default function Home() {
         <section className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px] items-start">
           <div className="min-w-0 space-y-8">
             <EditorialHero />
-
-            <NoticiaPrincipal />
           </div>
 
           <aside className="w-full self-start xl:sticky xl:top-8">
