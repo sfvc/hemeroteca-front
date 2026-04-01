@@ -81,7 +81,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://www.instagram.com/catamarcacapital/#"
+                  href="https://www.instagram.com/cultura.catamarcacapital/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-500 hover:scale-110 transition"

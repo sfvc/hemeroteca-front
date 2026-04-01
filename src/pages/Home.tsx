@@ -4,6 +4,7 @@ import TablonNovedades from "../components/home/TablonNovedades";
 import CarruselSecundario from "../components/home/CarruselSecundario";
 import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
+import Carrousel from "../components/Carrousel";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <section className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px] items-start">
           <div className="min-w-0 space-y-8">
             <EditorialHero />
+            <Carrousel />
           </div>
 
           <aside className="w-full self-start xl:sticky xl:top-8">
@@ -33,4 +35,3 @@ export default function Home() {
     </div>
   );
 }
-

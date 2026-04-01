@@ -1,4 +1,5 @@
 import EditorialHero from "../components/home/EditorialNavbar";
+import Carrousel from "../components/Carrousel";
 import {
   Music2,
   Flag,
@@ -102,8 +103,9 @@ export default function Noticias() {
     <section className="min-h-screen bg-white text-slate-900">
       <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-2">
         <EditorialHero />
-
         <div className="mt-8">
+          {/* Aca si banco que este el carrusel */}
+          <Carrousel />
           <HeroNews news={mainNews} />
 
           <section className="mt-12 border-t border-slate-300 pt-8">

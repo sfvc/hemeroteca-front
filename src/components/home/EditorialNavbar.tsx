@@ -1,8 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { useState, useEffect } from "react";
-import { fetchBotonDerecho, fetchBotonIzquierdo } from "../../services/koha-service";
-import Carrousel from "../Carrousel";
+import {
+  fetchBotonDerecho,
+  fetchBotonIzquierdo,
+} from "../../services/koha-service";
+// import Carrousel from "../Carrousel";
 
 type Boton = {
   id: number;
@@ -98,10 +101,11 @@ export default function EditorialHero() {
                 }}
                 disabled={!botonIzquierdo.activo}
                 style={getButtonStyle(botonIzquierdo)}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonIzquierdo.activo
-                  ? "hover:opacity-80 cursor-pointer"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  }`}
+                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                  botonIzquierdo.activo
+                    ? "hover:opacity-80 cursor-pointer"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
               >
                 {botonIzquierdo.titulo}
               </button>
@@ -116,10 +120,11 @@ export default function EditorialHero() {
                 }}
                 disabled={!botonDerecho.activo}
                 style={getButtonStyle(botonDerecho)}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonDerecho.activo
-                  ? "hover:opacity-80 cursor-pointer"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  }`}
+                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                  botonDerecho.activo
+                    ? "hover:opacity-80 cursor-pointer"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
               >
                 {botonDerecho.titulo}
               </button>
@@ -170,7 +175,8 @@ export default function EditorialHero() {
         </nav>
       </div>
 
-      <Carrousel />
+      {/* Lo comente porque si lo dejamos aca, en todos los lados donde este el editorialHero, va a estar el carrusel, como en la seccion de "nosotros" o futuras secciones */}
+      {/* <Carrousel /> */}
 
       {/* FORM en modal */}
 

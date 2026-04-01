@@ -30,15 +30,15 @@ export default function TablonNovedades({ compact = false }) {
 
   return (
     <section
-      className={`relative overflow-hidden rounded-[28px] border border-slate-200 bg-[#867e75] ${compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
+      className={`relative overflow-hidden rounded-[28px] border border-slate-200 bg-[#e2d6c8] ${compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
         }`}
     >
       <div className="absolute inset-0 opacity-10 background-image:[radial-gradient(#ffffff_1px,transparent_1px) background-size:14px_14px]" />
       <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-black/10" />
 
       <div className="relative z-10">
-        <div className="mb-5 inline-flex rounded-2xl bg-white/10 px-4 py-2 backdrop-blur-md shadow-md ring-1 ring-white/10">
-          <h3 className=" font-serif text-2xl font-black uppercase text-white">
+        <div className="mb-5 inline-flex rounded-2xl bg-white/10 px-4 py-2 backdrop-blur-md shadow-xl ring-1 ring-white/10">
+          <h3 className=" font-serif text-2xl font-black uppercase text-slate-700">
             Novedades
           </h3>
         </div>
