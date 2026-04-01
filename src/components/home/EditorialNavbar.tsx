@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { useState, useEffect } from "react";
-import { fetchBotonDerecho, fetchBotonIzquierdo } from "../../services/koha-service";
+import { fetchBotonDerecho, fetchBotonIzquierdo, fetchEncabezado } from "../../services/koha-service";
 import Carrousel from "../Carrousel";
+import { formatFecha } from "../../util/formatFecha";
 
 type Boton = {
   id: number;
@@ -13,10 +14,18 @@ type Boton = {
   color_texto?: string | null;
 };
 
+type Encabezado = {
+  nombre: string;
+  temaDelMes?: string;
+  lugar?: string;
+  fechaFantasia?: string;
+};
+
 export default function EditorialHero() {
   const [openModal, setOpenModal] = useState(false);
   const [botonIzquierdo, setBotonIzquierdo] = useState<Boton | null>(null);
   const [botonDerecho, setBotonDerecho] = useState<Boton | null>(null);
+  const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,16 +45,24 @@ export default function EditorialHero() {
     fetchBotones();
   }, []);
 
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await fetchEncabezado();
+      if (data) setEncabezado(data);
+    };
+
+    loadData();
+  }, []);
+
   const isActive = (route: string) => {
     if (route === "/") return location.pathname === "/";
     return location.pathname.startsWith(route);
   };
 
   const navClass = (route: string) =>
-    `transition ${
-      isActive(route)
-        ? "text-orange-600 font-bold"
-        : "text-slate-700 hover:text-slate-950"
+    `transition ${isActive(route)
+      ? "text-orange-600 font-bold"
+      : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -131,15 +148,69 @@ export default function EditorialHero() {
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
         <div className="border-b border-slate-300 pb-6">
           <div className="text-center">
+
+            <div className={`flex items-center gap-4 mb-4  justify-center sm:hidden text-sm font-medium`}>
+              {/* BOTON IZQUIERDO */}
+              {botonIzquierdo && (
+                <button
+                  onClick={() => {
+                    if (!botonIzquierdo.activo) return;
+                    handleNavigation(botonIzquierdo.link);
+                  }}
+                  disabled={!botonIzquierdo.activo}
+                  style={getButtonStyle(botonIzquierdo)}
+                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonIzquierdo.activo
+                    ? "hover:opacity-80 cursor-pointer"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
+                >
+                  {botonIzquierdo.titulo}
+                </button>
+              )}
+
+              {/* BOTON DERECHO */}
+              {botonDerecho && (
+                <button
+                  onClick={() => {
+                    if (!botonDerecho.activo) return;
+                    handleNavigation(botonDerecho.link);
+                  }}
+                  disabled={!botonDerecho.activo}
+                  style={getButtonStyle(botonDerecho)}
+                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonDerecho.activo
+                    ? "hover:opacity-80 cursor-pointer"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
+                >
+                  {botonDerecho.titulo}
+                </button>
+              )}
+            </div>
+
             <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-orange-500">
-              Noticias
+              {encabezado?.temaDelMes || "Noticias"}
             </p>
 
             <h1 className="mt-2 font-serif text-4xl font-black uppercase leading-none text-slate-950 sm:text-5xl lg:text-7xl">
-              Nueva
-              <br />
-              Hemeroteca
+              {encabezado?.nombre ? (
+                encabezado.nombre.split(" ").map((word, i) => (
+                  <span key={i} className="block">
+                    {word}
+                  </span>
+                ))
+              ) : (
+                <>
+                  Nueva <br /> Hemeroteca
+                </>
+              )}
             </h1>
+
+            {encabezado?.lugar && (
+              <p className="mt-3 text-xs uppercase tracking-widest text-slate-500">
+                {encabezado.lugar}
+                {encabezado.fechaFantasia && ` — ${formatFecha(encabezado.fechaFantasia)}`}
+              </p>
+            )}
           </div>
         </div>
 

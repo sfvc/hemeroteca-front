@@ -6,6 +6,7 @@ interface CarrouselItem {
     nombre: string;
     descripcion?: string;
     link?: string;
+    color_texto?: string | null;
     imagenesConUrl: { directus_files_id: string; url: string }[];
 }
 
@@ -43,10 +44,11 @@ export default function Carrousel() {
 
     const total = item.imagenesConUrl.length;
     const imageUrl = item.imagenesConUrl[index].url;
+    const textColor = item.color_texto || "#ffffff";
 
     return (
         <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl"
-            style={{ height: "480px" }}>
+            style={{ height: "500px" }}>
 
             {/* Imagen con fade */}
             <div
@@ -90,16 +92,19 @@ export default function Carrousel() {
             {/* Contenido inferior */}
             <div className="absolute bottom-0 left-0 right-0 p-7 z-10">
                 {/* Contador */}
-                <span
+                {/* <span
                     className="text-xs font-semibold tracking-widest uppercase mb-3 inline-block"
                     style={{ color: "rgba(255,255,255,0.6)", letterSpacing: "0.2em" }}
                 >
                     {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-                </span>
+                </span> */}
 
                 <h2
-                    className="text-3xl font-bold text-white mb-2 leading-tight"
-                    style={{ textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}
+                    className="text-3xl font-bold mb-2 leading-tight"
+                    style={{
+                        color: textColor,
+                        textShadow: "0 2px 12px rgba(0,0,0,0.4)"
+                    }}
                 >
                     {item.nombre}
                 </h2>
@@ -107,7 +112,11 @@ export default function Carrousel() {
                 {item.descripcion && (
                     <p
                         className="text-sm mb-4"
-                        style={{ color: "rgba(255,255,255,0.75)", maxWidth: "950px" }}
+                        style={{
+                            color: textColor,
+                            opacity: 0.85,
+                            maxWidth: "950px"
+                        }}
                     >
                         {item.descripcion}
                     </p>
