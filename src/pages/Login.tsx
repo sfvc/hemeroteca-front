@@ -17,9 +17,8 @@ export default function LoginHemeroteca() {
           />
           <div className="flex items-center gap-3 text-[#1f3554]">
             <span className="text-xs tracking-[0.3em] font-bold uppercase">
-              Hemeroteca Digital
+              Hemeroteca Municipal
             </span>
-            <span className="text-sm text-gray-500">| Catamarca Capital</span>
           </div>
         </div>
       </header>
@@ -101,7 +100,7 @@ export default function LoginHemeroteca() {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-4">
-            ¿No tenes cuenta?
+            ¿No tenes cuenta? 
             <Link
               to="/register"
               className="text-orange-600 font-semibold hover:underline"

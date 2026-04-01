@@ -6,11 +6,10 @@ import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
 
 export default function Home() {
-
   return (
     <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
-      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-8">
-        {/* HERO + NOTICIA A LA IZQUIERDA / TABLON A LA DERECHA */}
+      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-2">
+        {/* NAVBAR + NOTICIA A LA IZQUIERDA / TABLON A LA DERECHA */}
         <section className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px] items-start">
           <div className="min-w-0 space-y-8">
             <EditorialHero />
@@ -34,3 +33,4 @@ export default function Home() {
     </div>
   );
 }
+

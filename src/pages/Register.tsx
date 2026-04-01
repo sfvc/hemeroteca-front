@@ -17,7 +17,7 @@ export default function RegisterHemeroteca() {
           />
           <div className="flex items-center gap-3 text-[#1f3554]">
             <span className="text-xs tracking-[0.3em] font-bold uppercase">
-              Hemeroteca Digital
+              Hemeroteca Municipal
             </span>
             <span className="text-sm text-gray-500">| Catamarca Capital</span>
           </div>
@@ -49,7 +49,7 @@ export default function RegisterHemeroteca() {
           </h2>
 
           <p className="text-gray-500 mt-3 mb-6">
-            Completá los datos para registrarte en la hemeroteca.
+            Completá los siguientes campos para registrarte en la hemeroteca.
           </p>
 
           <form className="flex flex-col gap-4">
