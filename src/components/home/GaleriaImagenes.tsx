@@ -45,6 +45,8 @@ export default function GaleriaHome() {
 
           {!isSingle && (
             <>
+              {/* BOTON IZQUIERDA*/}
+
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -54,6 +56,8 @@ export default function GaleriaHome() {
               >
                 <ChevronLeft />
               </button>
+
+              {/* BOTON DERECHA*/}
 
               <button
                 onClick={(e) => {
@@ -80,7 +84,7 @@ export default function GaleriaHome() {
           <div className="relative w-full max-w-5xl">
             <button
               onClick={() => setOpen(false)}
-              className="absolute -top-12 right-0 text-white"
+              className="absolute -top-12 right-0 text-white cursor-pointer"
             >
               <X size={28} />
             </button>

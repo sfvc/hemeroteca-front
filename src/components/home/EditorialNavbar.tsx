@@ -1,7 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { useState, useEffect } from "react";
-import { fetchBotonDerecho, fetchBotonIzquierdo, fetchEncabezado } from "../../services/koha-service";
+import {
+  fetchBotonDerecho,
+  fetchBotonIzquierdo,
+  fetchEncabezado,
+} from "../../services/koha-service";
 import { formatFecha } from "../../util/formatFecha";
 
 type Boton = {
@@ -59,9 +63,10 @@ export default function EditorialHero() {
   };
 
   const navClass = (route: string) =>
-    `transition ${isActive(route)
-      ? "text-orange-600 font-bold"
-      : "text-slate-700 hover:text-slate-950"
+    `transition ${
+      isActive(route)
+        ? "text-orange-600 font-bold"
+        : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -149,8 +154,9 @@ export default function EditorialHero() {
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
         <div className="border-b border-slate-300 pb-6">
           <div className="text-center">
-
-            <div className={`flex items-center gap-4 mb-4  justify-center sm:hidden text-sm font-medium`}>
+            <div
+              className={`flex items-center gap-4 mb-4  justify-center sm:hidden text-sm font-medium`}
+            >
               {/* BOTON IZQUIERDO */}
               {botonIzquierdo && (
                 <button
@@ -160,10 +166,11 @@ export default function EditorialHero() {
                   }}
                   disabled={!botonIzquierdo.activo}
                   style={getButtonStyle(botonIzquierdo)}
-                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonIzquierdo.activo
-                    ? "hover:opacity-80 cursor-pointer"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    }`}
+                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                    botonIzquierdo.activo
+                      ? "hover:opacity-80 cursor-pointer"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
                 >
                   {botonIzquierdo.titulo}
                 </button>
@@ -178,10 +185,11 @@ export default function EditorialHero() {
                   }}
                   disabled={!botonDerecho.activo}
                   style={getButtonStyle(botonDerecho)}
-                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonDerecho.activo
-                    ? "hover:opacity-80 cursor-pointer"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    }`}
+                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                    botonDerecho.activo
+                      ? "hover:opacity-80 cursor-pointer"
+                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  }`}
                 >
                   {botonDerecho.titulo}
                 </button>
@@ -209,7 +217,8 @@ export default function EditorialHero() {
             {encabezado?.lugar && (
               <p className="mt-3 text-xs uppercase tracking-widest text-slate-500">
                 {encabezado.lugar}
-                {encabezado.fechaFantasia && ` — ${formatFecha(encabezado.fechaFantasia)}`}
+                {encabezado.fechaFantasia &&
+                  ` — ${formatFecha(encabezado.fechaFantasia)}`}
               </p>
             )}
           </div>

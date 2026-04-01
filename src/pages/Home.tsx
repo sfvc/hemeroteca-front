@@ -1,7 +1,7 @@
 import EditorialHero from "../components/home/EditorialNavbar";
 import SeccionesSecundarias from "../components/home/SeccionesSecundarias";
 import TablonNovedades from "../components/home/TablonNovedades";
-import CarruselSecundario from "../components/home/CarruselSecundario";
+import GaleriaImagenes from "../components/home/GaleriaImagenes";
 import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
 import Carrousel from "../components/Carrousel";
@@ -27,7 +27,7 @@ export default function Home() {
         </section>
 
         <section className="mt-14 space-y-10">
-          <CarruselSecundario />
+          <GaleriaImagenes />
           <Reseñas />
           <Ubicaciones />
         </section>
