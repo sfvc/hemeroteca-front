@@ -7,6 +7,7 @@ import {
   fetchEncabezado,
 } from "../../services/koha-service";
 import { formatFecha } from "../../util/formatFecha";
+import { Info } from "lucide-react";
 
 type Boton = {
   id: number;
@@ -94,11 +95,11 @@ export default function EditorialHero() {
     <header className="w-full border-b border-slate-300 bg-white">
       <div className="border-b border-slate-200">
         <div className="flex w-full items-center justify-between px-4 py-3 text-xs sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 text-slate-600 mb-2">
+          <div className="mb-2 flex items-center gap-3 text-slate-600">
             <img
               src={logoMunicipalidad}
               alt="Catamarca Capital"
-              className="h-10 sm:h-10 object-contain"
+              className="h-10 object-contain sm:h-10"
             />
             <span className="font-extrabold uppercase tracking-[0.2em]">
               Hemeroteca Municipal
@@ -109,8 +110,7 @@ export default function EditorialHero() {
             </span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-3">
-            {/* BOTON IZQUIERDO */}
+          <div className="hidden items-center gap-3 sm:flex">
             {botonIzquierdo && (
               <button
                 onClick={() => {
@@ -121,15 +121,25 @@ export default function EditorialHero() {
                 style={getButtonStyle(botonIzquierdo)}
                 className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   botonIzquierdo.activo
-                    ? "hover:opacity-80 cursor-pointer"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    ? "cursor-pointer hover:opacity-80"
+                    : "cursor-not-allowed bg-gray-300 text-gray-500"
                 }`}
               >
                 {botonIzquierdo.titulo}
               </button>
             )}
 
-            {/* BOTON DERECHO */}
+            <button
+              onClick={() => setOpenModal(true)}
+              style={{
+                backgroundColor: botonDerecho?.color_fondo || "#334155",
+                color: botonDerecho?.color_texto || "#ffffff",
+              }}
+              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-[1px] hover:opacity-90 cursor-pointer"
+            >
+              Solicitar Turno
+            </button>
+
             {botonDerecho && (
               <button
                 onClick={() => {
@@ -140,8 +150,8 @@ export default function EditorialHero() {
                 style={getButtonStyle(botonDerecho)}
                 className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   botonDerecho.activo
-                    ? "hover:opacity-80 cursor-pointer"
-                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    ? "cursor-pointer hover:opacity-80"
+                    : "cursor-not-allowed bg-gray-300 text-gray-500"
                 }`}
               >
                 {botonDerecho.titulo}
@@ -154,10 +164,7 @@ export default function EditorialHero() {
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
         <div className="border-b border-slate-300 pb-6">
           <div className="text-center">
-            <div
-              className={`flex items-center gap-4 mb-4  justify-center sm:hidden text-sm font-medium`}
-            >
-              {/* BOTON IZQUIERDO */}
+            <div className="mb-4 flex items-center justify-center gap-4 text-sm font-medium sm:hidden">
               {botonIzquierdo && (
                 <button
                   onClick={() => {
@@ -168,15 +175,25 @@ export default function EditorialHero() {
                   style={getButtonStyle(botonIzquierdo)}
                   className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
                     botonIzquierdo.activo
-                      ? "hover:opacity-80 cursor-pointer"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      ? "cursor-pointer hover:opacity-80"
+                      : "cursor-not-allowed bg-gray-300 text-gray-500"
                   }`}
                 >
                   {botonIzquierdo.titulo}
                 </button>
               )}
 
-              {/* BOTON DERECHO */}
+              <button
+                onClick={() => setOpenModal(true)}
+                style={{
+                  backgroundColor: botonDerecho?.color_fondo || "#334155",
+                  color: botonDerecho?.color_texto || "#ffffff",
+                }}
+                className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-[1px] hover:opacity-90 cursor-pointer"
+              >
+                Solicitar Turno
+              </button>
+
               {botonDerecho && (
                 <button
                   onClick={() => {
@@ -187,8 +204,8 @@ export default function EditorialHero() {
                   style={getButtonStyle(botonDerecho)}
                   className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${
                     botonDerecho.activo
-                      ? "hover:opacity-80 cursor-pointer"
-                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      ? "cursor-pointer hover:opacity-80"
+                      : "cursor-not-allowed bg-gray-300 text-gray-500"
                   }`}
                 >
                   {botonDerecho.titulo}
@@ -225,25 +242,17 @@ export default function EditorialHero() {
         </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-b border-slate-200 py-4 text-sm font-medium">
-          {/* Publico */}
-
           <Link to="/" className={navClass("/")}>
             Inicio
           </Link>
-
-          {/* Te patea al login y una vez logueado o registrado recien te lleva a la AGM */}
 
           <Link to="/login" className={navClass("/login")}>
             Archivo General
           </Link>
 
-          {/* Publico */}
-
           <Link to="/noticias" className={navClass("/noticias")}>
             Noticias
           </Link>
-
-          {/* Publico */}
 
           <Link to="/nosotros" className={navClass("/nosotros")}>
             Nosotros
@@ -251,81 +260,96 @@ export default function EditorialHero() {
         </nav>
       </div>
 
-      {/* Lo comente porque si lo dejamos aca, en todos los lados donde este el editorialHero, va a estar el carrusel, como en la seccion de "nosotros" o futuras secciones */}
-      {/* <Carrousel /> */}
-
-      {/* FORM en modal */}
-
       {openModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-5">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 relative">
-            {/* Botón cerrar */}
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm"
+          onClick={() => setOpenModal(false)}
+        >
+          <div
+            className="relative w-full max-w-xl rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setOpenModal(false)}
-              className="absolute top-3 right-3 text-slate-800 hover:text-red-600 cursor-pointer"
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-red-50 hover:text-red-600"
+              aria-label="Cerrar modal"
             >
               ✕
             </button>
 
-            {/* Titulo */}
-            <h2 className="text-2xl font-bold text-slate-900 mb-4 font-serif">
-              Solicitar Turno Presencial
-            </h2>
+            <div className="mb-6 border-b border-slate-200 pb-4">
+              <h2 className="mb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
+                Solicitar Turno Presencial
+              </h2>
 
-            {/* Formulario */}
-            <form className="space-y-4">
-              {/* Dia */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700">
-                  Día
-                </label>
-                <input
-                  type="date"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
-                />
+              <div className="flex items-start gap-3 rounded-2xl border border-orange-100 bg-orange-50/70 p-4 text-sm text-slate-700">
+                <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+                  <Info className="h-5 w-5 text-orange-500" />
+                </div>
+                <p className="leading-relaxed">
+                  Este formulario es para solicitar un turno presencial en la
+                  hemeroteca. Podrás asistir a las oficinas en la fecha
+                  seleccionada y retirar los libros previamente solicitados.
+                </p>
+              </div>
+            </div>
+
+            <form className="space-y-5">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                    Día
+                  </label>
+                  <input
+                    type="date"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                    Hora
+                  </label>
+                  <input
+                    type="time"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                  />
+                </div>
               </div>
 
-              {/* Hora */}
               <div>
-                <label className="block text-sm font-medium text-slate-700">
-                  Hora
-                </label>
-                <input
-                  type="time"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
-                />
-              </div>
-
-              {/* Quien solicita */}
-              <div>
-                <label className="block text-sm font-medium text-slate-700">
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Quién solicita?
                 </label>
                 <input
-                  type="text"
-                  placeholder="Email"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                  type="email"
+                  placeholder="tuemail@ejemplo.com"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                 />
+                <p className="mt-2 text-xs text-slate-500">
+                  Ingresá un correo electrónico válido para poder contactarte.
+                </p>
               </div>
 
-              {/* Que solicita */}
               <div>
-                <label className="block text-sm font-medium text-slate-700">
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Qué solicita?
                 </label>
                 <textarea
                   placeholder="Detalle del pedido"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2"
+                  rows={5}
+                  className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                 />
               </div>
 
-              {/* Boton que envia solicitud al mail de la hemeroteca */}
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-orange-500 py-2 font-semibold text-white hover:bg-orange-600 transition"
-              >
-                Enviar solicitud
-              </button>
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  className="w-full rounded-2xl bg-orange-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 hover:shadow-lg"
+                >
+                  Enviar solicitud
+                </button>
+              </div>
             </form>
           </div>
         </div>
