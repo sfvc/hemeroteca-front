@@ -100,7 +100,7 @@ export default function Noticias() {
 
   return (
     <section className="min-h-screen bg-white text-slate-900">
-      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-8">
+      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-2">
         <EditorialHero />
 
         <div className="mt-8">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 
-const images = ["/airbagBanner2.png", "/BibliotecaMunicipal.png", "/HM.png"];
+const images = ["/airbagBanner2.png", "/hemerotecaVintage.png", "/HM.png"];
 
 export default function GaleriaHome() {
   const [current, setCurrent] = useState(0);
@@ -15,21 +15,27 @@ export default function GaleriaHome() {
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">
-              Galería
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-1">
+              Ilustracion
             </p>
+
+            {/* Si quiere ver mas imagenes en la fototeca tendra q hacer clik y loguearse */}
+
             <h3 className="font-serif text-2xl font-black text-slate-900">
-              Espacio Hemeroteca
+              Galeria de Imagenes
             </h3>
           </div>
         </div>
 
-        {/* IMAGE */}
+        {/* IMAGENES (que las imagenes del carrusel se vean completas) */}
         <div
           onClick={() => setOpen(true)}
           className="relative cursor-pointer overflow-hidden rounded-2xl"
         >
-          <img src={images[current]} className="h-70 w-full object-cover" />
+          <img
+            src={images[current]}
+            className="w-full h-100 md:h-125 object-contain bg-gray-300"
+          />
 
           <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
 
@@ -62,14 +68,13 @@ export default function GaleriaHome() {
           )}
         </div>
 
-        {/* DESC */}
         <p className="mt-5 max-w-2xl text-sm leading-6 text-slate-600">
           Un recorrido visual por nuestras instalaciones, archivos históricos y
           espacios de consulta.
         </p>
       </section>
 
-      {/* MODAL */}
+      {/* MODAL PARA VER FOTO*/}
       {open && (
         <div className="fixed inset-0 z-90 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="relative w-full max-w-5xl">

@@ -1,4 +1,4 @@
-import EditorialHero from "../components/home/EditorialNavbar";
+import EditorialNavbar from "../components/home/EditorialNavbar";
 import NoticiaPrincipal from "../components/home/NoticiaPrincipal";
 import SeccionesSecundarias from "../components/home/SeccionesSecundarias";
 import TablonNovedades from "../components/home/TablonNovedades";
@@ -7,14 +7,13 @@ import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
 
 export default function Home() {
-
   return (
     <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
-      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-8">
-        {/* HERO + NOTICIA A LA IZQUIERDA / TABLON A LA DERECHA */}
+      <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-2">
+        {/* NAVBAR + NOTICIA A LA IZQUIERDA / TABLON A LA DERECHA */}
         <section className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_340px] items-start">
           <div className="min-w-0 space-y-8">
-            <EditorialHero />
+            <EditorialNavbar />
 
             <NoticiaPrincipal />
           </div>

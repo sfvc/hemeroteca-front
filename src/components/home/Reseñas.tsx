@@ -4,7 +4,7 @@ import { useState } from "react";
 const reviews = [
   {
     name: "María Gómez",
-    rating: 5,
+    rating: 4,
     text: "Un espacio cultural increíble, muy bien organizado.",
   },
   {
@@ -43,10 +43,10 @@ export default function ResenasHome() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">
-              Opiniones
+              Reseñas
             </p>
             <h3 className="font-serif text-2xl font-black text-slate-900">
-              Reseñas de visitantes
+              Opiniones de Usuarios
             </h3>
           </div>
 

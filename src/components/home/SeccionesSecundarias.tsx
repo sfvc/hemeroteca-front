@@ -6,14 +6,16 @@ const secondaryNews = [
     id: 1,
     category: "Tutorial",
     title: "Detras de La  Foto",
-    description: "Aqui va uno de los 2 videos con fondo de tele viejo",
+    description:
+      "Aqui va uno de los 2 videos con fondo de tele viejo. (No hara falta loguearse)",
     image: "/hemerotecaVintage.png",
   },
   {
     id: 2,
     category: "Tutorial",
     title: "Practicas de Conservacion",
-    description: "Aqui va uno de los 2 videos con fondo de tele viejo",
+    description:
+      "Aqui va uno de los 2 videos con fondo de tele viejo. (No hara falta loguearse)",
     image: "/hemerotecaVintage.png",
   },
   {
@@ -21,7 +23,7 @@ const secondaryNews = [
     category: "Investigacion",
     title: "Nuestras Colecciones",
     description:
-      "Aqui puedes ver todas nuestras colecciones de Libros, revistas, diarios y mas! Ingresa a la AGM (Archivo General Municipal) a investigar, ver y descargar cualquier contenido que quieras!.",
+      "Aqui puedes ver todas nuestras colecciones de Libros, revistas, diarios y mas! Ingresa a la AGM (Archivo General Municipal) a investigar, ver y descargar cualquier contenido que quieras!. (Hara falta Loguearse)",
     image: "/hemerotecaVintage.png",
   },
   {
@@ -29,7 +31,7 @@ const secondaryNews = [
     category: "Investigacion",
     title: "AGM: Archivo general Municipal",
     description:
-      "Para los adictos a saber cada detalle de nuestra historia y cultura. Investiga y recorre la biblioteca municipal leyendo libros, periodicos, aprendiendo sobre personajes y mas!",
+      "Para los adictos a saber cada detalle de nuestra historia y cultura. Investiga y recorre la biblioteca municipal leyendo libros, periodicos, aprendiendo sobre personajes y mas!. (Hara falta Loguearse)",
     image: "/hemerotecaVintage.png",
   },
 ];

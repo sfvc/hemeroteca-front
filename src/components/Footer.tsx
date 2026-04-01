@@ -12,13 +12,13 @@ export default function Footer() {
       >
         <path
           d="M0,0L60,2C120,4,240,8,360,20C480,32,600,52,720,48C840,44,960,16,1080,10C1200,4,1320,20,1380,28L1440,36L1440,120L0,120Z"
-          className="fill-slate-200"
+          className="fill-slate-100"
         />
       </svg>
 
       {/* Logo */}
 
-      <footer className="w-full bg-slate-200 text-slate-200">
+      <footer className="w-full bg-slate-100 text-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
             <div className="flex items-center gap-4">

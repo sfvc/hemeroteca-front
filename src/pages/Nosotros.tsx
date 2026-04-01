@@ -79,14 +79,13 @@ function InfoCard({
 export default function Nosotros() {
   return (
     <section className="bg-white">
-      <main className="w-full px-6 pb-14 pt-8 lg:px-10 xl:px-16">
+      <main className="w-full px-6 pb-14 pt-2 lg:px-10 xl:px-16">
         <EditorialHero />
 
         <div className="mx-auto w-full max-w-7xl py-8 sm:py-14 lg:py-16">
-
           <div className="space-y-10 sm:space-y-14 lg:space-y-16">
             <InfoCard
-              title="¿Quiénes somos en Hemeroteca Digital?"
+              title="¿Quiénes somos en Hemeroteca Municipal?"
               description={`Consulta las colecciones digitales de diarios, periódicos y revistas de Catamarca que estamos preservando y poniendo en línea. También podés solicitar una noticia en particular para recibirla por correo electrónico.`}
               image="/HM.png"
               variant="brand"
@@ -95,14 +94,13 @@ export default function Nosotros() {
             <Divider />
 
             <InfoCard
-              title="¿Quiénes desarrollamos Hemeroteca Digital?"
-              description={`En el Nodo Tecnológico de la Secretaría Municipal de Modernización del Gobierno de Catamarca, trabajamos para preservar y difundir el patrimonio periodístico de nuestra provincia a través de la Hemeroteca Digital. Nuestro equipo se dedica a digitalizar, catalogar y poner a disposición del público las colecciones de diarios, periódicos y revistas que forman parte de la historia de Catamarca.`}
+              title="¿Quiénes desarrollamos Hemeroteca Municipal?"
+              description={`En el Nodo Tecnológico de la Secretaría Municipal de Modernización del Gobierno de Catamarca, trabajamos para preservar y difundir el patrimonio periodístico de nuestra provincia a través de la Hemeroteca Municipal. Nuestro equipo se dedica a digitalizar, catalogar y poner a disposición del público las colecciones de diarios, periódicos y revistas que forman parte de la historia de Catamarca.`}
               image="https://www.catamarcaciudad.gob.ar/wp-content/uploads/nodo-tecnologico.jpeg"
               variant="light"
             />
 
             <Divider />
-
           </div>
         </div>
       </main>
