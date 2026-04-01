@@ -7,6 +7,7 @@ interface CarrouselItem {
   nombre: string;
   descripcion?: string;
   link?: string;
+  color_texto?: string | null;
   imagenesConUrl: { directus_files_id: string; url: string }[];
 }
 
@@ -50,10 +51,12 @@ export default function Carrousel() {
   const total = item.imagenesConUrl.length;
   const imageUrl = item.imagenesConUrl[index].url;
 
+  const textColor = item.color_texto || "#1e293b"; // fallback
+
   return (
     <section className="overflow-hidden rounded-[28px] bg-white shadow-2xl">
       {/* Bloque imagen */}
-      <div className="relative overflow-hidden" style={{ height: "480px" }}>
+      <div className="relative overflow-hidden" style={{ height: "460px" }}>
         {/* Imagen con fade */}
         <div
           className="absolute inset-0 transition-opacity duration-500"
@@ -141,29 +144,36 @@ export default function Carrousel() {
       </div>
 
       {/* Card inferior pegada abajo */}
-<div className="bg-gray-100 px-5 py-4 sm:px-6 sm:py-5">
-  <h2 className="text-xl font-bold uppercase leading-tight text-slate-800 sm:text-2xl lg:text-3xl">
-    {item.nombre}
-  </h2>
+      <div className="bg-gray-100 px-5 py-4 sm:px-6 sm:py-5">
+        <h2
+          className="text-xl font-bold uppercase leading-tight sm:text-2xl lg:text-3xl"
+          style={{ color: textColor }}
+        >
+          {item.nombre}
+        </h2>
 
-  {item.descripcion && (
-    <p className="mt-2 text-sm leading-6 text-slate-500">
-      {item.descripcion}
-    </p>
-  )}
+        {item.descripcion && (
+          <p
+            className="mt-2 text-sm leading-6"
+            style={{ color: textColor }}
+          >
+            {item.descripcion}
+          </p>
+        )}
 
-  {item.link && (
-    <a
-      href={item.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-slate-800 hover:gap-3 transition"
-    >
-      Ver más
-      <ChevronRight className="h-4 w-4" />
-    </a>
-  )}
-</div>
+        {item.link && (
+          <a
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold hover:gap-3 transition"
+            style={{ color: textColor }}
+          >
+            Ver más
+            <ChevronRight className="h-4 w-4" />
+          </a>
+        )}
+      </div>
     </section>
   );
 }

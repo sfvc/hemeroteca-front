@@ -20,7 +20,10 @@ export default function TablonNovedades({ compact = false }) {
       const data: NovedadesItem[] | null = await fetchNovedades();
 
       if (data) {
-        const activas: NovedadesItem[] = data.filter((item: NovedadesItem) => item.activo === true);
+        const activas: NovedadesItem[] = data
+          .filter((item: NovedadesItem) => item.activo === true)
+          .slice(0, 6);
+
         setNovedades(activas);
       }
     };
