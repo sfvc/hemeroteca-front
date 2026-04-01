@@ -47,7 +47,7 @@ export default function SeccionesSecundarias() {
         {secondaryNews.map((item) => (
           <article
             key={item.id}
-            className="group overflow-hidden rounded-3xl bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] cursor-pointer"
+            className="group overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] cursor-pointer"
           >
             <div className="relative aspect-4/3 overflow-hidden">
               <img

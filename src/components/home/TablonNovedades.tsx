@@ -33,14 +33,14 @@ export default function TablonNovedades({ compact = false }) {
 
   return (
     <section
-      className={`relative overflow-hidden rounded-[28px] border border-slate-200 bg-[#e2d6c8] ${compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
+      className={`relative overflow-hidden border border-slate-200 bg-[#e2d6c8] ${compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
         }`}
     >
       <div className="absolute inset-0 opacity-10 background-image:[radial-gradient(#ffffff_1px,transparent_1px) background-size:14px_14px]" />
       <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-black/10" />
 
       <div className="relative z-10">
-        <div className="mb-5 inline-flex rounded-2xl bg-white/10 px-4 py-2 backdrop-blur-md shadow-xl ring-1 ring-white/10">
+        <div className="mb-5 inline-flex bg-white/10 px-4 py-2 backdrop-blur-md shadow-xl ring-1 ring-white/10">
           <h3 className=" font-serif text-2xl font-black uppercase text-slate-700">
             Novedades
           </h3>
@@ -58,7 +58,7 @@ export default function TablonNovedades({ compact = false }) {
                 key={note.id}
                 className={`${rotateStyles[index % 4]} group relative transition duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer`}
               >
-                <div className="bg-gray-100 relative min-h-35 rounded-xl p-4 shadow-[0_12px_25px_rgba(15,23,42,0.18)]">
+                <div className="bg-gray-100 relative min-h-35 p-4 shadow-[0_12px_25px_rgba(15,23,42,0.18)]">
 
                   <div
                     className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${pinColors[index % 4]} shadow-md`}

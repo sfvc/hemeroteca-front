@@ -11,7 +11,7 @@ export default function GaleriaHome() {
 
   return (
     <>
-      <section className="group rounded-3xl bg-white p-6 border border-slate-300">
+      <section className="group bg-white p-6 border border-slate-300">
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>

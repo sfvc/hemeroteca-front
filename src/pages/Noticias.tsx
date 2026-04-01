@@ -164,7 +164,7 @@ function HeroNews({ news }: { news: NewNotice }) {
           </p>
         </div>
 
-        <div className="mt-6 overflow-hidden rounded-[28px] border border-slate-200 bg-white">
+        <div className="mt-6 overflow-hidden border border-slate-200 bg-white">
           {news.image && (
             <img
               src={news.image}
@@ -200,7 +200,7 @@ function HeroNews({ news }: { news: NewNotice }) {
               )}
             </div>
 
-            <aside className="space-y-4 rounded-3xl bg-slate-100 p-5">
+            <aside className="space-y-4 bg-slate-100 p-5">
               <div>
                 <p className="text-xs font-bold uppercase text-slate-500">
                   Detalles:
@@ -227,7 +227,7 @@ function HeroNews({ news }: { news: NewNotice }) {
       {/* Noticias adicionales de la derecha */}
 
       <aside className="space-y-5 lg:col-span-4">
-        <div className="rounded-[28px] border-2 border-slate-300 bg-slate-50 p-6 ">
+        <div className="border-2 border-slate-200 bg-slate-50 p-6 ">
           <p className="text-xs font-extrabold uppercase text-orange-600">
             Novedad
           </p>
@@ -241,7 +241,7 @@ function HeroNews({ news }: { news: NewNotice }) {
             y inscribete antes de quedarte sin cupos!
           </p>
         </div>
-        <div className="rounded-[28px] border-2 border-slate-300 bg-slate-50 p-6">
+        <div className="border-2 border-slate-200 bg-slate-50 p-6">
           <p className="text-xs font-extrabold uppercase text-orange-600">
             Novedad
           </p>
@@ -256,7 +256,7 @@ function HeroNews({ news }: { news: NewNotice }) {
             expectativas mientras esperamos el estreno de Avengers Doomsday.
           </p>
         </div>
-        <div className="rounded-[28px] border-2 border-slate-300 bg-slate-50 p-6">
+        <div className="border-2 border-slate-200 bg-slate-50 p-6">
           <p className="text-xs font-extrabold uppercase text-orange-600">
             Novedad
           </p>
@@ -286,7 +286,7 @@ function NewsCard({ news }: { news: NewNotice }) {
   const Icon = news.icon;
 
   return (
-    <article className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-sm">
+    <article className="overflow-hidden border border-slate-50 bg-white shadow-sm">
       <div className={`h-2 w-full ${news.tone}`} />
 
       <div className="p-6 sm:p-8 lg:p-10">
@@ -372,7 +372,7 @@ function NewsCard({ news }: { news: NewNotice }) {
               )}
 
               {news.Datos && news.Datos.length > 0 && (
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                <div className=" border border-slate-200 bg-slate-50 p-5">
                   <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
                     Detalles
                   </h3>

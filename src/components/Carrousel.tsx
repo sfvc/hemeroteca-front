@@ -54,7 +54,7 @@ export default function Carrousel() {
   const textColor = item.color_texto || "#1e293b"; // fallback
 
   return (
-    <section className="overflow-hidden rounded-[28px] bg-white shadow-2xl">
+    <section className="overflow-hidden bg-white shadow-2xl ">
       {/* Bloque imagen */}
       <div className="relative overflow-hidden" style={{ height: "460px" }}>
         {/* Imagen con fade */}
@@ -153,10 +153,7 @@ export default function Carrousel() {
         </h2>
 
         {item.descripcion && (
-          <p
-            className="mt-2 text-sm leading-6"
-            style={{ color: textColor }}
-          >
+          <p className="mt-2 text-sm leading-6" style={{ color: textColor }}>
             {item.descripcion}
           </p>
         )}
