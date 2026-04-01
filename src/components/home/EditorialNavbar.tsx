@@ -266,12 +266,12 @@ export default function EditorialHero() {
           onClick={() => setOpenModal(false)}
         >
           <div
-            className="relative w-full max-w-xl rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8"
+            className="relative w-full max-w-xl border border-slate-200 bg-white p-6 shadow-2xl sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setOpenModal(false)}
-              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-red-50 hover:text-red-600"
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-red-50 hover:text-red-600 cursor-pointer"
               aria-label="Cerrar modal"
             >
               ✕
@@ -345,7 +345,7 @@ export default function EditorialHero() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-orange-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 hover:shadow-lg"
+                  className="w-full rounded-2xl bg-orange-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 hover:shadow-lg cursor-pointer"
                 >
                   Enviar solicitud
                 </button>
