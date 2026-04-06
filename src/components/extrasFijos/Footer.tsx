@@ -4,18 +4,6 @@ import logoMunicipalidad from "/-Isologotipo_Catamarca Capital_blanco.png";
 export default function Footer() {
   return (
     <div className="w-full overflow-hidden">
-      {/* Onda superior invertida */}
-      <svg
-        className="block w-full h-15"
-        viewBox="0 0 1440 120"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,0L60,2C120,4,240,8,360,20C480,32,600,52,720,48C840,44,960,16,1080,10C1200,4,1320,20,1380,28L1440,36L1440,120L0,120Z"
-          className="fill-slate-800"
-        />
-      </svg>
-
       {/* Logo */}
 
       <footer className="w-full bg-slate-800 text-slate-200">

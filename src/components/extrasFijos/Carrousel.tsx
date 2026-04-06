@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { fetchCarrousel } from "../services/koha-service";
+import { fetchCarrousel } from "../../services/koha-service";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarrouselItem {

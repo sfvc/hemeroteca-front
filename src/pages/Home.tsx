@@ -4,7 +4,7 @@ import TablonNovedades from "../components/home/TablonNovedades";
 import GaleriaImagenes from "../components/home/GaleriaImagenes";
 import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
-import Carrousel from "../components/Carrousel";
+import Carrousel from "../components/extrasFijos/Carrousel";
 
 export default function Home() {
   return (
@@ -27,7 +27,11 @@ export default function Home() {
         </section>
 
         <section className="mt-14 space-y-10">
-          <GaleriaImagenes />
+          <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-slate-800 py-10">
+            <div className="px-6 lg:px-10 xl:px-16">
+              <GaleriaImagenes />
+            </div>
+          </div>
           <Reseñas />
           <Ubicaciones />
         </section>

@@ -1,14 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 
-// import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Noticias from "./pages/Noticias";
 import Nosotros from "./pages/Nosotros";
-import Footer from "./components/Footer";
+import Footer from "./components/extrasFijos/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ScrollToTop from "./components/ScrollToTop";
-import RetroTv from "./components/RetroTv";
+import ScrollToTop from "./functions/ScrollToTop";
+import RetroTv from "./components/extrasFijos/RetroTv";
 
 function App() {
   return (

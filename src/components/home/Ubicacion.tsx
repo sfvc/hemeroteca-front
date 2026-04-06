@@ -2,9 +2,9 @@ import { MapPin, Mail, Phone } from "lucide-react";
 
 export default function UbicacionHome() {
   return (
-    <section className="bg-white p-8 border border-slate-200 shadow-md">
+    <section className="bg-white p-8 border border-slate-100 shadow-md">
       <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
+        <p className="text-xs font-bold uppercase tracking-widest text-orange-500">
           Ubicación
         </p>
         <h3 className="font-serif text-3xl font-extrabold text-slate-900 mt-2">

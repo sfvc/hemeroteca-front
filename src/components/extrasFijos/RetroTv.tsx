@@ -1,5 +1,5 @@
 import React from "react";
-import EditorialHero from "../components/home/EditorialNavbar";
+import EditorialHero from "../home/EditorialNavbar";
 
 type RetroTvProps = {
   text?: string;
@@ -13,7 +13,7 @@ export default function RetroTv({
   videoUrl = "https://www.youtube.com/embed/WOchrFs21_M",
 }: RetroTvProps) {
   return (
-    <div className="relative mx-auto w-full max-w-6xl px-4">
+    <div className="relative mx-auto w-full max-w-6xl px-4 mt-3">
       <EditorialHero />
 
       {/* Decoración exterior / ambiente */}
@@ -29,15 +29,15 @@ export default function RetroTv({
         </div>
 
         {/* TV body */}
-        <div className="relative rounded-[34px] border-10 border-stone-600 bg-linear-to-b from-[#bdb5a2] via-[#afa68f] to-[#9c927d] p-5 shadow-[0_24px_70px_rgba(0,0,0,0.28)]">
+        <div className="relative rounded-[34px] border-10 border-stone-600 bg-linear-to-b from-[#bdb5a2] via-[#afa68f] to-[#9c927d] p-5">
           {/* Brillo superior del cuerpo */}
           <div className="pointer-events-none absolute left-8 right-8 top-3 h-8 rounded-full bg-white/10 blur-md" />
 
           <div className="grid gap-5 md:grid-cols-[1fr_170px]">
             {/* Pantalla */}
-            <div className="relative rounded-[30px] border-[6px] border-stone-600 bg-[#e7dfd1] p-4 shadow-[inset_0_2px_8px_rgba(255,255,255,0.3),inset_0_-10px_18px_rgba(0,0,0,0.08)]">
+            <div className="relative rounded-[30px] border-[6px] border-stone-600 bg-[#e7dfd1] p-4">
               <div className="rounded-[22px] border border-stone-300 bg-[#f4efe6] p-3 shadow-inner">
-                <div className="relative aspect-4/3 overflow-hidden rounded-[18px] border border-stone-400 bg-[#d8cfbe] shadow-[inset_0_0_30px_rgba(0,0,0,0.18)]">
+                <div className="relative aspect-4/3 overflow-hidden rounded-[18px] border border-stone-400 bg-[#d8cfbe]">
                   {/* Fondo tenue detrás del video */}
                   <div className="absolute inset-0 bg-linear-to-br from-[#f7f0df] via-[#ddd4c2] to-[#c8bca8]" />
 
@@ -67,7 +67,7 @@ export default function RetroTv({
                   )}
 
                   {/* Glow cálido CRT */}
-                  <div className="pointer-events-none absolute inset-0 z-20 shadow-[inset_0_0_60px_rgba(255,190,100,0.20)]" />
+                  <div className="pointer-events-none absolute inset-0 z-20" />
 
                   {/* Scanlines */}
                   <div className="pointer-events-none absolute inset-0 z-30 opacity-25 bg-[linear-gradient(to_bottom,rgba(20,20,20,0.16)_1px,transparent_1px)] bg-size[length:100%_3px]" />
@@ -107,11 +107,11 @@ export default function RetroTv({
             </div>
 
             {/* Panel lateral */}
-            <div className="flex flex-col justify-between rounded-[22px] border-[6px] border-stone-600 bg-linear-to-b from-[#c1b9a5] to-[#a79d88] p-3 shadow-[inset_0_2px_6px_rgba(255,255,255,0.18),inset_0_-8px_16px_rgba(0,0,0,0.10)]">
+            <div className="flex flex-col justify-between rounded-[22px] border-[6px] border-stone-600 bg-linear-to-b from-[#c1b9a5] to-[#a79d88] p-3">
               <div className="rounded-2xl border-2 border-stone-500 bg-[#d8cebb] p-4 shadow-inner">
                 <div className="space-y-4">
                   <div className="flex justify-center">
-                    <div className="relative flex h-11 w-11 items-center justify-center rounded-full border-4 border-stone-400 bg-[#f5f1ea] shadow-[inset_0_2px_5px_rgba(255,255,255,0.5),inset_0_-3px_6px_rgba(0,0,0,0.12)]">
+                    <div className="relative flex h-11 w-11 items-center justify-center rounded-full border-4 border-stone-400 bg-[#f5f1ea]">
                       <div className="h-1.5 w-1.5 rounded-full bg-stone-500" />
                       <div className="absolute top-1 h-3 w-0.5 rounded-full bg-stone-500" />
                     </div>
@@ -120,14 +120,14 @@ export default function RetroTv({
                   <div className="mx-auto h-0.5 w-16 bg-stone-400/70" />
 
                   <div className="flex justify-center">
-                    <div className="relative flex h-11 w-11 items-center justify-center rounded-full border-4 border-stone-400 bg-[#f5f1ea] shadow-[inset_0_2px_5px_rgba(255,255,255,0.5),inset_0_-3px_6px_rgba(0,0,0,0.12)]">
+                    <div className="relative flex h-11 w-11 items-center justify-center rounded-full border-4 border-stone-400 bg-[#f5f1ea]">
                       <div className="h-1.5 w-1.5 rounded-full bg-stone-500" />
                       <div className="absolute right-1 h-0.5 w-3 rounded-full bg-stone-500" />
                     </div>
                   </div>
 
                   <div className="mt-2 flex justify-center">
-                    <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-4 border-stone-400 bg-[#f5f1ea] shadow-[inset_0_2px_5px_rgba(255,255,255,0.5),inset_0_-3px_6px_rgba(0,0,0,0.12)]">
+                    <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-4 border-stone-400 bg-[#f5f1ea]">
                       <div className="absolute h-6 w-1 rotate-45 rounded-full bg-stone-500" />
                       <div className="absolute h-6 w-1 -rotate-45 rounded-full bg-stone-400 opacity-50" />
                     </div>
