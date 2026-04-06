@@ -1,6 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchCarrousel } from "../../services/koha-service";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { fetchEncabezado } from "../../services/koha-service";
+
+type Encabezado = {
+  nombre: string;
+  temaDelMes?: string;
+  lugar?: string;
+  fechaFantasia?: string;
+};
 
 interface CarrouselItem {
   id: number;
@@ -15,6 +23,16 @@ export default function Carrousel() {
   const [item, setItem] = useState<CarrouselItem | null>(null);
   const [index, setIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await fetchEncabezado();
+      if (data) setEncabezado(data);
+    };
+
+    loadData();
+  }, []);
 
   useEffect(() => {
     const load = async () => {
@@ -54,7 +72,13 @@ export default function Carrousel() {
   const textColor = item.color_texto || "#1e293b"; // fallback
 
   return (
-    <section className="overflow-hidden bg-white shadow-2xl ">
+    <section className="overflow-hidden bg-white">
+      {/* <div className="flex justify-center items-center mb-5">
+        <p className="text-2xl font-bold uppercase tracking-widest text-slate-700 text-center font-serif">
+          {encabezado?.temaDelMes || "Noticias"}
+        </p>
+      </div> */}
+
       {/* Bloque imagen */}
       <div className="relative overflow-hidden" style={{ height: "460px" }}>
         {/* Imagen con fade */}

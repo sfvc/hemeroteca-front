@@ -11,7 +11,7 @@ export default function GaleriaHome() {
 
   return (
     <>
-      <section className="group bg-slate-800 p-6 ">
+      <section className="group bg-white border border-gray-100 p-6 ">
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -21,7 +21,7 @@ export default function GaleriaHome() {
 
             {/* Si quiere ver mas imagenes en la fototeca tendra q hacer clik y loguearse */}
 
-            <h3 className="font-serif text-2xl font-black text-slate-100">
+            <h3 className="font-serif text-2xl font-black text-slate-800">
               Galeria de Imagenes
             </h3>
           </div>
@@ -72,7 +72,7 @@ export default function GaleriaHome() {
           )}
         </div>
 
-        <p className="mt-5 max-w-2xl text-sm leading-6 text-slate-300">
+        <p className="mt-5 max-w-2xl text-sm leading-6 text-slate-600">
           Un recorrido visual por nuestras instalaciones, archivos históricos y
           espacios de consulta.
         </p>

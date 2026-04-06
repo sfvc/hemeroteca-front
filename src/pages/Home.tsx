@@ -27,11 +27,7 @@ export default function Home() {
         </section>
 
         <section className="mt-14 space-y-10">
-          <div className="w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-slate-800 py-10">
-            <div className="px-6 lg:px-10 xl:px-16">
-              <GaleriaImagenes />
-            </div>
-          </div>
+          <GaleriaImagenes />
           <Reseñas />
           <Ubicaciones />
         </section>
