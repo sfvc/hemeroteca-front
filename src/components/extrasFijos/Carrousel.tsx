@@ -1,14 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchCarrousel } from "../../services/koha-service";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { fetchEncabezado } from "../../services/koha-service";
+// import { fetchEncabezado } from "../../services/koha-service";
 
-type Encabezado = {
-  nombre: string;
-  temaDelMes?: string;
-  lugar?: string;
-  fechaFantasia?: string;
-};
+// type Encabezado = {
+//   nombre: string;
+//   temaDelMes?: string;
+//   lugar?: string;
+//   fechaFantasia?: string;
+// };
 
 interface CarrouselItem {
   id: number;
@@ -23,16 +23,16 @@ export default function Carrousel() {
   const [item, setItem] = useState<CarrouselItem | null>(null);
   const [index, setIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
+  // const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
 
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchEncabezado();
-      if (data) setEncabezado(data);
-    };
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     const data = await fetchEncabezado();
+  //     if (data) setEncabezado(data);
+  //   };
 
-    loadData();
-  }, []);
+  //   loadData();
+  // }, []);
 
   useEffect(() => {
     const load = async () => {
