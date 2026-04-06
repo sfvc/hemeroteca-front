@@ -129,13 +129,15 @@ export default function EditorialHero() {
               </button>
             )}
 
+
+
             <button
               onClick={() => setOpenModal(true)}
               style={{
                 backgroundColor: botonDerecho?.color_fondo || "#334155",
                 color: botonDerecho?.color_texto || "#ffffff",
               }}
-              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-[1px] hover:opacity-90 cursor-pointer"
+              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-px hover:opacity-90 cursor-pointer"
             >
               Solicitar Turno
             </button>

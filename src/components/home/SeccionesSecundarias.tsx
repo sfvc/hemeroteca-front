@@ -50,7 +50,7 @@ export default function SeccionesSecundarias() {
           <article
             key={item.id}
             onClick={() => navigate(item.url)}
-            className="group overflow-hidden bg-white border border-slate-300 cursor-pointer"
+            className="group overflow-hidden bg-white border border-slate-200 transition duration-300 hover:scale-105 cursor-pointer"
           >
             <div className="relative aspect-4/3 overflow-hidden">
               <img

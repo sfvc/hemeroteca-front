@@ -39,7 +39,7 @@ export default function ResenasHome() {
 
   return (
     <>
-      <section className="bg-white p-6 border border-slate-300">
+      <section className="bg-white p-6 border border-slate-200">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400">

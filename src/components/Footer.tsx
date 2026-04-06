@@ -1,5 +1,5 @@
 import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
-import logoMunicipalidad from "/-Isologotipo_Catamarca Capital.png";
+import logoMunicipalidad from "/-Isologotipo_Catamarca Capital_blanco.png";
 
 export default function Footer() {
   return (
@@ -12,13 +12,13 @@ export default function Footer() {
       >
         <path
           d="M0,0L60,2C120,4,240,8,360,20C480,32,600,52,720,48C840,44,960,16,1080,10C1200,4,1320,20,1380,28L1440,36L1440,120L0,120Z"
-          className="fill-slate-100"
+          className="fill-slate-800"
         />
       </svg>
 
       {/* Logo */}
 
-      <footer className="w-full bg-slate-100 text-slate-200">
+      <footer className="w-full bg-slate-800 text-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
             <div className="flex items-center gap-4">
@@ -32,20 +32,20 @@ export default function Footer() {
             {/* UBICACION */}
 
             <div>
-              <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-slate-800">
+              <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-slate-100">
                 Ubicación
               </h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li>Palacio Municipal · La Rioja 631</li>
+                <li>Pasaje Narvaez 790, Catamarca Capital</li>
                 <li>SFV de Catamarca · Catamarca</li>
-                <li>Argentina · CP K4700EMV</li>
+                <li>Argentina · CP K4700</li>
               </ul>
             </div>
 
             {/* INFO DE CONTACTO */}
 
             <div>
-              <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-slate-800">
+              <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-slate-100">
                 Contacto
               </h4>
               <ul className="space-y-2 text-sm text-slate-400">
@@ -57,7 +57,7 @@ export default function Footer() {
             {/* REDES SOCIALES */}
 
             <div>
-              <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-slate-800">
+              <h4 className="font-semibold text-sm uppercase tracking-wider mb-4 text-slate-100">
                 Seguinos!
               </h4>
 
@@ -75,7 +75,7 @@ export default function Footer() {
                   href="https://x.com/MuniSFVC"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-800 hover:scale-110 transition"
+                  className="text-slate-300 hover:scale-110 transition"
                 >
                   <Twitter size={32} />
                 </a>

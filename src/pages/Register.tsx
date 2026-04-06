@@ -19,7 +19,6 @@ export default function RegisterHemeroteca() {
             <span className="text-xs tracking-[0.3em] font-bold uppercase">
               Hemeroteca Municipal
             </span>
-            <span className="text-sm text-gray-500">| Catamarca Capital</span>
           </div>
         </div>
       </header>
@@ -27,11 +26,22 @@ export default function RegisterHemeroteca() {
       {/* MAIN */}
       <main className="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-8">
         {/* HERO */}
-        <div className="rounded-3xl p-8 bg-[url('/hemerotecaVintage.png')] bg-cover bg-center relative overflow-hidden">
+        <div className="hidden md:block rounded-3xl bg-[url('/hemerotecaVintage.png')] bg-cover bg-center relative overflow-hidden">
           {/* BOTON VOLVER */}
           <button
             onClick={() => navigate("/")}
             className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-orange-600 px-3 py-2 rounded-full transition"
+          >
+            <ArrowLeft size={18} />
+            <span className="text-sm font-semibold">Volver</span>
+          </button>
+        </div>
+
+        {/* BOTON VOLVER MOBILE */}
+        <div className="md:hidden">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 bg-white border border-gray-200 text-orange-600 px-4 py-2 rounded-full shadow-sm"
           >
             <ArrowLeft size={18} />
             <span className="text-sm font-semibold">Volver</span>
