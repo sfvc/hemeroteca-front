@@ -5,34 +5,36 @@ const secondaryNews = [
   {
     id: 1,
     category: "Tutorial",
-    title: "Detras de La  Foto",
-    description:
-      "Aqui va uno de los 2 videos con fondo de tele viejo. (No hara falta loguearse)",
+    title: "Detras de La Foto",
+    description: "Aqui va uno de los 2 videos",
     image: "/hemerotecaVintage.png",
+    url: "/detras-foto",
   },
   {
     id: 2,
     category: "Tutorial",
     title: "Practicas de Conservacion",
-    description:
-      "Aqui va uno de los 2 videos con fondo de tele viejo. (No hara falta loguearse)",
+    description: "Aqui va el segundo video",
     image: "/hemerotecaVintage.png",
+    url: "/practicas-conservacion",
   },
   {
     id: 3,
     category: "Investigacion",
     title: "Nuestras Colecciones",
     description:
-      "Aqui puedes ver todas nuestras colecciones de Libros, revistas, diarios y mas! Ingresa a la AGM (Archivo General Municipal) a investigar, ver y descargar cualquier contenido que quieras!. (Hara falta Loguearse)",
+      "Aqui puedes ver nuestras colecciones destacadas y su historia",
     image: "/hemerotecaVintage.png",
+    url: "/login",
   },
   {
     id: 4,
     category: "Investigacion",
     title: "AGM: Archivo general Municipal",
     description:
-      "Para los adictos a saber cada detalle de nuestra historia y cultura. Investiga y recorre la biblioteca municipal leyendo libros, periodicos, aprendiendo sobre personajes y mas!. (Hara falta Loguearse)",
+      "Conoce el Archivo General Municipal, su historia, importancia y como acceder a el",
     image: "/hemerotecaVintage.png",
+    url: "/login",
   },
 ];
 
@@ -47,7 +49,8 @@ export default function SeccionesSecundarias() {
         {secondaryNews.map((item) => (
           <article
             key={item.id}
-            className="group overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] cursor-pointer"
+            onClick={() => navigate(item.url)}
+            className="group overflow-hidden bg-white border border-slate-300 cursor-pointer"
           >
             <div className="relative aspect-4/3 overflow-hidden">
               <img
@@ -71,7 +74,7 @@ export default function SeccionesSecundarias() {
               </p>
 
               <button
-                onClick={() => navigate("/login")}
+                onClick={() => navigate(item.url)}
                 className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3 cursor-pointer"
               >
                 Ver mas

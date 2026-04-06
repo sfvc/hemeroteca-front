@@ -32,7 +32,7 @@ export default function TablonNovedades({ compact = false }) {
 
   return (
     <section
-      className={`relative overflow-hidden border border-slate-200 bg-[#f0ebe9] ${
+      className={`relative overflow-hidden border border-slate-200 bg-[#f0ebe9] mt-5 ${
         compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
       }`}
     >

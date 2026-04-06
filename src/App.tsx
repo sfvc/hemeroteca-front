@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ScrollToTop from "./components/ScrollToTop";
+import RetroTv from "./components/RetroTv";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/practicas-conservacion" element={<RetroTv />} />
+          <Route path="/detras-foto" element={<RetroTv />} />
         </Routes>
       </main>
       <Footer />
