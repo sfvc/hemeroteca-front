@@ -1,85 +1,145 @@
+import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import KohaApi from "../../api/kohaApi";
+import { fecthSeccion_1, fecthSeccion_2, fecthSeccion_3, fecthSeccion_4 } from "../../services/koha-service";
 
-const secondaryNews = [
-  {
-    id: 1,
-    category: "Tutorial",
-    title: "Detras de La  Foto",
-    description:
-      "Aqui va uno de los 2 videos con fondo de tele viejo. (No hara falta loguearse)",
-    image: "/hemerotecaVintage.png",
-  },
-  {
-    id: 2,
-    category: "Tutorial",
-    title: "Practicas de Conservacion",
-    description:
-      "Aqui va uno de los 2 videos con fondo de tele viejo. (No hara falta loguearse)",
-    image: "/hemerotecaVintage.png",
-  },
-  {
-    id: 3,
-    category: "Investigacion",
-    title: "Nuestras Colecciones",
-    description:
-      "Aqui puedes ver todas nuestras colecciones de Libros, revistas, diarios y mas! Ingresa a la AGM (Archivo General Municipal) a investigar, ver y descargar cualquier contenido que quieras!. (Hara falta Loguearse)",
-    image: "/hemerotecaVintage.png",
-  },
-  {
-    id: 4,
-    category: "Investigacion",
-    title: "AGM: Archivo general Municipal",
-    description:
-      "Para los adictos a saber cada detalle de nuestra historia y cultura. Investiga y recorre la biblioteca municipal leyendo libros, periodicos, aprendiendo sobre personajes y mas!. (Hara falta Loguearse)",
-    image: "/hemerotecaVintage.png",
-  },
-];
+interface Seccion {
+  id: number;
+  titulo: string;
+  imagen: string;
+  descripcion: string;
+  link?: string;
+}
+
+const CATEGORIAS: Record<number, string> = {
+  0: "Colecciones",
+  1: "Informativo",
+  2: "Informativo",
+  3: "Investigación",
+};
+
+const SkeletonCard = () => (
+  <div className="overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] animate-pulse">
+    <div className="aspect-4/3 bg-slate-200" />
+    <div className="p-5 space-y-3">
+      <div className="h-4 bg-slate-200 rounded w-1/3" />
+      <div className="h-5 bg-slate-200 rounded w-3/4" />
+      <div className="h-3 bg-slate-200 rounded w-full" />
+      <div className="h-3 bg-slate-200 rounded w-5/6" />
+    </div>
+  </div>
+);
 
 export default function SeccionesSecundarias() {
-  const navigate = useNavigate();
+  const [secciones, setSecciones] = useState<(Seccion | null)[]>([
+    null,
+    null,
+    null,
+    null,
+  ]);
+  const [loading, setLoading] = useState(true);
+
+  const apiUrl = KohaApi.defaults.baseURL || "";
+
+  useEffect(() => {
+    const loadSecciones = async () => {
+      try {
+        const [s1, s2, s3, s4] = await Promise.all([
+          fecthSeccion_1(),
+          fecthSeccion_2(),
+          fecthSeccion_3(),
+          fecthSeccion_4(),
+        ]);
+
+        setSecciones([
+          s1?.[0] ?? null,
+          s2?.[0] ?? null,
+          s3?.[0] ?? null,
+          s4?.[0] ?? null,
+        ]);
+      } catch (error) {
+        console.error("Error cargando secciones:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSecciones();
+  }, []);
+
+  const handleNavegar = (link?: string) => {
+    if (!link) return;
+    // Si es una URL externa, abrir en nueva pestaña
+    if (link.startsWith("http://") || link.startsWith("https://")) {
+      window.open(link, "_blank", "noopener noreferrer");
+    } else {
+      // Ruta interna
+      window.location.href = link;
+    }
+  };
 
   return (
     <section>
-      <div className="mb-5 border-b border-slate-300 pb-3"></div>
+      <div className="mb-5 border-b border-slate-300 pb-3" />
 
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
-        {secondaryNews.map((item) => (
-          <article
-            key={item.id}
-            className="group overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] cursor-pointer"
-          >
-            <div className="relative aspect-4/3 overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-              />
+        {loading
+          ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+          : secciones.map((item, index) => {
+              if (!item) return null;
 
-              <div className="absolute left-0 top-0 m-5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-700 backdrop-blur">
-                {item.category}
-              </div>
-            </div>
+              const imagenUrl = item.imagen
+                ? `${apiUrl}/assets/${item.imagen}`
+                : null;
 
-            <div className="p-5">
-              <h4 className="font-serif text-xl font-black text-slate-900">
-                {item.title}
-              </h4>
+              const categoria = CATEGORIAS[index] ?? "Sección";
 
-              <p className="mt-3 text-sm leading-6 text-slate-600">
-                {item.description}
-              </p>
+              return (
+                <article
+                  key={item.id}
+                  onClick={() => handleNavegar(item.link)}
+                  className="group overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] cursor-pointer"
+                >
+                  {/* Imagen */}
+                  <div className="relative aspect-4/3 overflow-hidden">
+                    {imagenUrl ? (
+                      <img
+                        src={imagenUrl}
+                        alt={item.titulo}
+                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm">
+                        Sin imagen
+                      </div>
+                    )}
 
-              <button
-                onClick={() => navigate("/login")}
-                className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition hover:gap-3 cursor-pointer"
-              >
-                Ver mas
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-          </article>
-        ))}
+                    {/* Badge categoría */}
+                    <div className="absolute left-0 top-0 m-5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-700 backdrop-blur">
+                      {categoria}
+                    </div>
+                  </div>
+
+                  {/* Contenido */}
+                  <div className="p-5">
+                    <h4 className="font-serif text-xl font-black text-slate-900">
+                      {item.titulo}
+                    </h4>
+
+                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                      {item.descripcion}
+                    </p>
+
+                    {item.link && (
+                      <span className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3">
+                        Ver más
+                        <ChevronRight className="h-5 w-5" />
+                      </span>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
       </div>
     </section>
   );

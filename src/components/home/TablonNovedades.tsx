@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CalendarDays, Flag, Music2, Ticket } from "lucide-react";
+import { CalendarDays, Flag, Music2, Ticket, Bell, Megaphone, Newspaper, Sparkles, Star, AlertCircle } from "lucide-react";
 import { fetchNovedades } from "../../services/koha-service";
 
 interface NovedadesItem {
@@ -10,7 +10,18 @@ interface NovedadesItem {
   activo?: boolean;
 }
 
-const iconMap = [Music2, Flag, Ticket, CalendarDays];
+const iconMap = [
+  Music2,
+  Flag,
+  Ticket,
+  CalendarDays,
+  Bell,
+  Megaphone,
+  Newspaper,
+  Sparkles,
+  Star,
+  AlertCircle,
+];
 
 export default function TablonNovedades({ compact = false }) {
   const [novedades, setNovedades] = useState<NovedadesItem[]>([]);
@@ -20,9 +31,9 @@ export default function TablonNovedades({ compact = false }) {
       const data: NovedadesItem[] | null = await fetchNovedades();
 
       if (data) {
-        const activas: NovedadesItem[] = data.filter(
-          (item: NovedadesItem) => item.activo === true,
-        );
+        const activas: NovedadesItem[] = data
+          .filter((item: NovedadesItem) => item.activo === true)
+          .slice(0, 6);
         setNovedades(activas);
       }
     };
@@ -32,9 +43,8 @@ export default function TablonNovedades({ compact = false }) {
 
   return (
     <section
-      className={`relative overflow-hidden border border-slate-200 bg-[#f0ebe9] ${
-        compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
-      }`}
+      className={`relative overflow-hidden border border-slate-200 bg-[#f0ebe9] ${compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
+        }`}
     >
       <div className="absolute inset-0 opacity-10 background-image:[radial-gradient(#ffffff_1px,transparent_1px) background-size:14px_14px]" />
       <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-black/10" />
@@ -50,12 +60,13 @@ export default function TablonNovedades({ compact = false }) {
           {novedades.map((note, index) => {
             const Icon = iconMap[index % iconMap.length];
 
-            // const rotateStyles = ["-rotate-2", "rotate-1", "-rotate-1", "rotate-2"];
             const pinColors = [
               "bg-red-600",
-              "bg-cyan-600",
-              "bg-orange-500",
+              "bg-blue-600",
               "bg-green-600",
+              "bg-orange-500",
+              "bg-purple-600",
+              "bg-yellow-500",
             ];
 
             return (
@@ -63,9 +74,9 @@ export default function TablonNovedades({ compact = false }) {
                 key={note.id}
                 className={`group relative transition duration-300 hover:rotate-0 hover:scale-[1.02] cursor-pointer`}
               >
-                <div className="bg-gray-100 relative min-h-35 p-4 shadow-[0_12px_25px_rgba(15,23,42,0.18)]">
+                <div className="bg-gray-100 relative min-h-30 p-4 shadow-[0_12px_25px_rgba(15,23,42,0.18)]">
                   <div
-                    className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${pinColors[index % 4]} shadow-md`}
+                    className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${pinColors[index % pinColors.length]} shadow-md`}
                   />
 
                   <div className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-[40%] rounded-full bg-white/75" />

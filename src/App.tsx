@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ScrollToTop from "./components/ScrollToTop";
+import Equipo from "./pages/Equipo";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/equipo" element={<Equipo />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

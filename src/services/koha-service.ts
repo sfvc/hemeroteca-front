@@ -2,7 +2,10 @@ import KohaApi from "../api/kohaApi";
 
 export const fetchEncabezado = async () => {
   try {
-    const response = await KohaApi.get("/items/encabezado");
+    const response = await KohaApi.get(
+      "/items/encabezado?filter[activo][_eq]=true"
+    );
+
     return response.data.data[0];
   } catch (error) {
     console.error("Error fetching encabezado:", error);
@@ -62,6 +65,56 @@ export const fetchBotonDerecho = async () => {
     return response.data.data;
   } catch (error) {
     console.error("Error fetching boton:", error);
+    return null;
+  }
+};
+
+export const fetchEquipo = async () => {
+  try {
+    const response = await KohaApi.get("/items/equipo");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching equipo:", error);
+    return null;
+  }
+};
+
+export const fecthSeccion_1 = async () => {
+  try {
+    const response = await KohaApi.get("/items/seccion_1");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching seccion:", error);
+    return null;
+  }
+};
+
+export const fecthSeccion_2 = async () => {
+  try {
+    const response = await KohaApi.get("/items/seccion_2");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching seccion:", error);
+    return null;
+  }
+};
+
+export const fecthSeccion_3 = async () => {
+  try {
+    const response = await KohaApi.get("/items/seccion_3");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching seccion:", error);
+    return null;
+  }
+};
+
+export const fecthSeccion_4 = async () => {
+  try {
+    const response = await KohaApi.get("/items/seccion_4");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching seccion:", error);
     return null;
   }
 };
