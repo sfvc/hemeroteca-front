@@ -91,7 +91,7 @@ export default function Footer() {
 
           {/* RELLENO DE LA MUNI */}
 
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-800/70">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
             <p>© 2026 Municipalidad de Catamarca Capital</p>
             <p>Secretaría de Cultura</p>
             <p>Programa Municipal Hemeroteca Juvenil v1.0</p>

@@ -26,11 +26,11 @@ export default function RegisterHemeroteca() {
       {/* MAIN */}
       <main className="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-8">
         {/* HERO */}
-        <div className="hidden md:block rounded-3xl bg-[url('/hemerotecaVintage.png')] bg-cover bg-center relative overflow-hidden">
+        <div className="hidden md:block rounded-3xl bg-[url('/HemerotecaCyan.png')] bg-cover bg-center relative overflow-hidden">
           {/* BOTON VOLVER */}
           <button
             onClick={() => navigate("/")}
-            className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-orange-600 px-3 py-2 rounded-full transition"
+            className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-cyan-700 px-3 py-2 rounded-full transition"
           >
             <ArrowLeft size={18} />
             <span className="text-sm font-semibold">Volver</span>
@@ -41,7 +41,7 @@ export default function RegisterHemeroteca() {
         <div className="md:hidden">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 bg-white border border-gray-200 text-orange-600 px-4 py-2 rounded-full shadow-sm"
+            className="flex items-center gap-2 bg-white border border-gray-200 text-cyan-700 px-4 py-2 rounded-full shadow-sm"
           >
             <ArrowLeft size={18} />
             <span className="text-sm font-semibold">Volver</span>
@@ -50,7 +50,7 @@ export default function RegisterHemeroteca() {
 
         {/* REGISTER CARD */}
         <div className="bg-white/90 backdrop-blur rounded-3xl p-8 border border-gray-200 flex flex-col justify-center">
-          <p className="text-orange-500 text-xs tracking-[0.25em] font-bold uppercase mb-2">
+          <p className="text-cyan-700 text-xs tracking-[0.25em] font-bold uppercase mb-2">
             Registro
           </p>
 
@@ -70,7 +70,7 @@ export default function RegisterHemeroteca() {
               <input
                 type="text"
                 placeholder="usuario o correo@ejemplo.com"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-600/20"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-700/20"
               />
             </div>
 
@@ -81,7 +81,7 @@ export default function RegisterHemeroteca() {
               <input
                 type="password"
                 placeholder="********"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-600/20"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-700/20"
               />
             </div>
 
@@ -92,12 +92,12 @@ export default function RegisterHemeroteca() {
               <input
                 type="password"
                 placeholder="********"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-orange-600/20"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-700/20"
               />
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
-              <input type="checkbox" className="accent-orange-600" />
+              <input type="checkbox" className="accent-cyan-700" />
               Acepto los términos y condiciones
             </div>
 
@@ -105,7 +105,7 @@ export default function RegisterHemeroteca() {
 
             <button
               type="submit"
-              className="mt-4 bg-orange-600 text-white py-3 rounded-full font-bold hover:bg-orange-700 transition"
+              className="mt-4 bg-cyan-700 text-white py-3 rounded-full font-bold hover:bg-cyan-500 transition"
             >
               Registrarse
             </button>
@@ -115,7 +115,7 @@ export default function RegisterHemeroteca() {
             ¿Ya tenes cuenta?
             <Link
               to="/login"
-              className="text-orange-600 font-semibold hover:underline"
+              className="text-cyan-700 font-semibold hover:underline"
             >
               Iniciar sesión
             </Link>

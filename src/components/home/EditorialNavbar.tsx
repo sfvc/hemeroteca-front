@@ -67,9 +67,10 @@ export default function EditorialHero() {
   };
 
   const navClass = (route: string) =>
-    `transition ${isActive(route)
-      ? "text-orange-600 font-bold"
-      : "text-slate-700 hover:text-slate-950"
+    `transition ${
+      isActive(route)
+        ? "text-orange-600 font-bold"
+        : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -146,8 +147,7 @@ export default function EditorialHero() {
                 <button
                   onClick={() => setOpenModal(true)}
                   style={{
-                    backgroundColor:
-                      botonDerecho?.color_fondo || "#334155",
+                    backgroundColor: botonDerecho?.color_fondo || "#334155",
                     color: botonDerecho?.color_texto || "#ffffff",
                   }}
                   className="cursor-pointer flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:opacity-90"
@@ -158,8 +158,7 @@ export default function EditorialHero() {
                 {botonDerecho && (
                   <button
                     onClick={() =>
-                      botonDerecho.activo &&
-                      handleNavigation(botonDerecho.link)
+                      botonDerecho.activo && handleNavigation(botonDerecho.link)
                     }
                     disabled={!botonDerecho.activo}
                     style={getButtonStyle(botonDerecho)}
@@ -252,7 +251,7 @@ export default function EditorialHero() {
             {/* BOTON CERRAR */}
             <button
               onClick={() => setOpenModal(false)}
-              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-red-50 hover:text-red-600 cursor-pointer sm:right-6 sm:top-6"
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white cursor-pointer sm:right-6 sm:top-6"
               aria-label="Cerrar modal"
             >
               ✕
@@ -260,18 +259,18 @@ export default function EditorialHero() {
 
             {/* HEADER */}
             <div className="mb-6 border-b border-slate-200 pb-4">
-              <h2 className="cursor-pointermb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
+              <h2 className="cursor-pointermb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl mb-3">
                 Solicitar Turno Presencial
               </h2>
 
-              <div className="flex items-start gap-3 rounded-2xl border border-orange-100 bg-orange-50/70 p-4 text-sm text-slate-700">
+              <div className="flex items-start gap-3 rounded-2xl border border-cyan-100 bg-cyan-50/70 p-4 text-sm text-slate-700">
                 <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-                  <Info className="h-5 w-5 text-orange-500" />
+                  <Info className="h-5 w-5 text-cyan-700" />
                 </div>
                 <p className="leading-relaxed">
                   Este formulario es para solicitar un turno presencial en la
-                  hemeroteca. Podrás asistir a las oficinas en la fecha seleccionada
-                  y retirar los libros previamente solicitados.
+                  hemeroteca. Podrás asistir a las oficinas en la fecha
+                  seleccionada y retirar los libros previamente solicitados.
                 </p>
               </div>
             </div>
@@ -300,8 +299,8 @@ export default function EditorialHero() {
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                   />
                   <p className="mt-2 text-xs text-slate-500">
-                    Turnos de atención de 8 a 12:30 y de 15 a 18:30 hs, de lunes a
-                    viernes.
+                    Turnos de atención de 8 a 12:30 y de 15 a 18:30 hs, de lunes
+                    a viernes.
                   </p>
                 </div>
               </div>
@@ -352,7 +351,7 @@ export default function EditorialHero() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-orange-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 hover:shadow-lg cursor-pointer"
+                  className="w-full rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-cyan-600 hover:shadow-lg cursor-pointer"
                 >
                   Enviar solicitud
                 </button>

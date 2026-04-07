@@ -6,7 +6,7 @@ import Nosotros from "./pages/Nosotros";
 import Footer from "./components/extrasFijos/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ScrollToTop from "./functions/ScrollToTop";
+import ScrollToTop from "./util/ScrollToTop";
 import Equipo from "./pages/Equipo";
 import RetroTv from "./components/extrasFijos/RetroTv";
 import VideoPage from "./pages/Video";

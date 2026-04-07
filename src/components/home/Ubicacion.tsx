@@ -4,7 +4,7 @@ export default function UbicacionHome() {
   return (
     <section className="bg-white p-8 border border-slate-100 shadow-md">
       <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-widest text-orange-500">
+        <p className="text-xs font-bold uppercase tracking-widest text-cyan-700">
           Ubicación
         </p>
         <h3 className="font-serif text-3xl font-extrabold text-slate-900 mt-2">
@@ -52,7 +52,7 @@ export default function UbicacionHome() {
           <a
             href="https://www.google.com/maps/dir/?api=1&destination=-28.469759239696472,-65.774652239962"
             target="_blank"
-            className="mt-6 inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow hover:bg-slate-800 transition"
+            className="mt-6 inline-flex items-center justify-center rounded-xl bg-cyan-700 px-6 py-3 text-sm font-semibold text-white shadow hover:bg-cyan-500 transition"
           >
             Cómo llegar
           </a>

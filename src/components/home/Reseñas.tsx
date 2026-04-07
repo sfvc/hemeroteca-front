@@ -42,7 +42,7 @@ export default function ResenasHome() {
       <section className="bg-white p-6 border border-slate-100 shadow-md">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-700">
               Reseñas
             </p>
             <h3 className="font-serif text-2xl font-black text-slate-900">

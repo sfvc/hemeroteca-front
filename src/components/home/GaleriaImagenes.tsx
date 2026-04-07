@@ -15,7 +15,7 @@ export default function GaleriaHome() {
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500 mb-1">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-700 mb-1">
               Ilustracion
             </p>
 
