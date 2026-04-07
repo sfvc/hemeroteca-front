@@ -1,21 +1,21 @@
-// import React from "react";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginHemeroteca() {
   const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-white text-[#0b1328]">
       {/* HEADER */}
-      <header className="max-w-6xl mx-auto px-6 pt-6 pb-4 border-b border-gray-300 flex items-center justify-between">
+      <header className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-4 border-b border-gray-300 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img
             src={logoMunicipalidad}
             alt="Catamarca Capital"
-            className="h-10 sm:h-10 object-contain"
+            className="h-10 object-contain"
           />
-          <div className="flex items-center gap-3 text-[#1f3554]">
+           <div className="flex items-center gap-3 text-[#1f3554]">
             <span className="text-xs tracking-[0.3em] font-bold uppercase">
               Hemeroteca Municipal
             </span>
@@ -24,9 +24,9 @@ export default function LoginHemeroteca() {
       </header>
 
       {/* MAIN */}
-      <main className="max-w-6xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {/* HERO */}
-        <div className="rounded-3xl p-8 bg-[url('/hemerotecaVintage.png')] bg-cover bg-center relative overflow-hidden">
+        <div className="hidden md:block rounded-3xl bg-[url('/hemerotecaVintage.png')] bg-cover bg-center relative overflow-hidden">
           {/* BOTON VOLVER */}
           <button
             onClick={() => navigate("/")}
@@ -37,18 +37,29 @@ export default function LoginHemeroteca() {
           </button>
         </div>
 
+        {/* BOTON VOLVER MOBILE */}
+        <div className="md:hidden mb-1">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 bg-white border border-gray-200 text-orange-600 px-4 py-2 rounded-full shadow-sm"
+          >
+            <ArrowLeft size={18} />
+            <span className="text-sm font-semibold">Volver</span>
+          </button>
+        </div>
+
         {/* LOGIN CARD */}
-        <div className="bg-white/90 backdrop-blur rounded-3xl p-8 border border-gray-200 flex flex-col justify-center">
+        <div className="bg-white/90 backdrop-blur rounded-3xl p-6 sm:p-8 border border-gray-200 flex flex-col justify-center">
           <p className="text-orange-500 text-xs tracking-[0.25em] font-bold uppercase mb-2">
             Bienvenido
           </p>
 
-          <h2 className="font-serif text-4xl font-bold uppercase">
+          <h2 className="font-serif text-2xl sm:text-4xl font-bold uppercase leading-tight">
             HEMEROTECA MUNICIPAL
           </h2>
 
           <p className="text-gray-500 mt-3 mb-6">
-            Ingresa tus credenciales para ponder acceder a la informacion de la
+            Ingresa tus credenciales para poder acceder a la información de la
             AGM.
           </p>
 
@@ -75,7 +86,7 @@ export default function LoginHemeroteca() {
               />
             </div>
 
-            <div className="flex justify-between items-center text-sm mt-1">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-sm mt-1">
               <label className="flex items-center gap-2 text-gray-500">
                 <input type="checkbox" className="accent-orange-600" />
                 Recordarme
@@ -89,8 +100,6 @@ export default function LoginHemeroteca() {
               </a>
             </div>
 
-            {/* Al ingresar con sus credenciales se les redirige a AGM o a la AGM del mismo sistema si es que las fusionamos a las paginas */}
-
             <button
               type="submit"
               className="mt-4 bg-orange-600 text-white py-3 rounded-full font-bold hover:bg-orange-700 transition"
@@ -100,7 +109,7 @@ export default function LoginHemeroteca() {
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-4">
-            ¿No tenes cuenta? 
+            ¿No tenés cuenta?{" "}
             <Link
               to="/register"
               className="text-orange-600 font-semibold hover:underline"

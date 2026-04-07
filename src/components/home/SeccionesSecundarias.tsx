@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import KohaApi from "../../api/kohaApi";
-import { fecthSeccion_1, fecthSeccion_2, fecthSeccion_3, fecthSeccion_4 } from "../../services/koha-service";
+import {
+  fecthSeccion_1,
+  fecthSeccion_2,
+  fecthSeccion_3,
+  fecthSeccion_4,
+} from "../../services/koha-service";
 
 interface Seccion {
   id: number;
@@ -9,6 +15,7 @@ interface Seccion {
   imagen: string;
   descripcion: string;
   link?: string;
+  activo: boolean;
 }
 
 const CATEGORIAS: Record<number, string> = {
@@ -16,6 +23,12 @@ const CATEGORIAS: Record<number, string> = {
   1: "Informativo",
   2: "Informativo",
   3: "Investigación",
+};
+
+const RUTAS_INTERNAS: Record<number, (link?: string) => string> = {
+  0: () => "/colecciones",
+  1: (link) => `/video?url=${encodeURIComponent(link ?? "")}`,
+  2: (link) => `/video?url=${encodeURIComponent(link ?? "")}`,
 };
 
 const SkeletonCard = () => (
@@ -31,13 +44,9 @@ const SkeletonCard = () => (
 );
 
 export default function SeccionesSecundarias() {
-  const [secciones, setSecciones] = useState<(Seccion | null)[]>([
-    null,
-    null,
-    null,
-    null,
-  ]);
+  const [secciones, setSecciones] = useState<(Seccion | null)[]>([null, null, null, null]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const apiUrl = KohaApi.defaults.baseURL || "";
 
@@ -50,13 +59,7 @@ export default function SeccionesSecundarias() {
           fecthSeccion_3(),
           fecthSeccion_4(),
         ]);
-
-        setSecciones([
-          s1?.[0] ?? null,
-          s2?.[0] ?? null,
-          s3?.[0] ?? null,
-          s4?.[0] ?? null,
-        ]);
+        setSecciones([s1, s2, s3, s4]);
       } catch (error) {
         console.error("Error cargando secciones:", error);
       } finally {
@@ -67,40 +70,47 @@ export default function SeccionesSecundarias() {
     loadSecciones();
   }, []);
 
-  const handleNavegar = (link?: string) => {
-    if (!link) return;
-    // Si es una URL externa, abrir en nueva pestaña
-    if (link.startsWith("http://") || link.startsWith("https://")) {
-      window.open(link, "_blank", "noopener noreferrer");
+  const handleNavegar = (index: number, link?: string) => {
+    const rutaFn = RUTAS_INTERNAS[index];
+
+    if (rutaFn) {
+      navigate(rutaFn(link));
     } else {
-      // Ruta interna
-      window.location.href = link;
+      if (!link) return;
+      if (link.startsWith("http://") || link.startsWith("https://")) {
+        window.open(link, "_blank", "noopener noreferrer");
+      } else {
+        navigate(link);
+      }
     }
   };
+
+  const visibles = secciones.filter(Boolean).length;
+  const colsClass =
+    visibles === 4 ? "sm:grid-cols-2 xl:grid-cols-4"
+    : visibles === 3 ? "sm:grid-cols-2 xl:grid-cols-3"
+    : visibles === 2 ? "sm:grid-cols-2"
+    : "grid-cols-1";
 
   return (
     <section>
       <div className="mb-5 border-b border-slate-300 pb-3" />
 
-      <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      <div className={`grid gap-6 ${colsClass}`}>
         {loading
           ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
           : secciones.map((item, index) => {
               if (!item) return null;
 
-              const imagenUrl = item.imagen
-                ? `${apiUrl}/assets/${item.imagen}`
-                : null;
-
+              const imagenUrl = item.imagen ? `${apiUrl}/assets/${item.imagen}` : null;
               const categoria = CATEGORIAS[index] ?? "Sección";
 
               return (
                 <article
                   key={item.id}
-                  onClick={() => handleNavegar(item.link)}
+                  onClick={() => handleNavegar(index, item.link)}
                   className="group overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)] cursor-pointer"
                 >
-                  {/* Imagen */}
                   <div className="relative aspect-4/3 overflow-hidden">
                     {imagenUrl ? (
                       <img
@@ -114,13 +124,11 @@ export default function SeccionesSecundarias() {
                       </div>
                     )}
 
-                    {/* Badge categoría */}
                     <div className="absolute left-0 top-0 m-5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-700 backdrop-blur">
                       {categoria}
                     </div>
                   </div>
 
-                  {/* Contenido */}
                   <div className="p-5">
                     <h4 className="font-serif text-xl font-black text-slate-900">
                       {item.titulo}
@@ -130,12 +138,10 @@ export default function SeccionesSecundarias() {
                       {item.descripcion}
                     </p>
 
-                    {item.link && (
-                      <span className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3">
-                        Ver más
-                        <ChevronRight className="h-5 w-5" />
-                      </span>
-                    )}
+                    <span className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3">
+                      Ver más
+                      <ChevronRight className="h-5 w-5" />
+                    </span>
                   </div>
                 </article>
               );

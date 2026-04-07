@@ -11,17 +11,17 @@ export default function GaleriaHome() {
 
   return (
     <>
-      <section className="group bg-white p-6 border border-slate-300">
+      <section className="group bg-white border border-gray-100 p-6 ">
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-1">
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500 mb-1">
               Ilustracion
             </p>
 
             {/* Si quiere ver mas imagenes en la fototeca tendra q hacer clik y loguearse */}
 
-            <h3 className="font-serif text-2xl font-black text-slate-900">
+            <h3 className="font-serif text-2xl font-black text-slate-800">
               Galeria de Imagenes
             </h3>
           </div>
@@ -34,7 +34,7 @@ export default function GaleriaHome() {
         >
           <img
             src={images[current]}
-            className="w-full h-100 md:h-125 object-contain bg-gray-300"
+            className="w-full h-100 md:h-125 object-contain bg-slate-100"
           />
 
           <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
@@ -52,7 +52,7 @@ export default function GaleriaHome() {
                   e.stopPropagation();
                   setCurrent((c) => (c - 1 + images.length) % images.length);
                 }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 shadow-md"
+                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/30 p-3 shadow-md cursor-pointer"
               >
                 <ChevronLeft />
               </button>
@@ -64,7 +64,7 @@ export default function GaleriaHome() {
                   e.stopPropagation();
                   setCurrent((c) => (c + 1) % images.length);
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 shadow-md"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/30 p-3 shadow-md cursor-pointer"
               >
                 <ChevronRight />
               </button>

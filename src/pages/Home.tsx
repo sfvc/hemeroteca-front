@@ -4,7 +4,7 @@ import TablonNovedades from "../components/home/TablonNovedades";
 import GaleriaImagenes from "../components/home/GaleriaImagenes";
 import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
-import Carrousel from "../components/Carrousel";
+import Carrousel from "../components/extrasFijos/Carrousel";
 
 export default function Home() {
   return (

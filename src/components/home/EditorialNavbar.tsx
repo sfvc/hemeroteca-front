@@ -92,7 +92,9 @@ export default function EditorialHero() {
   };
 
   return (
-    <header className="w-full border-b border-slate-300 bg-white">
+    <header className="w-full border-b border-gray-200 bg-white">
+      {/* HEADER*/}
+
       <div className="border-b border-slate-200">
         <div className="flex w-full items-center justify-between px-4 py-3 text-xs sm:px-6 lg:px-8">
           <div className="mb-2 flex items-center gap-3 text-slate-600">
@@ -128,6 +130,8 @@ export default function EditorialHero() {
               </button>
             )}
 
+            {/* BOTON SOLICITAR TURNO PRESENCIAL*/}
+
             <button
               onClick={() => setOpenModal(true)}
               style={{
@@ -158,6 +162,8 @@ export default function EditorialHero() {
           </div>
         </div>
       </div>
+
+      {/* BOTONES*/}
 
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
         <div className="border-b border-slate-300 pb-6">
@@ -209,6 +215,8 @@ export default function EditorialHero() {
               )}
             </div>
 
+            {/* TEMA DE MES + TITULO */}
+
             <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-orange-500">
               {encabezado?.temaDelMes}
             </p>
@@ -227,13 +235,19 @@ export default function EditorialHero() {
           </div>
         </div>
 
+        {/* NAVBAR */}
+
         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-b border-slate-200 py-4 text-sm font-medium">
           <Link to="/" className={navClass("/")}>
             Inicio
           </Link>
 
           <Link to="/login" className={navClass("/login")}>
-            Archivo General
+            Hemeroteca Digital
+          </Link>
+
+          <Link to="/login" className={navClass("/login")}>
+            Catalogo
           </Link>
 
           <Link to="/noticias" className={navClass("/noticias")}>
@@ -249,6 +263,16 @@ export default function EditorialHero() {
           </Link>
         </nav>
       </div>
+
+      {/* TEMA DEL MES 2 */}
+
+      {/* <div className="flex justify-center items-center my-5">
+        <p className="text-2xl font-bold uppercase tracking-widest text-slate-700 text-center font-serif">
+          {encabezado?.temaDelMes || "Noticias"}
+        </p>
+      </div> */}
+
+      {/* FORMULARIO DE TURNO PRESENCIAL*/}
 
       {openModal && (
         <div
@@ -284,8 +308,12 @@ export default function EditorialHero() {
               </div>
             </div>
 
+            {/* FORMULARIO*/}
+
             <form className="space-y-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* DIA*/}
+
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Día
@@ -296,6 +324,8 @@ export default function EditorialHero() {
                   />
                 </div>
 
+                {/* HORA */}
+
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Hora
@@ -304,8 +334,30 @@ export default function EditorialHero() {
                     type="time"
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                   />
+                  <p className="mt-2 text-xs text-slate-500">
+                    Turnos de atencion de 8 a 12:30 y de 15 a 18:30 hs, de lunes
+                    a viernes.
+                  </p>
                 </div>
               </div>
+
+              {/* NOMBRE Y APELLIDO*/}
+
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Nombre y Apellido
+                </label>
+                <input
+                  type="text"
+                  placeholder="Tu nombre y apellido"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                />
+                <p className="mt-2 text-xs text-slate-500">
+                  Ingresá tu nombre y apellido.
+                </p>
+              </div>
+
+              {/* MAIL DE QUIEN SOLICITA*/}
 
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
@@ -321,16 +373,20 @@ export default function EditorialHero() {
                 </p>
               </div>
 
+              {/* QUE SE SOLICITA*/}
+
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Qué solicita?
                 </label>
                 <textarea
-                  placeholder="Detalle del pedido"
+                  placeholder="Detalle brevemente el pedido"
                   rows={5}
                   className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                 />
               </div>
+
+              {/* BOTON ENVIAR FORMULARIO */}
 
               <div className="pt-2">
                 <button

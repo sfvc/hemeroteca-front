@@ -5,7 +5,6 @@ export const fetchEncabezado = async () => {
     const response = await KohaApi.get(
       "/items/encabezado?filter[activo][_eq]=true"
     );
-
     return response.data.data[0];
   } catch (error) {
     console.error("Error fetching encabezado:", error);
@@ -23,14 +22,13 @@ export const fetchCarrousel = async () => {
     if (!data || data.length === 0) return null;
 
     const item = data[0];
-    const apiUrl = KohaApi.defaults.baseURL || '';
+    const apiUrl = KohaApi.defaults.baseURL || "";
 
-    const imagenesConUrl = item.imagenes?.map(
-      (img: { directus_files_id: string }) => ({
+    const imagenesConUrl =
+      item.imagenes?.map((img: { directus_files_id: string }) => ({
         ...img,
         url: `${apiUrl}/assets/${img.directus_files_id}`,
-      })
-    ) ?? [];
+      })) ?? [];
 
     return { ...item, imagenesConUrl };
   } catch (error) {
@@ -81,8 +79,10 @@ export const fetchEquipo = async () => {
 
 export const fecthSeccion_1 = async () => {
   try {
-    const response = await KohaApi.get("/items/seccion_1");
-    return response.data.data;
+    const response = await KohaApi.get(
+      "/items/seccion_1?filter[activo][_eq]=true"
+    );
+    return response.data.data[0] ?? null;
   } catch (error) {
     console.error("Error fetching seccion:", error);
     return null;
@@ -91,8 +91,10 @@ export const fecthSeccion_1 = async () => {
 
 export const fecthSeccion_2 = async () => {
   try {
-    const response = await KohaApi.get("/items/seccion_2");
-    return response.data.data;
+    const response = await KohaApi.get(
+      "/items/seccion_2?filter[activo][_eq]=true"
+    );
+    return response.data.data[0] ?? null;
   } catch (error) {
     console.error("Error fetching seccion:", error);
     return null;
@@ -101,8 +103,10 @@ export const fecthSeccion_2 = async () => {
 
 export const fecthSeccion_3 = async () => {
   try {
-    const response = await KohaApi.get("/items/seccion_3");
-    return response.data.data;
+    const response = await KohaApi.get(
+      "/items/seccion_3?filter[activo][_eq]=true"
+    );
+    return response.data.data[0] ?? null;
   } catch (error) {
     console.error("Error fetching seccion:", error);
     return null;
@@ -111,8 +115,10 @@ export const fecthSeccion_3 = async () => {
 
 export const fecthSeccion_4 = async () => {
   try {
-    const response = await KohaApi.get("/items/seccion_4");
-    return response.data.data;
+    const response = await KohaApi.get(
+      "/items/seccion_4?filter[activo][_eq]=true"
+    );
+    return response.data.data[0] ?? null;
   } catch (error) {
     console.error("Error fetching seccion:", error);
     return null;

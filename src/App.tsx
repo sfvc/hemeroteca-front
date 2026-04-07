@@ -1,14 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 
-// import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Noticias from "./pages/Noticias";
 import Nosotros from "./pages/Nosotros";
-import Footer from "./components/Footer";
+import Footer from "./components/extrasFijos/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./functions/ScrollToTop";
 import Equipo from "./pages/Equipo";
+import RetroTv from "./components/extrasFijos/RetroTv";
+import VideoPage from "./pages/Video";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           <Route path="/equipo" element={<Equipo />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/practicas-conservacion" element={<RetroTv />} />
+          <Route path="/detras-foto" element={<RetroTv />} />
+          <Route path="/video" element={<VideoPage />} />
         </Routes>
       </main>
       <Footer />
