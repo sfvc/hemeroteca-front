@@ -102,35 +102,38 @@ export default function Noticias() {
   return (
     <section className="min-h-screen bg-white text-slate-900">
       <main className="w-full px-6 lg:px-10 xl:px-16 pb-14 pt-2">
+        {/* Navbar estilo diario */}
+
         <EditorialHero />
+
         <div className="mt-8">
           {/* Aca si banco que este el carrusel */}
+
           <Carrousel />
-          <HeroNews news={mainNews} />
+
+          <div className="mt-8 flex justify-center">
+            <div className="w-full max-w-7xl">
+              <HeroNews news={mainNews} />
+            </div>
+          </div>
 
           <section className="mt-12 border-t border-slate-300 pt-8">
             <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto]">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-500">
+                <p className="text-md font-bold uppercase tracking-[0.28em] text-cyan-600">
                   Cobertura destacada
                 </p>
-                <h2 className="mt-2 font-serif text-4xl font-black uppercase leading-none sm:text-5xl">
-                  En otras Noticias...
+                <h2 className="mt-2 font-serif text-2xl font-black uppercase leading-none sm:text-2xl">
+                  En otras Noticias de la ciudad...
                 </h2>
               </div>
-
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-slate-950"
-              >
-                Ver archivo completo
-                <ChevronRight className="h-4 w-4" />
-              </a>
             </div>
 
-            <div className="mt-8 space-y-8">
+            <div className="mt-8 flex flex-col items-center gap-8">
               {featuredNews.map((news) => (
-                <NewsCard key={news.id} news={news} />
+                <div key={news.id} className="w-full max-w-7xl">
+                  <NewsCard news={news} />
+                </div>
               ))}
             </div>
           </section>
@@ -145,11 +148,11 @@ export default function Noticias() {
 
 function HeroNews({ news }: { news: NewNotice }) {
   return (
-    <section className="mt-8 grid gap-8 lg:grid-cols-12">
-      <article className="lg:col-span-8">
+    <section className="mt-8">
+      <article>
         <div className="border-b border-slate-300 pb-6">
           <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600">
-            <span className="inline-flex items-center rounded-full bg-slate-700 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-orange-600">
+            <span className="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-cyan-600">
               {news.label}
             </span>
             <span>{news.date}</span>
@@ -192,7 +195,7 @@ function HeroNews({ news }: { news: NewNotice }) {
                   href={news.Url}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-700 px-5 py-3 text-sm font-semibold text-orange-600 transition hover:bg-slate-600"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-200 px-5 py-3 text-sm font-semibold text-cyan-600 transition hover:bg-slate-100"
                 >
                   Leer nota completa
                   <ExternalLink className="h-4 w-4" />
@@ -223,57 +226,6 @@ function HeroNews({ news }: { news: NewNotice }) {
           </div>
         </div>
       </article>
-
-      {/* Noticias adicionales de la derecha */}
-
-      <aside className="space-y-5 lg:col-span-4">
-        <div className="border-2 border-slate-200 bg-slate-50 p-6 ">
-          <p className="text-xs font-extrabold uppercase text-orange-600">
-            Novedad
-          </p>
-          <h3 className="mt-3 text-2xl font-black leading-8 text-black">
-            Nodo Tecnologico abre sus inscripciones para la diplomatura en
-            Full-Stack
-          </h3>
-          <p className="mt-3 text-sm text-slate-800">
-            Este proximo 25/03 se abren las incripciones para la Diplomatura en
-            desarrollo web full stack en el nodo Tecnologico. Entra a si pagina
-            y inscribete antes de quedarte sin cupos!
-          </p>
-        </div>
-        <div className="border-2 border-slate-200 bg-slate-50 p-6">
-          <p className="text-xs font-extrabold uppercase text-orange-600">
-            Novedad
-          </p>
-          <h3 className="mt-3 text-2xl font-black leading-8 text-black">
-            Marvel esta devuelta!
-          </h3>
-          <p className="mt-3 text-sm text-slate-800">
-            El UCM vuelve a estar en boca de todos por el estreno de "Spider-man
-            brand new day" este proximo 31 de julio de 2026. Despues de las
-            fuertes criticas a sus ultimas series y peliculas, decicidieron
-            apostarle al amigable vecino Spiderman. Esperamos que llene nuestras
-            expectativas mientras esperamos el estreno de Avengers Doomsday.
-          </p>
-        </div>
-        <div className="border-2 border-slate-200 bg-slate-50 p-6">
-          <p className="text-xs font-extrabold uppercase text-orange-600">
-            Novedad
-          </p>
-          <h3 className="mt-3 text-2xl font-black leading-8 text-black">
-            Mano a mano con el padre de Colapinto: “Franco saca más fuerza
-            gracias al apoyo de la gente”
-          </h3>
-          <p className="mt-3 text-sm text-slate-800">
-            Llegó y saludó a todos y cada uno de los presentes. Con su habitual
-            simpatía y amabilidad, Aníbal Colapinto acompañó con su impronta en
-            el encuentro de la peña FC43 y se le iluminan los ojos cuando habla
-            de su hijo, el piloto argentino que viene de sumar su primer punto
-            con el equipo Alpine en la Fórmula 1. De hecho, anticipó el buen
-            domingo que tuvo el piloto de 22 años en el Gran Premio de China.
-          </p>
-        </div>
-      </aside>
     </section>
   );
 }
@@ -410,8 +362,8 @@ function MiniData({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="mt-0.5 rounded-full bg-white p-2">
-        <Icon className="h-5 w-5 text-orange-600" />
+      <div className="mt-0.5 rounded-full bg-slate-200 p-2">
+        <Icon className="h-5 w-5 text-cyan-600" />
       </div>
       <p className="text-sm text-slate-700 mt-2">{text}</p>
     </div>

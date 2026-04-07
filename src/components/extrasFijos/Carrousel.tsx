@@ -1,14 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchCarrousel } from "../../services/koha-service";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-// import { fetchEncabezado } from "../../services/koha-service";
-
-// type Encabezado = {
-//   nombre: string;
-//   temaDelMes?: string;
-//   lugar?: string;
-//   fechaFantasia?: string;
-// };
 
 interface CarrouselItem {
   id: number;
@@ -23,16 +15,6 @@ export default function Carrousel() {
   const [item, setItem] = useState<CarrouselItem | null>(null);
   const [index, setIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  // const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
-
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     const data = await fetchEncabezado();
-  //     if (data) setEncabezado(data);
-  //   };
-
-  //   loadData();
-  // }, []);
 
   useEffect(() => {
     const load = async () => {
@@ -69,16 +51,10 @@ export default function Carrousel() {
   const total = item.imagenesConUrl.length;
   const imageUrl = item.imagenesConUrl[index].url;
 
-  const textColor = item.color_texto || "#1e293b"; // fallback
+  const textColor = item.color_texto || "#1e293b"; 
 
   return (
     <section className="overflow-hidden bg-white">
-      {/* <div className="flex justify-center items-center mb-5">
-        <p className="text-2xl font-bold uppercase tracking-widest text-slate-700 text-center font-serif">
-          {encabezado?.temaDelMes || "Noticias"}
-        </p>
-      </div> */}
-
       {/* Bloque imagen */}
       <div className="relative overflow-hidden" style={{ height: "460px" }}>
         {/* Imagen con fade */}
@@ -170,7 +146,7 @@ export default function Carrousel() {
       {/* Card inferior pegada abajo */}
       <div className="bg-gray-100 px-5 py-4 sm:px-6 sm:py-5">
         <h2
-          className="text-xl font-bold uppercase leading-tight sm:text-2xl lg:text-3xl"
+          className="text-xl font-serif font-bold uppercase leading-tight sm:text-2xl lg:text-3xl"
           style={{ color: textColor }}
         >
           {item.nombre}

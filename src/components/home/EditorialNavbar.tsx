@@ -69,7 +69,7 @@ export default function EditorialHero() {
   const navClass = (route: string) =>
     `transition ${
       isActive(route)
-        ? "text-orange-600 font-bold"
+        ? "text-cyan-600 font-bold"
         : "text-slate-700 hover:text-slate-950"
     }`;
 
@@ -114,20 +114,22 @@ export default function EditorialHero() {
             </div>
           ) : (
             <>
-              <div className="mb-2 flex items-center gap-3 text-slate-600">
-                <img
-                  src={logoMunicipalidad}
-                  alt="Catamarca Capital"
-                  className="h-10 object-contain sm:h-10"
-                />
-                <span className="font-extrabold uppercase tracking-[0.2em]">
-                  Hemeroteca Municipal
-                </span>
-                <span className="hidden sm:inline">|</span>
-                <span className="hidden sm:inline uppercase">
-                  Catamarca Capital
-                </span>
-              </div>
+              <Link to="/" className={navClass("/")}>
+                <div className="mb-2 flex items-center gap-3 text-slate-600">
+                  <img
+                    src={logoMunicipalidad}
+                    alt="Catamarca Capital"
+                    className="h-10 object-contain sm:h-10"
+                  />
+                  <span className="font-extrabold uppercase tracking-[0.2em]">
+                    Hemeroteca Municipal
+                  </span>
+                  <span className="hidden sm:inline">|</span>
+                  <span className="hidden sm:inline uppercase">
+                    Catamarca Capital
+                  </span>
+                </div>
+              </Link>
 
               <div className="hidden items-center gap-3 sm:flex">
                 {botonIzquierdo && (
@@ -185,7 +187,7 @@ export default function EditorialHero() {
               </div>
             ) : (
               <>
-                <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-orange-500">
+                <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-cyan-500">
                   {encabezado?.temaDelMes}
                 </p>
 
@@ -285,7 +287,7 @@ export default function EditorialHero() {
                   </label>
                   <input
                     type="date"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                   />
                 </div>
 
@@ -296,7 +298,7 @@ export default function EditorialHero() {
                   </label>
                   <input
                     type="time"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                   />
                   <p className="mt-2 text-xs text-slate-500">
                     Turnos de atención de 8 a 12:30 y de 15 a 18:30 hs, de lunes
@@ -313,7 +315,7 @@ export default function EditorialHero() {
                 <input
                   type="text"
                   placeholder="Tu nombre y apellido"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
                 <p className="mt-2 text-xs text-slate-500">
                   Ingresá tu nombre y apellido.
@@ -328,7 +330,7 @@ export default function EditorialHero() {
                 <input
                   type="email"
                   placeholder="tuemail@ejemplo.com"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
                 <p className="mt-2 text-xs text-slate-500">
                   Ingresá un correo electrónico válido para poder contactarte.
@@ -343,7 +345,7 @@ export default function EditorialHero() {
                 <textarea
                   placeholder="Detalle brevemente el pedido"
                   rows={5}
-                  className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
+                  className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
               </div>
 

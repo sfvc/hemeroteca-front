@@ -15,7 +15,7 @@ export default function LoginHemeroteca() {
             alt="Catamarca Capital"
             className="h-10 object-contain"
           />
-           <div className="flex items-center gap-3 text-[#1f3554]">
+          <div className="flex items-center gap-3 text-[#1f3554]">
             <span className="text-xs tracking-[0.3em] font-bold uppercase">
               Hemeroteca Municipal
             </span>
@@ -30,7 +30,7 @@ export default function LoginHemeroteca() {
           {/* BOTON VOLVER */}
           <button
             onClick={() => navigate("/")}
-            className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-cyan-700 px-3 py-2 rounded-full transition"
+            className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-cyan-700 px-3 py-2 rounded-full transition cursor-pointer"
           >
             <ArrowLeft size={18} />
             <span className="text-sm font-semibold">Volver</span>
@@ -102,7 +102,7 @@ export default function LoginHemeroteca() {
 
             <button
               type="submit"
-              className="mt-4 bg-cyan-700 text-white py-3 rounded-full font-bold hover:bg-cyan-500 transition"
+              className="mt-4 bg-cyan-700 text-white py-3 rounded-full font-bold hover:bg-cyan-500 transition cursor-pointer"
             >
               Ingresar
             </button>
@@ -112,7 +112,7 @@ export default function LoginHemeroteca() {
             ¿No tenés cuenta?{" "}
             <Link
               to="/register"
-              className="text-cyan-700 font-semibold hover:underline"
+              className="text-cyan-700 font-semibold hover:underline cursor-pointer"
             >
               Registrate
             </Link>

@@ -30,7 +30,7 @@ export default function RegisterHemeroteca() {
           {/* BOTON VOLVER */}
           <button
             onClick={() => navigate("/")}
-            className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-cyan-700 px-3 py-2 rounded-full transition"
+            className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 hover:bg-white text-cyan-700 px-3 py-2 rounded-full transition cursor-pointer"
           >
             <ArrowLeft size={18} />
             <span className="text-sm font-semibold">Volver</span>
@@ -105,7 +105,7 @@ export default function RegisterHemeroteca() {
 
             <button
               type="submit"
-              className="mt-4 bg-cyan-700 text-white py-3 rounded-full font-bold hover:bg-cyan-500 transition"
+              className="mt-4 bg-cyan-700 text-white py-3 rounded-full font-bold hover:bg-cyan-500 transition cursor-pointer"
             >
               Registrarse
             </button>
@@ -115,7 +115,7 @@ export default function RegisterHemeroteca() {
             ¿Ya tenes cuenta?
             <Link
               to="/login"
-              className="text-cyan-700 font-semibold hover:underline"
+              className="text-cyan-700 font-semibold hover:underline cursor-pointer"
             >
               Iniciar sesión
             </Link>
