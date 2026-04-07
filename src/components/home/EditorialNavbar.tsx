@@ -31,32 +31,34 @@ export default function EditorialHero() {
   const [botonIzquierdo, setBotonIzquierdo] = useState<Boton | null>(null);
   const [botonDerecho, setBotonDerecho] = useState<Boton | null>(null);
   const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBotones = async () => {
-      const left = await fetchBotonIzquierdo();
-      const right = await fetchBotonDerecho();
+    const loadAll = async () => {
+      try {
+        const [left, right, data] = await Promise.all([
+          fetchBotonIzquierdo(),
+          fetchBotonDerecho(),
+          fetchEncabezado(),
+        ]);
 
-      const leftActivo = left?.find((item: Boton) => item.activo === true);
-      const rightActivo = right?.find((item: Boton) => item.activo === true);
+        const leftActivo = left?.find((item: Boton) => item.activo === true);
+        const rightActivo = right?.find((item: Boton) => item.activo === true);
 
-      setBotonIzquierdo(leftActivo || null);
-      setBotonDerecho(rightActivo || null);
+        setBotonIzquierdo(leftActivo || null);
+        setBotonDerecho(rightActivo || null);
+        if (data) setEncabezado(data);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchBotones();
-  }, []);
-
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchEncabezado();
-      if (data) setEncabezado(data);
-    };
-
-    loadData();
+    loadAll();
   }, []);
 
   const isActive = (route: string) => {
@@ -93,187 +95,151 @@ export default function EditorialHero() {
 
   return (
     <header className="w-full border-b border-gray-200 bg-white">
-      {/* HEADER*/}
-
+      {/* HEADER SUPERIOR */}
       <div className="border-b border-slate-200">
         <div className="flex w-full items-center justify-between px-4 py-3 text-xs sm:px-6 lg:px-8">
-          <div className="mb-2 flex items-center gap-3 text-slate-600">
-            <img
-              src={logoMunicipalidad}
-              alt="Catamarca Capital"
-              className="h-10 object-contain sm:h-10"
-            />
-            <span className="font-extrabold uppercase tracking-[0.2em]">
-              Hemeroteca Municipal
-            </span>
-            <span className="hidden sm:inline">|</span>
-            <span className="hidden sm:inline uppercase">
-              Catamarca Capital
-            </span>
-          </div>
+          {loading ? (
+            <div className="flex w-full items-center justify-between animate-pulse">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 bg-slate-200 rounded-md" />
+                <div className="h-4 w-40 bg-slate-200 rounded" />
+              </div>
 
-          <div className="hidden items-center gap-3 sm:flex">
-            {botonIzquierdo && (
-              <button
-                onClick={() => {
-                  if (!botonIzquierdo.activo) return;
-                  handleNavigation(botonIzquierdo.link);
-                }}
-                disabled={!botonIzquierdo.activo}
-                style={getButtonStyle(botonIzquierdo)}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonIzquierdo.activo
-                  ? "cursor-pointer hover:opacity-80"
-                  : "cursor-not-allowed bg-gray-300 text-gray-500"
-                  }`}
-              >
-                {botonIzquierdo.titulo}
-              </button>
-            )}
+              <div className="hidden sm:flex gap-3">
+                <div className="h-9 w-28 bg-slate-200 rounded-2xl" />
+                <div className="h-9 w-32 bg-slate-200 rounded-2xl" />
+                <div className="h-9 w-28 bg-slate-200 rounded-2xl" />
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="mb-2 flex items-center gap-3 text-slate-600">
+                <img
+                  src={logoMunicipalidad}
+                  alt="Catamarca Capital"
+                  className="h-10 object-contain sm:h-10"
+                />
+                <span className="font-extrabold uppercase tracking-[0.2em]">
+                  Hemeroteca Municipal
+                </span>
+                <span className="hidden sm:inline">|</span>
+                <span className="hidden sm:inline uppercase">
+                  Catamarca Capital
+                </span>
+              </div>
 
-            {/* BOTON SOLICITAR TURNO PRESENCIAL*/}
+              <div className="hidden items-center gap-3 sm:flex">
+                {botonIzquierdo && (
+                  <button
+                    onClick={() =>
+                      botonIzquierdo.activo &&
+                      handleNavigation(botonIzquierdo.link)
+                    }
+                    disabled={!botonIzquierdo.activo}
+                    style={getButtonStyle(botonIzquierdo)}
+                    className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-80"
+                  >
+                    {botonIzquierdo.titulo}
+                  </button>
+                )}
 
-            <button
-              onClick={() => setOpenModal(true)}
-              style={{
-                backgroundColor: botonDerecho?.color_fondo || "#334155",
-                color: botonDerecho?.color_texto || "#ffffff",
-              }}
-              className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-px hover:opacity-90 cursor-pointer"
-            >
-              Solicitar Turno
-            </button>
+                <button
+                  onClick={() => setOpenModal(true)}
+                  style={{
+                    backgroundColor:
+                      botonDerecho?.color_fondo || "#334155",
+                    color: botonDerecho?.color_texto || "#ffffff",
+                  }}
+                  className="cursor-pointer flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:opacity-90"
+                >
+                  Solicitar Turno
+                </button>
 
-            {botonDerecho && (
-              <button
-                onClick={() => {
-                  if (!botonDerecho.activo) return;
-                  handleNavigation(botonDerecho.link);
-                }}
-                disabled={!botonDerecho.activo}
-                style={getButtonStyle(botonDerecho)}
-                className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonDerecho.activo
-                  ? "cursor-pointer hover:opacity-80"
-                  : "cursor-not-allowed bg-gray-300 text-gray-500"
-                  }`}
-              >
-                {botonDerecho.titulo}
-              </button>
-            )}
-          </div>
+                {botonDerecho && (
+                  <button
+                    onClick={() =>
+                      botonDerecho.activo &&
+                      handleNavigation(botonDerecho.link)
+                    }
+                    disabled={!botonDerecho.activo}
+                    style={getButtonStyle(botonDerecho)}
+                    className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-80"
+                  >
+                    {botonDerecho.titulo}
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
-      {/* BOTONES*/}
-
+      {/* CONTENIDO */}
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
         <div className="border-b border-slate-300 pb-6">
           <div className="text-center">
-            <div className="mb-4 flex items-center justify-center gap-4 text-sm font-medium sm:hidden">
-              {botonIzquierdo && (
-                <button
-                  onClick={() => {
-                    if (!botonIzquierdo.activo) return;
-                    handleNavigation(botonIzquierdo.link);
-                  }}
-                  disabled={!botonIzquierdo.activo}
-                  style={getButtonStyle(botonIzquierdo)}
-                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonIzquierdo.activo
-                    ? "cursor-pointer hover:opacity-80"
-                    : "cursor-not-allowed bg-gray-300 text-gray-500"
-                    }`}
-                >
-                  {botonIzquierdo.titulo}
-                </button>
-              )}
+            {loading ? (
+              <div className="flex flex-col items-center gap-4 animate-pulse">
+                <div className="h-3 w-32 bg-orange-200 rounded" />
+                <div className="h-10 w-64 bg-slate-300 rounded" />
+                <div className="h-3 w-40 bg-slate-200 rounded" />
+              </div>
+            ) : (
+              <>
+                <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-orange-500">
+                  {encabezado?.temaDelMes}
+                </p>
 
-              <button
-                onClick={() => setOpenModal(true)}
-                style={{
-                  backgroundColor: botonDerecho?.color_fondo || "#334155",
-                  color: botonDerecho?.color_texto || "#ffffff",
-                }}
-                className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:-translate-y-px hover:opacity-90 cursor-pointer"
-              >
-                Solicitar Turno
-              </button>
+                <h1 className="mt-2 font-serif text-4xl font-black uppercase text-slate-950 sm:text-5xl lg:text-7xl">
+                  {encabezado?.nombre}
+                </h1>
 
-              {botonDerecho && (
-                <button
-                  onClick={() => {
-                    if (!botonDerecho.activo) return;
-                    handleNavigation(botonDerecho.link);
-                  }}
-                  disabled={!botonDerecho.activo}
-                  style={getButtonStyle(botonDerecho)}
-                  className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 ${botonDerecho.activo
-                    ? "cursor-pointer hover:opacity-80"
-                    : "cursor-not-allowed bg-gray-300 text-gray-500"
-                    }`}
-                >
-                  {botonDerecho.titulo}
-                </button>
-              )}
-            </div>
-
-            {/* TEMA DE MES + TITULO */}
-
-            <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-orange-500">
-              {encabezado?.temaDelMes}
-            </p>
-
-            <h1 className="mt-2 font-serif text-4xl font-black uppercase leading-none text-slate-950 sm:text-5xl lg:text-7xl">
-              {encabezado?.nombre}
-            </h1>
-
-            {encabezado?.lugar && (
-              <p className="mt-3 text-xs uppercase tracking-widest text-slate-500">
-                {encabezado.lugar}
-                {encabezado.fechaFantasia &&
-                  ` — ${formatFecha(encabezado.fechaFantasia)}`}
-              </p>
+                {encabezado?.lugar && (
+                  <p className="mt-3 text-xs uppercase tracking-widest text-slate-500">
+                    {encabezado.lugar}
+                    {encabezado.fechaFantasia &&
+                      ` — ${formatFecha(encabezado.fechaFantasia)}`}
+                  </p>
+                )}
+              </>
             )}
           </div>
         </div>
 
-        {/* NAVBAR */}
-
+        {/* NAV */}
         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-b border-slate-200 py-4 text-sm font-medium">
-          <Link to="/" className={navClass("/")}>
-            Inicio
-          </Link>
-
-          <Link to="/login" className={navClass("/login")}>
-            Hemeroteca Digital
-          </Link>
-
-          <Link to="/login" className={navClass("/login")}>
-            Catalogo
-          </Link>
-
-          <Link to="/noticias" className={navClass("/noticias")}>
-            Noticias
-          </Link>
-
-          <Link to="/nosotros" className={navClass("/nosotros")}>
-            Nosotros
-          </Link>
-
-          <Link to="/equipo" className={navClass("/equipo")}>
-            Equipo
-          </Link>
+          {loading ? (
+            <div className="flex gap-4 animate-pulse">
+              <div className="h-4 w-16 bg-slate-200 rounded" />
+              <div className="h-4 w-24 bg-slate-200 rounded" />
+              <div className="h-4 w-20 bg-slate-200 rounded" />
+              <div className="h-4 w-20 bg-slate-200 rounded" />
+              <div className="h-4 w-20 bg-slate-200 rounded" />
+            </div>
+          ) : (
+            <>
+              <Link to="/" className={navClass("/")}>
+                Inicio
+              </Link>
+              <Link to="/login" className={navClass("/login")}>
+                Hemeroteca Digital
+              </Link>
+              <Link to="/login" className={navClass("/login")}>
+                Catalogo
+              </Link>
+              <Link to="/noticias" className={navClass("/noticias")}>
+                Noticias
+              </Link>
+              <Link to="/nosotros" className={navClass("/nosotros")}>
+                Nosotros
+              </Link>
+            </>
+          )}
         </nav>
       </div>
 
-      {/* TEMA DEL MES 2 */}
-
-      {/* <div className="flex justify-center items-center my-5">
-        <p className="text-2xl font-bold uppercase tracking-widest text-slate-700 text-center font-serif">
-          {encabezado?.temaDelMes || "Noticias"}
-        </p>
-      </div> */}
-
-      {/* FORMULARIO DE TURNO PRESENCIAL*/}
-
+      {/* MODAL */}
+      {/* MODAL */}
       {openModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6 backdrop-blur-sm overflow-auto"
@@ -283,6 +249,7 @@ export default function EditorialHero() {
             className="relative w-full max-w-xl border border-slate-200 bg-white p-6 sm:p-8 rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* BOTON CERRAR */}
             <button
               onClick={() => setOpenModal(false)}
               className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-red-50 hover:text-red-600 cursor-pointer sm:right-6 sm:top-6"
@@ -291,8 +258,9 @@ export default function EditorialHero() {
               ✕
             </button>
 
+            {/* HEADER */}
             <div className="mb-6 border-b border-slate-200 pb-4">
-              <h2 className="mb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
+              <h2 className="cursor-pointermb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
                 Solicitar Turno Presencial
               </h2>
 
@@ -302,18 +270,16 @@ export default function EditorialHero() {
                 </div>
                 <p className="leading-relaxed">
                   Este formulario es para solicitar un turno presencial en la
-                  hemeroteca. Podrás asistir a las oficinas en la fecha
-                  seleccionada y retirar los libros previamente solicitados.
+                  hemeroteca. Podrás asistir a las oficinas en la fecha seleccionada
+                  y retirar los libros previamente solicitados.
                 </p>
               </div>
             </div>
 
-            {/* FORMULARIO*/}
-
+            {/* FORMULARIO */}
             <form className="space-y-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {/* DIA*/}
-
+                {/* DIA */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Día
@@ -325,7 +291,6 @@ export default function EditorialHero() {
                 </div>
 
                 {/* HORA */}
-
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Hora
@@ -335,14 +300,13 @@ export default function EditorialHero() {
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                   />
                   <p className="mt-2 text-xs text-slate-500">
-                    Turnos de atencion de 8 a 12:30 y de 15 a 18:30 hs, de lunes
-                    a viernes.
+                    Turnos de atención de 8 a 12:30 y de 15 a 18:30 hs, de lunes a
+                    viernes.
                   </p>
                 </div>
               </div>
 
-              {/* NOMBRE Y APELLIDO*/}
-
+              {/* NOMBRE */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Nombre y Apellido
@@ -357,8 +321,7 @@ export default function EditorialHero() {
                 </p>
               </div>
 
-              {/* MAIL DE QUIEN SOLICITA*/}
-
+              {/* EMAIL */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Quién solicita?
@@ -373,8 +336,7 @@ export default function EditorialHero() {
                 </p>
               </div>
 
-              {/* QUE SE SOLICITA*/}
-
+              {/* DETALLE */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Qué solicita?
@@ -386,8 +348,7 @@ export default function EditorialHero() {
                 />
               </div>
 
-              {/* BOTON ENVIAR FORMULARIO */}
-
+              {/* BOTON */}
               <div className="pt-2">
                 <button
                   type="submit"

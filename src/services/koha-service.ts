@@ -47,6 +47,56 @@ export const fetchNovedades = async () => {
   }
 };
 
+interface DirectusImage {
+  directus_files_id: string;
+}
+
+interface NoticiaAPI {
+  id: number;
+  nombre: string;
+  descripcion?: string;
+  activo: boolean;
+  link: string;
+  imagenes: DirectusImage[];
+}
+
+export interface Noticia {
+  id: number;
+  nombre: string;
+  descripcion?: string;
+  activo: boolean;
+  link: string;
+  imagenesConUrl: { url: string }[];
+}
+
+export const fetchNoticias = async (): Promise<Noticia[]> => {
+  try {
+    const response = await KohaApi.get<{ data: NoticiaAPI[] }>(
+      "/items/noticias?fields=*,imagenes.directus_files_id"
+    );
+
+    const data = response.data.data;
+    if (!data || data.length === 0) return [];
+
+    const apiUrl = KohaApi.defaults.baseURL || "";
+
+    return data.map((item) => ({
+      id: item.id,
+      nombre: item.nombre,
+      descripcion: item.descripcion,
+      activo: item.activo,
+      link: item.link,
+      imagenesConUrl:
+        item.imagenes?.map((img) => ({
+          url: `${apiUrl}/assets/${img.directus_files_id}`,
+        })) ?? [],
+    }));
+  } catch (error) {
+    console.error("Error fetching noticias:", error);
+    return [];
+  }
+};
+
 export const fetchBotonIzquierdo = async () => {
   try {
     const response = await KohaApi.get("/items/botonInicioIzquierda");

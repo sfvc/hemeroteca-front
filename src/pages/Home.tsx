@@ -5,6 +5,7 @@ import GaleriaImagenes from "../components/home/GaleriaImagenes";
 import Reseñas from "../components/home/Reseñas";
 import Ubicaciones from "../components/home/Ubicacion";
 import Carrousel from "../components/extrasFijos/Carrousel";
+import NoticiasCarousel from "../components/home/NoticiasCarrousel";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
         </section>
 
         <section className="mt-14 space-y-10">
+          <NoticiasCarousel />
           <GaleriaImagenes />
           <Reseñas />
           <Ubicaciones />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchEquipo } from "../services/koha-service";
 import KohaApi from "../api/kohaApi";
-import EditorialHero from "../components/home/EditorialNavbar";
+// import EditorialHero from "../components/home/EditorialNavbar";
 
 interface Miembro {
   id: number;
@@ -65,8 +65,8 @@ const Equipo = () => {
   }
 
   return (
-    <section className="py-10 px-4">
-        <EditorialHero />
+    <section>
+        {/* <EditorialHero /> */}
       {/* Título de sección */}
       <div className="mb-10 text-center mt-6">
         <span className="inline-block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
@@ -79,7 +79,7 @@ const Equipo = () => {
       </div>
 
       {/* Grid de tarjetas */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
         {equipo.map((miembro) => {
           const avatarUrl = miembro.avatar
             ? `${apiUrl}/assets/${miembro.avatar}`
