@@ -32,6 +32,7 @@ export default function EditorialHero() {
   const [botonDerecho, setBotonDerecho] = useState<Boton | null>(null);
   const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hora, setHora] = useState("");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -67,10 +68,9 @@ export default function EditorialHero() {
   };
 
   const navClass = (route: string) =>
-    `transition ${
-      isActive(route)
-        ? "text-cyan-600 font-bold"
-        : "text-slate-700 hover:text-slate-950"
+    `transition ${isActive(route)
+      ? "text-cyan-600 font-bold"
+      : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -92,6 +92,27 @@ export default function EditorialHero() {
       backgroundColor: boton.color_fondo || "#334155",
       color: boton.color_texto || "#ffffff",
     };
+  };
+
+  const generarHorarios = () => {
+    const horarios: string[] = [];
+
+    const agregarRango = (inicio: number, fin: number) => {
+      for (let h = inicio; h <= fin; h++) {
+        horarios.push(`${String(h).padStart(2, "0")}:00`);
+        if (h !== fin) {
+          horarios.push(`${String(h).padStart(2, "0")}:30`);
+        }
+      }
+    };
+
+    // Mañana: 08:00 - 12:30
+    agregarRango(8, 12);
+
+    // Tarde: 15:00 - 18:30
+    agregarRango(15, 18);
+
+    return horarios;
   };
 
   return (
@@ -240,21 +261,19 @@ export default function EditorialHero() {
       </div>
 
       {/* MODAL */}
-      {/* MODAL */}
       {openModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6 backdrop-blur-sm overflow-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-3 py-4 backdrop-blur-sm"
           onClick={() => setOpenModal(false)}
         >
           <div
-            className="relative w-full max-w-xl border border-slate-200 bg-white p-6 sm:p-8 rounded-2xl shadow-2xl"
+            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white p-5 sm:p-8 rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* BOTON CERRAR */}
             <button
               onClick={() => setOpenModal(false)}
-              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white cursor-pointer sm:right-6 sm:top-6"
-              aria-label="Cerrar modal"
+              className="sticky top-0 ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-cyan-700 hover:text-white"
             >
               ✕
             </button>
@@ -296,10 +315,18 @@ export default function EditorialHero() {
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Hora
                   </label>
-                  <input
-                    type="time"
+                  <select
+                    value={hora}
+                    onChange={(e) => setHora(e.target.value)}
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
-                  />
+                  >
+                    <option value="">Seleccionar horario</option>
+                    {generarHorarios().map((h) => (
+                      <option key={h} value={h}>
+                        {h}
+                      </option>
+                    ))}
+                  </select>
                   <p className="mt-2 text-xs text-slate-500">
                     Turnos de atención de 8 a 12:30 y de 15 a 18:30 hs, de lunes
                     a viernes.
@@ -319,6 +346,21 @@ export default function EditorialHero() {
                 />
                 <p className="mt-2 text-xs text-slate-500">
                   Ingresá tu nombre y apellido.
+                </p>
+              </div>
+
+              {/* TELÉFONO */}
+              <div>
+                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                  Teléfono
+                </label>
+                <input
+                  type="number"
+                  placeholder="Tu número de teléfono"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
+                />
+                <p className="mt-2 text-xs text-slate-500">
+                  Ingresá tu número de teléfono.
                 </p>
               </div>
 

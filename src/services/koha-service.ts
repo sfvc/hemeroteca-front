@@ -184,3 +184,53 @@ export const fecthSeccion_4 = async () => {
     return null;
   }
 };
+
+interface DirectusImage {
+  directus_files_id: string;
+}
+
+interface GaleriaAPI {
+  id: number;
+  nombre: string;
+  descripcion?: string;
+  activo: boolean;
+  link: string;
+  imagenes: DirectusImage[];
+}
+
+export interface Galeria {
+  id: number;
+  nombre: string;
+  descripcion?: string;
+  activo: boolean;
+  link: string;
+  imagenesConUrl: { url: string }[];
+}
+
+export const fetchGaleria = async (): Promise<Galeria[]> => {
+  try {
+    const response = await KohaApi.get<{ data: GaleriaAPI[] }>(
+      "/items/galeria?fields=*,imagenes.directus_files_id"
+    );
+
+    const data = response.data.data;
+    if (!data || data.length === 0) return [];
+
+    const apiUrl = KohaApi.defaults.baseURL || "";
+
+    return data.map((item) => ({
+      id: item.id,
+      nombre: item.nombre,
+      descripcion: item.descripcion,
+      activo: item.activo,
+      link: item.link,
+      imagenesConUrl:
+        item.imagenes?.map((img) => ({
+          url: `${apiUrl}/assets/${img.directus_files_id}`,
+        })) ?? [],
+    }));
+  } catch (error) {
+    console.error("Error fetching galeria:", error);
+    return [];
+  }
+};
