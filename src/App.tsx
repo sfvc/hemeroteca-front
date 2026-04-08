@@ -14,7 +14,6 @@ import VideoPage from "./pages/Video";
 function App() {
   return (
     <div className="min-h-dvh bg-white text-slate-900">
-      {/* <Navbar /> */}
 
       <main className="">
         <ScrollToTop />

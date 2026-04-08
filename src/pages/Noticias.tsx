@@ -9,7 +9,7 @@ import {
   MapPin,
   Ticket,
   Radio,
-  ChevronRight,
+  WandSparkles,
 } from "lucide-react";
 
 type NewNotice = {
@@ -39,38 +39,37 @@ const featuredNews: NewNotice[] = [
     image:
       "https://es.rollingstone.com/wp-content/uploads/2025/12/El-rock-esta-en-un-gran-momento-Airbag-1.jpg",
     Url: "https://youtu.be/dQw4w9WgXcQ?si=v37lWTMIOkm-YEGl",
-    Datos: [
-      "Lugar: Estadio Bicentenario",
-      "Horario: 22:00 hs",
-      "Entradas: anticipadas disponibles",
-      "Edad: mayores de 16 años",
-      "Se recomienda llegar con anticipación",
-      "Respetar indicaciones del personal",
-    ],
+    // Datos: [
+    //   "Lugar: Estadio Bicentenario",
+    //   "Horario: 22:00 hs",
+    //   "Entradas: anticipadas disponibles",
+    //   "Edad: mayores de 16 años",
+    //   "Se recomienda llegar con anticipación",
+    //   "Respetar indicaciones del personal",
+    // ],
     icon: Music2,
-    tone: "bg-red-600",
+    tone: "bg-[#F0901B]",
   },
   {
     id: 2,
-    label: "Rally",
+    label: "MMM: Misterios Misteriosamente Misteriosos",
     date: "27 marzo 2026",
-    title: "Nueva fecha del rally en Catamarca",
+    title: "Creen en lo Paranormal? Se viene el MMM a Catamarca",
     subTitle:
-      "Se viene una nueva jornada del automovilismo con gran expectativa entre pilotos y fanáticos.",
+      "La provincia se prepara para recibir a los investigadores más reconocidos del país en una jornada dedicada a los fenómenos paranormales.",
     description:
-      "La provincia vuelve a recibir una de las competencias más convocantes del calendario deportivo local. Será una fecha clave para el campeonato y una gran oportunidad para disfrutar de un fin de semana a pura velocidad. El circuito de Valle Viejo se prepara para recibir a los mejores pilotos y a miles de fanáticos.",
-    image:
-      "https://www.rallyargentino.com/documentos/carreras/716e0e0f0cd1ad74f5a510198a98b39f.jpg",
+      "El evento MMM: Misterios Misteriosamente Misteriosos llega a Catamarca con la presencia de expertos en fenómenos paranormales, quienes compartirán sus investigaciones y experiencias. La jornada promete ser una oportunidad única para los amantes del misterio y lo desconocido, con charlas, debates y actividades relacionadas con el mundo paranormal. Se espera una gran convocatoria de público interesado en descubrir los enigmas que rodean a estos fenómenos.",
+    image: "/Misterios.png",
     Url: "https://youtu.be/dQw4w9WgXcQ?si=v37lWTMIOkm-YEGl",
-    Datos: [
-      "Circuito: Valle Viejo",
-      "Hora de inicio: 09:00 hs",
-      "Acceso: libre en sectores habilitados",
-      "Actividades para toda la familia",
-      "Zona gastronómica disponible",
-    ],
-    icon: Flag,
-    tone: "bg-sky-600",
+    // Datos: [
+    //   "Circuito: Valle Viejo",
+    //   "Hora de inicio: 09:00 hs",
+    //   "Acceso: libre en sectores habilitados",
+    //   "Actividades para toda la familia",
+    //   "Zona gastronómica disponible",
+    // ],
+    icon: WandSparkles,
+    tone: "bg-[#0F4C94]",
   },
   {
     id: 3,
@@ -84,15 +83,15 @@ const featuredNews: NewNotice[] = [
     image:
       "https://latamvoyage.com/wp-content/uploads/2023/07/62bc7c6d8f22c.jpg",
     Url: "https://youtu.be/dQw4w9WgXcQ?si=v37lWTMIOkm-YEGl",
-    Datos: [
-      "Lugar: Predio Ferial",
-      "Horario general: 09:00 hs a 00:00 hs",
-      "Patios gastronómicos hasta la madrugada",
-      "Acceso libre en sectores seleccionados",
-      "Shows y actividades Novedades",
-    ],
+    // Datos: [
+    //   "Lugar: Predio Ferial",
+    //   "Horario general: 09:00 hs a 00:00 hs",
+    //   "Patios gastronómicos hasta la madrugada",
+    //   "Acceso libre en sectores seleccionados",
+    //   "Shows y actividades Novedades",
+    // ],
     icon: PartyPopper,
-    tone: "bg-orange-600",
+    tone: "bg-[#F0901B]",
   },
 ];
 
@@ -120,11 +119,11 @@ export default function Noticias() {
           <section className="mt-12 border-t border-slate-300 pt-8">
             <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto]">
               <div>
-                <p className="text-md font-bold uppercase tracking-[0.28em] text-cyan-600">
+                <p className="text-md font-bold uppercase tracking-windest text-cyan-600">
                   Cobertura destacada
                 </p>
                 <h2 className="mt-2 font-serif text-2xl font-black uppercase leading-none sm:text-2xl">
-                  En otras Noticias de la ciudad...
+                  En otras Novedades...
                 </h2>
               </div>
             </div>
@@ -285,8 +284,19 @@ function NewsCard({ news }: { news: NewNotice }) {
                 Lorem Ipsum.
               </p>
 
+              <p>
+                Lorem Ipsum has been the industry's standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem Ipsum.
+              </p>
+
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <h3 className="text-sm font-bold tracking-[0.16em] text-slate-500 uppercase">
+                <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
                   Palabras de la banda
                 </h3>
 
@@ -314,17 +324,17 @@ function NewsCard({ news }: { news: NewNotice }) {
 
             <div className="space-y-4 lg:col-span-5">
               {news.image && (
-                <div className="overflow-hidden rounded-2xl bg-slate-100">
+                <div className="overflow-hidden bg-slate-100 aspect-3/4 lg:aspect-2/3 flex items-center justify-center shadow-md">
                   <img
                     src={news.image}
                     alt={news.title}
-                    className="h-64 w-full object-cover"
+                    className="h-full w-full object-contain"
                   />
                 </div>
               )}
 
-              {news.Datos && news.Datos.length > 0 && (
-                <div className=" border border-slate-200 bg-slate-50 p-5">
+              {/* {news.Datos && news.Datos.length > 0 && (
+                <div className="border border-slate-200 bg-slate-50 p-5">
                   <h3 className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
                     Detalles
                   </h3>
@@ -340,7 +350,7 @@ function NewsCard({ news }: { news: NewNotice }) {
                     ))}
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
