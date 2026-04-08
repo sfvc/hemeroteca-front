@@ -3,126 +3,139 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchNoticias } from "../../services/koha-service";
 
 export default function NoticiasCarousel() {
-    const [imagenes, setImagenes] = useState<string[]>([]);
-    const [titulo, setTitulo] = useState<string>("");
-    const [descripcion, setDescripcion] = useState<string>("");
-    const [link, setLink] = useState<string>("");
-    const [current, setCurrent] = useState(0);
+  const [imagenes, setImagenes] = useState<string[]>([]);
+  const [titulo, setTitulo] = useState<string>("");
+  const [descripcion, setDescripcion] = useState<string>("");
+  const [link, setLink] = useState<string>("");
+  const [current, setCurrent] = useState(0);
 
-    useEffect(() => {
-        const load = async () => {
-            const data = await fetchNoticias();
+  useEffect(() => {
+    const load = async () => {
+      const data = await fetchNoticias();
 
-            if (!data || data.length === 0) return;
+      if (!data || data.length === 0) return;
 
-            const activa = data.find((n) => n.activo);
-            if (!activa) return;
+      const activa = data.find((n) => n.activo);
+      if (!activa) return;
 
-            const urls = activa.imagenesConUrl.map((img) => img.url);
+      const urls = activa.imagenesConUrl.map((img) => img.url);
 
-            setImagenes(urls);
-            setLink(activa.link);
-            setTitulo(activa.nombre);
-            setDescripcion(activa.descripcion ?? "");
-        };
+      setImagenes(urls);
+      setLink(activa.link);
+      setTitulo(activa.nombre);
+      setDescripcion(activa.descripcion ?? "");
+    };
 
-        load();
-    }, []);
+    load();
+  }, []);
 
-    useEffect(() => {
-        if (imagenes.length <= 1) return;
+  useEffect(() => {
+    if (imagenes.length <= 1) return;
 
-        const interval = setInterval(() => {
-            setCurrent((prev) => (prev + 1) % imagenes.length);
-        }, 5000);
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % imagenes.length);
+    }, 5000);
 
-        return () => clearInterval(interval);
-    }, [imagenes]);
+    return () => clearInterval(interval);
+  }, [imagenes]);
 
-    if (imagenes.length === 0) return null;
+  if (imagenes.length === 0) return null;
 
-    return (
-        <section className="relative w-full h-105 overflow-hidden shadow-xl p-6">
+  return (
+    <section className="w-full border border-slate-200 overflow-hidden shadow-md p-6 bg-white">
+      <div className="mb-6">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-700 mb-1">
+          Ilustración
+        </p>
 
-            <div className="mb-6 flex items-center justify-between">
-                <div>
-                    <h3 className="font-serif text-2xl font-black text-slate-800">
-                        {titulo}
-                    </h3>
+        <h3 className="font-serif text-2xl font-black text-slate-800">
+          {titulo}
+        </h3>
 
-                    <p className="text-sm text-slate-600 max-w-2xl mt-2">
-                        {descripcion}
-                    </p>
-                </div>
-            </div>
+        <p className="text-sm text-slate-600 max-w-2xl mt-2">{descripcion}</p>
+      </div>
 
+      {/* Contenedor SOLO del carrusel */}
+      <div className="relative w-full h-[420px] overflow-hidden rounded-xl">
+        <div
+          className="flex h-full transition-transform duration-700 ease-in-out"
+          style={{
+            transform: `translateX(-${current * 100}%)`,
+          }}
+        >
+          {imagenes.map((img, i) => (
             <div
-                className="flex h-full transition-transform duration-700 ease-in-out"
-                style={{
-                    transform: `translateX(-${current * 100}%)`,
-                }}
+              key={i}
+              className="min-w-full h-full flex items-center justify-center"
             >
-                {imagenes.map((img, i) => (
-                    <div key={i} className="min-w-full h-full">
-                        <img
-                            src={img}
-                            className="w-full h-full object-cover cursor-pointer"
-                            onClick={() => window.open(link, "_blank")}
-                        />
-                    </div>
-                ))}
+              <img
+                src={img}
+                alt={`Noticia ${i + 1}`}
+                className="w-full h-full object-cover object-center cursor-pointer"
+                onClick={() => window.open(link, "_blank")}
+              />
             </div>
+          ))}
+        </div>
 
-            {imagenes.length > 1 && (
-                <>
-                    <button
-                        onClick={() =>
-                            setCurrent((prev) =>
-                                prev === 0 ? imagenes.length - 1 : prev - 1
-                            )
-                        }
-                        className="cursor-pointer absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 backdrop-blur p-3 rounded-full hover:bg-white/50 transition"
-                    >
-                        <ChevronLeft />
-                    </button>
+        {imagenes.length > 1 && (
+          <>
+            <button
+              onClick={() =>
+                setCurrent(
+                  (prev) => (prev - 1 + imagenes.length) % imagenes.length,
+                )
+              }
+              className="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95"
+              style={{
+                background: "rgba(255,255,255,0.18)",
+                backdropFilter: "blur(8px)",
+                color: "white",
+              }}
+              aria-label="Anterior"
+            >
+              <ChevronLeft size={24} />
+            </button>
 
-                    <button
-                        onClick={() =>
-                            setCurrent((prev) => (prev + 1) % imagenes.length)
-                        }
-                        className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 backdrop-blur p-3 rounded-full hover:bg-white/50 transition"
-                    >
-                        <ChevronRight />
-                    </button>
-                </>
-            )}
+            <button
+              onClick={() => setCurrent((prev) => (prev + 1) % imagenes.length)}
+              className="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full cursor-pointer transition-all duration-200 hover:scale-110 active:scale-95"
+              style={{
+                background: "rgba(255,255,255,0.18)",
+                backdropFilter: "blur(8px)",
+                color: "white",
+              }}
+              aria-label="Siguiente"
+            >
+              <ChevronRight size={24} />
+            </button>
 
-            {imagenes.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {imagenes.map((_, i) => (
-                        <div
-                            key={i}
-                            onClick={() => setCurrent(i)}
-                            className={`h-2 rounded-full cursor-pointer transition-all ${i === current ? "bg-white w-6" : "bg-white/50 w-2"
-                                }`}
-                        />
-                    ))}
-                </div>
-            )}
-
-            {/* VER MÁS */}
-            <div className="flex justify-center mt-6">
-                <button
-                    onClick={() => window.open(link, "_blank")}
-                    className="group flex items-center gap-2 bg-white/90 backdrop-blur text-slate-800 px-6 py-3 rounded-full font-semibold shadow-md hover:bg-white transition-all duration-300 hover:scale-105"
-                >
-                    Ver más
-                    <span className="transition-transform group-hover:translate-x-1">
-                        →
-                    </span>
-                </button>
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+              {imagenes.map((_, i) => (
+                <div
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`h-2 rounded-full cursor-pointer transition-all ${
+                    i === current ? "bg-cyan-600 w-6" : "bg-white/90 w-2"
+                  }`}
+                />
+              ))}
             </div>
+          </>
+        )}
+      </div>
 
-        </section>
-    );
+      {/* <div className="flex justify-center mt-6">
+        <button
+          onClick={() => window.open(link, "_blank")}
+          className="group flex items-center gap-2 bg-white/90 backdrop-blur text-slate-800 px-6 py-3 rounded-full font-semibold shadow-md hover:bg-white transition-all duration-300 hover:scale-105"
+        >
+          Ver más
+          <span className="transition-transform group-hover:translate-x-1">
+            →
+          </span>
+        </button>
+      </div> */}
+    </section>
+  );
 }

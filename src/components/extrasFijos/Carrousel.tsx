@@ -51,7 +51,7 @@ export default function Carrousel() {
   const total = item.imagenesConUrl.length;
   const imageUrl = item.imagenesConUrl[index].url;
 
-  const textColor = item.color_texto || "#1e293b"; 
+  const textColor = item.color_texto || "#1e293b";
 
   return (
     <section className="overflow-hidden bg-white">
