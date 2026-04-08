@@ -3,10 +3,10 @@ import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import KohaApi from "../../api/kohaApi";
 import {
-  fecthSeccion_1,
-  fecthSeccion_2,
-  fecthSeccion_3,
-  fecthSeccion_4,
+  fetchSeccion_1,
+  fetchSeccion_2,
+  fetchSeccion_3,
+  fetchSeccion_4,
 } from "../../services/koha-service";
 
 interface Seccion {
@@ -54,10 +54,10 @@ export default function SeccionesSecundarias() {
     const loadSecciones = async () => {
       try {
         const [s1, s2, s3, s4] = await Promise.all([
-          fecthSeccion_1(),
-          fecthSeccion_2(),
-          fecthSeccion_3(),
-          fecthSeccion_4(),
+          fetchSeccion_1(),
+          fetchSeccion_2(),
+          fetchSeccion_3(),
+          fetchSeccion_4(),
         ]);
         setSecciones([s1, s2, s3, s4]);
       } catch (error) {
