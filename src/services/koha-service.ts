@@ -117,6 +117,16 @@ export const fetchBotonDerecho = async () => {
   }
 };
 
+export const fetchReviews = async () => {
+  try {
+    const response = await KohaApi.get("/items/reviews");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return null;
+  }
+};
+
 export const fetchEquipo = async () => {
   try {
     const response = await KohaApi.get("/items/equipo");
