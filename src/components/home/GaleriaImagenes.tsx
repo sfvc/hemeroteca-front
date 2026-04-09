@@ -1,99 +1,101 @@
-import { useEffect, useState } from "react";
-import { fetchGaleria, type Galeria } from "../../services/koha-service";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 
-export default function GaleriaComponent() {
-  const [galeriaActiva, setGaleriaActiva] = useState<Galeria | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+const images = ["/airbagBanner2.png", "/hemerotecaVintage.png", "/HM.png"];
 
-  useEffect(() => {
-    fetchGaleria().then((data) => {
-      const activa = data.find((g) => g.activo);
-      setGaleriaActiva(activa || null);
-    });
-  }, []);
+export default function GaleriaHome() {
+  const [current, setCurrent] = useState(0);
+  const [open, setOpen] = useState(false);
 
-  // 👉 autoplay (opcional)
-  useEffect(() => {
-    if (!galeriaActiva) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) =>
-        prev === galeriaActiva.imagenesConUrl.length - 1 ? 0 : prev + 1
-      );
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [galeriaActiva]);
-
-  if (!galeriaActiva) return null;
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? galeriaActiva.imagenesConUrl.length - 1 : prev - 1
-    );
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === galeriaActiva.imagenesConUrl.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const currentImage = galeriaActiva.imagenesConUrl[currentIndex];
+  const isSingle = images.length === 1;
 
   return (
-    <section className="w-full max-w-10xl mx-auto p-6 border border-slate-100 shadow-md rounded-xl">
-            <div className="mb-6 flex items-center justify-between">
-                <div>
-                    <h3 className="font-serif text-2xl font-black text-slate-800">
-                        {galeriaActiva.nombre}
-                    </h3>
+    <>
+      <section className="group bg-white border border-gray-100 p-6">
+        {/* HEADER */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-700 mb-1">
+              Ilustracion
+            </p>
 
-                    <p className="text-sm text-slate-600 max-w-2xl mt-2">
-                        {galeriaActiva.descripcion}
-                    </p>
-                </div>
-            </div>
-      <div className="relative group">
-        {/* 👉 Imagen clickeable */}
-        <a href={galeriaActiva.link} target="_blank" rel="noopener noreferrer">
+            {/* Si quiere ver mas imagenes en la fototeca tendra q hacer clik y loguearse */}
+
+            <h3 className="font-serif text-2xl font-black text-slate-800">
+              Galeria de Imagenes
+            </h3>
+          </div>
+        </div>
+
+        {/* IMAGENES (que las imagenes del carrusel se vean completas) */}
+        <div
+          onClick={() => setOpen(true)}
+          className="relative cursor-pointer overflow-hidden rounded-2xl"
+        >
           <img
-            src={currentImage.url}
-            alt={`galeria-${currentIndex}`}
-            className="w-full h-64 md:h-96 rounded-xl cursor-pointer transition hover:scale-[1.02]" // object-cover
+            src={images[current]}
+            className="w-full h-100 md:h-125 object-contain bg-slate-100"
           />
-        </a>
 
-        {/* 👉 Botón izquierda */}
-        <button
-          onClick={prevSlide}
-          className="cursor-pointer absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
-        >
-          <ChevronLeft size={24} />
-        </button>
+          <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
 
-        {/* 👉 Botón derecha */}
-        <button
-          onClick={nextSlide}
-          className="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </div>
+          <div className="absolute right-4 top-4 rounded-full bg-white/90 p-3 shadow-md backdrop-blur">
+            <Expand className="h-5 w-5" />
+          </div>
 
-      {/* 👉 Indicadores */}
-      <div className="flex justify-center gap-2 mt-4">
-        {galeriaActiva.imagenesConUrl.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrentIndex(i)}
-            className={`w-3 h-3 rounded-full ${
-              i === currentIndex ? "bg-black" : "bg-gray-400"
-            }`}
-          />
-        ))}
-      </div>
-    </section>
+          {!isSingle && (
+            <>
+              {/* BOTON IZQUIERDA*/}
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrent((c) => (c - 1 + images.length) % images.length);
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/30 p-3 shadow-md cursor-pointer"
+              >
+                <ChevronLeft />
+              </button>
+
+              {/* BOTON DERECHA*/}
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrent((c) => (c + 1) % images.length);
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/30 p-3 shadow-md cursor-pointer"
+              >
+                <ChevronRight />
+              </button>
+            </>
+          )}
+        </div>
+
+        <p className="mt-5 max-w-2xl text-sm leading-6 text-slate-600">
+          Un recorrido visual por nuestras instalaciones, archivos históricos y
+          espacios de consulta.
+        </p>
+      </section>
+
+      {/* MODAL PARA VER FOTO*/}
+      {open && (
+        <div className="fixed inset-0 z-90 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-5xl">
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute -top-12 right-0 text-white cursor-pointer"
+            >
+              <X size={28} />
+            </button>
+
+            <img
+              src={images[current]}
+              className="w-full rounded-2xl object-contain max-h-[80vh]"
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }

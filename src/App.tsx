@@ -10,6 +10,7 @@ import ScrollToTop from "./util/ScrollToTop";
 import Equipo from "./pages/Equipo";
 import RetroTv from "./components/extrasFijos/RetroTv";
 import VideoPage from "./pages/Video";
+// import Colecciones from "./pages/Colecciones";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/practicas-conservacion" element={<RetroTv />} />
           <Route path="/detras-foto" element={<RetroTv />} />
           <Route path="/video" element={<VideoPage />} />
+          {/* <Route path="/colecciones" element={<Colecciones />} /> */}
+
         </Routes>
       </main>
       <Footer />

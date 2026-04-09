@@ -68,9 +68,10 @@ export default function EditorialHero() {
   };
 
   const navClass = (route: string) =>
-    `transition ${isActive(route)
-      ? "text-cyan-600 font-bold"
-      : "text-slate-700 hover:text-slate-950"
+    `transition ${
+      isActive(route)
+        ? "text-cyan-600 font-bold"
+        : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -167,15 +168,24 @@ export default function EditorialHero() {
                   </button>
                 )}
 
+                {/* SOLICITAR TURNO PRESENCIAL */}
+
                 <button
                   onClick={() => setOpenModal(true)}
-                  style={{
-                    backgroundColor: botonDerecho?.color_fondo || "#334155",
-                    color: botonDerecho?.color_texto || "#ffffff",
-                  }}
-                  className="cursor-pointer flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium shadow-sm transition-all duration-300 hover:opacity-90"
+                  className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
                 >
                   Solicitar Turno
+                </button>
+
+                {/* IR A LA AGM DENUEVO */}
+
+                <button
+                  onClick={() =>
+                    window.open("https://agm.cc.gob.ar/", "_blank")
+                  }
+                  className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white shadow-md"
+                >
+                  Archivo General Municipal
                 </button>
 
                 {botonDerecho && (
@@ -243,9 +253,9 @@ export default function EditorialHero() {
               <Link to="/" className={navClass("/")}>
                 Inicio
               </Link>
-              <Link to="/login" className={navClass("/login")}>
+              {/* <Link to="/login" className={navClass("/login")}>
                 Hemeroteca Digital
-              </Link>
+              </Link> */}
               <Link to="/login" className={navClass("/login")}>
                 Catalogo
               </Link>
@@ -263,24 +273,25 @@ export default function EditorialHero() {
       {/* MODAL */}
       {openModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-3 py-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-3 py-2 backdrop-blur-sm"
           onClick={() => setOpenModal(false)}
         >
           <div
-            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white p-5 sm:p-8 rounded-2xl shadow-2xl"
+            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white px-5 pb-5 pt-4 shadow-2xl sm:px-8 sm:pb-8 sm:pt-5"
             onClick={(e) => e.stopPropagation()}
           >
             {/* BOTON CERRAR */}
             <button
               onClick={() => setOpenModal(false)}
-              className="sticky top-0 ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 hover:bg-cyan-700 hover:text-white"
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white"
+              aria-label="Cerrar modal"
             >
               ✕
             </button>
 
             {/* HEADER */}
-            <div className="mb-6 border-b border-slate-200 pb-4">
-              <h2 className="cursor-pointermb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl mb-3">
+            <div className="mb-6 border-b border-slate-200 py-4 pr-12">
+              <h2 className="mb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
                 Solicitar Turno Presencial
               </h2>
 
@@ -355,7 +366,7 @@ export default function EditorialHero() {
                   Teléfono
                 </label>
                 <input
-                  type="number"
+                  type="tel"
                   placeholder="Tu número de teléfono"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
@@ -395,7 +406,7 @@ export default function EditorialHero() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-cyan-600 hover:shadow-lg cursor-pointer"
+                  className="w-full cursor-pointer bg-cyan-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-cyan-600 hover:shadow-lg"
                 >
                   Enviar solicitud
                 </button>
