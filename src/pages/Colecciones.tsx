@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { ChevronRight, Check } from "lucide-react";
+import EditorialHero from "../components/home/EditorialNavbar";
 
 type Categoria = "colecciones" | "diarios" | "revistas";
 type TipoHemeroteca = "municipal" | "digital";
@@ -268,6 +269,9 @@ export default function Colecciones() {
 
   return (
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8">
+
+<EditorialHero />
+
       <div className="mt-5 mb-6 flex items-center justify-center gap-8">
         <button
           onClick={() => setTipoActivo("municipal")}
