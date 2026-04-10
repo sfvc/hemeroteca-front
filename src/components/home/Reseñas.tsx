@@ -39,6 +39,12 @@ export default function ResenasHome() {
     loadReviews();
   }, []);
 
+  const activeReviews = reviews.filter((r) => r.activo === true);
+
+  if (!loading && activeReviews.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <section className="bg-white p-6 border border-slate-100 shadow-md">
@@ -64,24 +70,21 @@ export default function ResenasHome() {
           <p className="text-sm text-slate-500">Cargando reseñas...</p>
         ) : (
           <div className="grid gap-4 md:grid-cols-3">
-            {reviews
-              .filter((r) => r.activo === true)
-              .slice(0, 3)
-              .map((r) => (
-                <article
-                  key={r.id}
-                  className="rounded-2xl bg-slate-50 p-5 transition hover:-translate-y-1 hover:shadow-md"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold">{r.nombre}</span>
-                    <Stars n={r.estrellas} />
-                  </div>
+            {activeReviews.slice(0, 3).map((r) => (
+              <article
+                key={r.id}
+                className="rounded-2xl bg-slate-50 p-5 transition hover:-translate-y-1 hover:shadow-md"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-bold">{r.nombre}</span>
+                  <Stars n={r.estrellas} />
+                </div>
 
-                  <p className="mt-3 text-sm text-slate-600">
-                    {r.descripcion}
-                  </p>
-                </article>
-              ))}
+                <p className="mt-3 text-sm text-slate-600">
+                  {r.descripcion}
+                </p>
+              </article>
+            ))}
           </div>
         )}
       </section>
@@ -101,17 +104,19 @@ export default function ResenasHome() {
             </div>
 
             <div className="space-y-4 max-h-[70vh] overflow-y-auto">
-              {reviews.map((r) => (
-                <div key={r.id} className="border-b pb-3">
-                  <div className="flex justify-between">
-                    <span className="font-semibold">{r.nombre}</span>
-                    <Stars n={r.estrellas} />
+              {reviews
+                .filter((r) => r.activo === true)
+                .map((r) => (
+                  <div key={r.id} className="border-b pb-3">
+                    <div className="flex justify-between">
+                      <span className="font-semibold">{r.nombre}</span>
+                      <Stars n={r.estrellas} />
+                    </div>
+                    <p className="text-sm text-slate-600 mt-1">
+                      {r.descripcion}
+                    </p>
                   </div>
-                  <p className="text-sm text-slate-600 mt-1">
-                    {r.descripcion}
-                  </p>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
