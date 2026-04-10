@@ -256,7 +256,7 @@ export default function EditorialHero() {
               {/* <Link to="/login" className={navClass("/login")}>
                 Hemeroteca Digital
               </Link> */}
-              <Link to="/login" className={navClass("/login")}>
+              <Link to="/colecciones" className={navClass("/colecciones")}>
                 Catalogo
               </Link>
               <Link to="/noticias" className={navClass("/noticias")}>
