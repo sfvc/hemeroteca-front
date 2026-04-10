@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { ChevronRight, Check } from "lucide-react";
-import EditorialHero from "../components/home/EditorialNavbar";
 
 type Categoria = "colecciones" | "diarios" | "revistas";
+type TipoHemeroteca = "municipal" | "digital";
 
 interface FiltroCard {
   id: Categoria;
@@ -48,74 +48,115 @@ const filtros: FiltroCard[] = [
   },
 ];
 
-const itemsColeccion: ItemColeccion[] = [
-  {
-    id: 1,
-    titulo: "El Ancasti",
-    categoria: "diarios",
-    imagen:
-      "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
-    descripcion: "Edición matutina",
-  },
-  {
-    id: 2,
-    titulo: "La Unión",
-    categoria: "diarios",
-    imagen:
-      "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
-    descripcion: "Portada histórica",
-  },
-  {
-    id: 3,
-    titulo: "Boletín Municipal",
-    categoria: "colecciones",
-    imagen: "/ColeccionesLa.png",
-    descripcion: "Colección institucional",
-  },
-  {
-    id: 4,
-    titulo: "Periódico Regional",
-    categoria: "colecciones",
-    imagen: "/ColeccionesLa.png",
-    descripcion: "Archivo de consulta",
-  },
-  {
-    id: 5,
-    titulo: "Revista Cultural",
-    categoria: "revistas",
-    imagen: "/Revistas.png",
-    descripcion: "Edición especial",
-  },
-  {
-    id: 6,
-    titulo: "Revista Patrimonio",
-    categoria: "revistas",
-    imagen: "/Revistas.png",
-    descripcion: "Archivo gráfico",
-  },
-  {
-    id: 7,
-    titulo: "Crónica Local",
-    categoria: "diarios",
-    imagen:
-      "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
-    descripcion: "Hemeroteca diaria",
-  },
-  {
-    id: 8,
-    titulo: "Semanario del Valle",
-    categoria: "colecciones",
-    imagen: "/ColeccionesLa.png",
-    descripcion: "Colección regional",
-  },
-  {
-    id: 9,
-    titulo: "Revista Historia",
-    categoria: "revistas",
-    imagen: "/Revistas.png",
-    descripcion: "Número de colección",
-  },
-];
+const itemsColeccion: Record<TipoHemeroteca, ItemColeccion[]> = {
+  municipal: [
+    {
+      id: 1,
+      titulo: "El Ancasti",
+      categoria: "diarios",
+      imagen:
+        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      descripcion: "Edición matutina",
+    },
+    {
+      id: 2,
+      titulo: "La Unión",
+      categoria: "diarios",
+      imagen:
+        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      descripcion: "Portada histórica",
+    },
+    {
+      id: 3,
+      titulo: "Boletín Municipal",
+      categoria: "colecciones",
+      imagen: "/ColeccionesLa.png",
+      descripcion: "Colección institucional",
+    },
+    {
+      id: 4,
+      titulo: "Periódico Regional",
+      categoria: "colecciones",
+      imagen: "/ColeccionesLa.png",
+      descripcion: "Archivo de consulta",
+    },
+    {
+      id: 5,
+      titulo: "Revista Cultural",
+      categoria: "revistas",
+      imagen: "/Revistas.png",
+      descripcion: "Edición especial",
+    },
+    {
+      id: 6,
+      titulo: "Revista Patrimonio",
+      categoria: "revistas",
+      imagen: "/Revistas.png",
+      descripcion: "Archivo gráfico",
+    },
+    {
+      id: 7,
+      titulo: "Crónica Local",
+      categoria: "diarios",
+      imagen:
+        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      descripcion: "Hemeroteca diaria",
+    },
+    {
+      id: 8,
+      titulo: "Semanario del Valle",
+      categoria: "colecciones",
+      imagen: "/ColeccionesLa.png",
+      descripcion: "Colección regional",
+    },
+    {
+      id: 9,
+      titulo: "Revista Historia",
+      categoria: "revistas",
+      imagen: "/Revistas.png",
+      descripcion: "Número de colección",
+    },
+  ],
+  digital: [
+    {
+      id: 10,
+      titulo: "Archivo Digital Catamarca",
+      categoria: "colecciones",
+      imagen: "/ColeccionesLa.png",
+      descripcion: "Colección digitalizada",
+    },
+    {
+      id: 11,
+      titulo: "Diario Web Histórico",
+      categoria: "diarios",
+      imagen:
+        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      descripcion: "Ediciones en formato digital",
+    },
+    {
+      id: 12,
+      titulo: "Revista Digital Patrimonio",
+      categoria: "revistas",
+      imagen: "/Revistas.png",
+      descripcion: "Publicación digital",
+    },
+    {
+      id: 13,
+      titulo: "Biblioteca de Boletines",
+      categoria: "colecciones",
+      imagen: "/ColeccionesLa.png",
+      descripcion: "Documentos digitalizados",
+    },
+    {
+      id: 14,
+      titulo: "Noticias del Archivo",
+      categoria: "diarios",
+      imagen:
+        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      descripcion: "Consulta online",
+    },
+  ],
+};
 
 const nombresCategoria: Record<Categoria, string> = {
   colecciones: "Colecciones",
@@ -132,16 +173,12 @@ function FiltroPrincipalCard({
   activo: boolean;
   onClick: () => void;
 }) {
-  {
-    /* Cards que funcionan como filtro */
-  }
-
   return (
     <article
       onClick={onClick}
       className="group w-full overflow-hidden bg-white shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-md cursor-pointer"
     >
-      <div className="relative aspect-6/4 overflow-hidden">
+      <div className="relative aspect-9/4 overflow-hidden">
         <img
           src={item.imagen}
           alt={item.titulo}
@@ -184,10 +221,6 @@ function FiltroPrincipalCard({
   );
 }
 
-{
-  /* Card de miniatura */
-}
-
 function MiniCard({ item }: { item: ItemColeccion }) {
   return (
     <article className="group overflow-hidden bg-slate-100 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer">
@@ -225,61 +258,161 @@ function MiniCard({ item }: { item: ItemColeccion }) {
 
 export default function Colecciones() {
   const [filtroActivo, setFiltroActivo] = useState<Categoria>("colecciones");
+  const [tipoActivo, setTipoActivo] = useState<TipoHemeroteca>("municipal");
 
   const itemsFiltrados = useMemo(() => {
-    return itemsColeccion.filter((item) => item.categoria === filtroActivo);
-  }, [filtroActivo]);
+    return itemsColeccion[tipoActivo].filter(
+      (item) => item.categoria === filtroActivo,
+    );
+  }, [filtroActivo, tipoActivo]);
 
   return (
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8">
-      {/* Editorial Hero */}
+      <div className="mt-5 mb-6 flex items-center justify-center gap-8">
+        <button
+          onClick={() => setTipoActivo("municipal")}
+          className={`pb-3 text-xl font-bold uppercase font-serif transition cursor-pointer ${
+            tipoActivo === "municipal"
+              ? "text-slate-900 border-b-4 border-cyan-700"
+              : "text-slate-500 border-b-2 border-transparent hover:text-slate-800"
+          }`}
+        >
+          Hemeroteca Municipal
+        </button>
 
-      <EditorialHero />
-      <div className="mb-5 border-b pt-5 border-slate-300 pb-3" />
-
-      <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-        {filtros.map((item) => (
-          <FiltroPrincipalCard
-            key={item.id}
-            item={item}
-            activo={filtroActivo === item.id}
-            onClick={() => setFiltroActivo(item.id)}
-          />
-        ))}
+        <button
+          onClick={() => setTipoActivo("digital")}
+          className={`pb-3 text-xl font-bold uppercase font-serif transition cursor-pointer ${
+            tipoActivo === "digital"
+              ? "text-slate-900 border-b-4 border-cyan-700"
+              : "text-slate-500 border-b-2 border-transparent hover:text-slate-800"
+          }`}
+        >
+          Hemeroteca Digital
+        </button>
       </div>
 
-      <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
-            Colección seleccionada
-          </span>
-          <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
-            {nombresCategoria[filtroActivo]}
-          </h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            {itemsFiltrados.length} elemento
-            {itemsFiltrados.length !== 1 ? "s" : ""} disponible
-            {itemsFiltrados.length !== 1 ? "s" : ""}
-          </p>
+      <div className="overflow-hidden">
+        <div
+          className={`flex w-[200%] transition-transform duration-500 ease-in-out ${
+            tipoActivo === "municipal" ? "translate-x-0" : "-translate-x-1/2"
+          }`}
+        >
+          <div className="w-1/2 shrink-0 pr-4">
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+                Colección seleccionada
+              </span>
+              <h1 className="text-2xl font-bold uppercase text-slate-800 font-serif">
+                Selecciona el tipo de Documento:
+              </h1>
+            </div>
+
+            <div className="mb-5 pt-1 pb-3" />
+
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {filtros.map((item) => (
+                <FiltroPrincipalCard
+                  key={`municipal-${item.id}`}
+                  item={item}
+                  activo={filtroActivo === item.id}
+                  onClick={() => setFiltroActivo(item.id)}
+                />
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+                  Colección seleccionada
+                </span>
+                <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
+                  {nombresCategoria[filtroActivo]}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  {itemsFiltrados.length} elemento
+                  {itemsFiltrados.length !== 1 ? "s" : ""} disponible
+                  {itemsFiltrados.length !== 1 ? "s" : ""}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {itemsFiltrados.map((item) => (
+                <MiniCard key={item.id} item={item} />
+              ))}
+            </div>
+
+            {itemsFiltrados.length === 0 && (
+              <div className="mt-10 rounded-sm border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+                <p className="font-serif text-2xl font-bold text-slate-800">
+                  No hay elementos en esta categoría
+                </p>
+                <p className="mt-2 text-sm text-slate-600">
+                  Probá seleccionando otro filtro.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="w-1/2 shrink-0 pl-4">
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+                Colección seleccionada
+              </span>
+              <h1 className="text-2xl font-bold uppercase text-slate-800 font-serif">
+                Selecciona el tipo de Documento:
+              </h1>
+            </div>
+
+            <div className="mb-5 pt-1 pb-3" />
+
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {filtros.map((item) => (
+                <FiltroPrincipalCard
+                  key={`digital-${item.id}`}
+                  item={item}
+                  activo={filtroActivo === item.id}
+                  onClick={() => setFiltroActivo(item.id)}
+                />
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+                  Colección seleccionada
+                </span>
+                <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
+                  {nombresCategoria[filtroActivo]}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  {itemsFiltrados.length} elemento
+                  {itemsFiltrados.length !== 1 ? "s" : ""} disponible
+                  {itemsFiltrados.length !== 1 ? "s" : ""}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {itemsFiltrados.map((item) => (
+                <MiniCard key={item.id} item={item} />
+              ))}
+            </div>
+
+            {itemsFiltrados.length === 0 && (
+              <div className="mt-10 rounded-sm border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
+                <p className="font-serif text-2xl font-bold text-slate-800">
+                  No hay elementos en esta categoría
+                </p>
+                <p className="mt-2 text-sm text-slate-600">
+                  Probá seleccionando otro filtro.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {itemsFiltrados.map((item) => (
-          <MiniCard key={item.id} item={item} />
-        ))}
-      </div>
-
-      {itemsFiltrados.length === 0 && (
-        <div className="mt-10 rounded-sm border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
-          <p className="font-serif text-2xl font-bold text-slate-800">
-            No hay elementos en esta categoría
-          </p>
-          <p className="mt-2 text-sm text-slate-600">
-            Probá seleccionando otro filtro.
-          </p>
-        </div>
-      )}
     </section>
   );
 }
