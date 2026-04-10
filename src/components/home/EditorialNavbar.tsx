@@ -162,7 +162,7 @@ export default function EditorialHero() {
                     }
                     disabled={!botonIzquierdo.activo}
                     style={getButtonStyle(botonIzquierdo)}
-                    className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-80"
+                    className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
                   >
                     {botonIzquierdo.titulo}
                   </button>
@@ -195,7 +195,7 @@ export default function EditorialHero() {
                     }
                     disabled={!botonDerecho.activo}
                     style={getButtonStyle(botonDerecho)}
-                    className="flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-80"
+                    className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
                   >
                     {botonDerecho.titulo}
                   </button>

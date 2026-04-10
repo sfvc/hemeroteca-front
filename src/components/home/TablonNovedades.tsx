@@ -19,6 +19,7 @@ interface NovedadesItem {
   contenido?: string;
   icono?: string;
   activo?: boolean;
+  link?: string | null;
 }
 
 const iconMap = [
@@ -71,9 +72,8 @@ export default function TablonNovedades({ compact = false }) {
 
   return (
     <section
-      className={`relative overflow-hidden border border-slate-200 bg-[#eeebea] mt-5 ${
-        compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
-      }`}
+      className={`relative overflow-hidden border border-slate-200 bg-[#eeebea] mt-5 ${compact ? "p-4 sm:p-5" : "p-5 sm:p-6"
+        }`}
     >
       <div className="absolute inset-0 opacity-10 background-image:[radial-gradient(#ffffff_1px,transparent_1px) background-size:14px_14px]" />
       <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-black/10" />
@@ -92,58 +92,62 @@ export default function TablonNovedades({ compact = false }) {
         <div className="space-y-4">
           {loading
             ? Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={index}
+                className="relative bg-gray-100 min-h-30 p-4 animate-pulse shadow-[0_12px_25px_rgba(15,23,42,0.18)]"
+              >
                 <div
-                  key={index}
-                  className="relative bg-gray-100 min-h-30 p-4 animate-pulse shadow-[0_12px_25px_rgba(15,23,42,0.18)]"
-                >
-                  <div
-                    className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${
-                      pinColors[index % pinColors.length]
+                  className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${pinColors[index % pinColors.length]
                     }`}
-                  />
+                />
 
-                  <div className="mb-3 flex items-center gap-2">
-                    <div className="h-5 w-5 bg-slate-300 rounded" />
-                    <div className="h-3 w-40 bg-slate-300 rounded" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="h-3 w-full bg-slate-300 rounded" />
-                    <div className="h-3 w-5/6 bg-slate-300 rounded" />
-                    <div className="h-3 w-2/3 bg-slate-300 rounded" />
-                  </div>
+                <div className="mb-3 flex items-center gap-2">
+                  <div className="h-5 w-5 bg-slate-300 rounded" />
+                  <div className="h-3 w-40 bg-slate-300 rounded" />
                 </div>
-              ))
+
+                <div className="space-y-2">
+                  <div className="h-3 w-full bg-slate-300 rounded" />
+                  <div className="h-3 w-5/6 bg-slate-300 rounded" />
+                  <div className="h-3 w-2/3 bg-slate-300 rounded" />
+                </div>
+              </div>
+            ))
             : novedades.map((note, index) => {
-                const Icon = iconMap[index % iconMap.length];
+              const Icon = iconMap[index % iconMap.length];
 
-                return (
-                  <article
-                    key={note.id}
-                    className="group relative transition duration-300 hover:scale-[1.02] cursor-pointer"
-                  >
-                    <div className="bg-gray-100 relative min-h-30 p-4 shadow-[0_12px_25px_rgba(15,23,42,0.18)]">
-                      <div
-                        className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${
-                          pinColors[index % pinColors.length]
+              return (
+                <article
+                  key={note.id}
+                  onClick={() => {
+                    if (note.link) {
+                      window.open(note.link, "_blank");
+                    }
+                  }}
+                  className={`group relative transition duration-300 hover:scale-[1.02] ${note.link ? "cursor-pointer hover:shadow-xl" : "cursor-default"
+                    }`}
+                >
+                  <div className="bg-gray-100 relative min-h-30 p-4 shadow-[0_12px_25px_rgba(15,23,42,0.18)]">
+                    <div
+                      className={`absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full ${pinColors[index % pinColors.length]
                         } shadow-md`}
-                      />
-                      <div className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-[40%] rounded-full bg-white/75" />
+                    />
+                    <div className="absolute -top-1 left-1/2 h-1.5 w-1.5 -translate-x-[40%] rounded-full bg-white/75" />
 
-                      <div className="mb-3 flex items-center gap-2 text-slate-700">
-                        <Icon className="h-5 w-5" />
-                        <span className="text-[11px] font-bold uppercase tracking-[0.24em]">
-                          {note.titulo}
-                        </span>
-                      </div>
-
-                      <p className="text-sm font-semibold leading-6 text-slate-800">
-                        {note.contenido}
-                      </p>
+                    <div className="mb-3 flex items-center gap-2 text-slate-700">
+                      <Icon className="h-5 w-5" />
+                      <span className="text-[11px] font-bold uppercase tracking-[0.24em]">
+                        {note.titulo}
+                      </span>
                     </div>
-                  </article>
-                );
-              })}
+
+                    <p className="text-sm font-semibold leading-6 text-slate-800">
+                      {note.contenido}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
         </div>
       </div>
     </section>

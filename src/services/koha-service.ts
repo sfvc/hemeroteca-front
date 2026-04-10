@@ -1,8 +1,14 @@
 import KohaApi from "../api/kohaApi";
 
 /* ─── Interfaces ────────────────────────────────────────── */
+
+interface DirectusFile {
+  id: string;
+  modified_on: string;
+}
+
 interface DirectusImage {
-  directus_files_id: string;
+  directus_files_id: DirectusFile;
 }
 
 interface NoticiaAPI {
@@ -41,10 +47,25 @@ export interface Galeria {
   imagenesConUrl: { url: string }[];
 }
 
+/* ─── Constantes ────────────────────────────────────────── */
+
+const IMAGE_FIELDS =
+  "imagenes.directus_files_id.id,imagenes.directus_files_id.modified_on";
+
 /* ─── Helpers ────────────────────────────────────────── */
+
 const mapImagenes = (imagenes?: DirectusImage[]) => {
   const apiUrl = KohaApi.defaults.baseURL || "";
-  return imagenes?.map((img) => ({ url: `${apiUrl}/assets/${img.directus_files_id}` })) ?? [];
+
+  return (
+    imagenes?.map((img) => {
+      const file = img.directus_files_id;
+
+      return {
+        url: `${apiUrl}/assets/${file.id}?v=${file.modified_on}`,
+      };
+    }) ?? []
+  );
 };
 
 /* ─── Fetch Functions ────────────────────────────────────────── */
@@ -52,7 +73,9 @@ const mapImagenes = (imagenes?: DirectusImage[]) => {
 // Encabezado
 export const fetchEncabezado = async () => {
   try {
-    const response = await KohaApi.get("/items/encabezado?filter[activo][_eq]=true");
+    const response = await KohaApi.get(
+      "/items/encabezado?filter[activo][_eq]=true"
+    );
     return response.data.data[0] ?? null;
   } catch (error) {
     console.error("Error fetching encabezado:", error);
@@ -84,10 +107,17 @@ export const fetchBotonDerecho = async () => {
 // Carrousel
 export const fetchCarrousel = async () => {
   try {
-    const response = await KohaApi.get("/items/carrousel?fields=*,imagenes.directus_files_id");
+    const response = await KohaApi.get(
+      `/items/carrousel?fields=*,${IMAGE_FIELDS}`
+    );
+
     const item = response.data.data?.[0];
     if (!item) return null;
-    return { ...item, imagenesConUrl: mapImagenes(item.imagenes) };
+
+    return {
+      ...item,
+      imagenesConUrl: mapImagenes(item.imagenes),
+    };
   } catch (error) {
     console.error("Error fetching carrousel:", error);
     return null;
@@ -102,7 +132,9 @@ export const fetchSeccion_4 = async () => fetchSeccion("seccion_4");
 
 const fetchSeccion = async (seccion: string) => {
   try {
-    const response = await KohaApi.get(`/items/${seccion}?filter[activo][_eq]=true`);
+    const response = await KohaApi.get(
+      `/items/${seccion}?filter[activo][_eq]=true`
+    );
     return response.data.data?.[0] ?? null;
   } catch (error) {
     console.error(`Error fetching ${seccion}:`, error);
@@ -125,8 +157,9 @@ export const fetchNovedades = async () => {
 export const fetchNoticias = async (): Promise<Noticia[]> => {
   try {
     const response = await KohaApi.get<{ data: NoticiaAPI[] }>(
-      "/items/noticias?fields=*,imagenes.directus_files_id"
+      `/items/noticias?fields=*,${IMAGE_FIELDS}`
     );
+
     return (response.data.data ?? []).map((item) => ({
       ...item,
       imagenesConUrl: mapImagenes(item.imagenes),
@@ -163,8 +196,9 @@ export const fetchEquipo = async () => {
 export const fetchGaleria = async (): Promise<Galeria[]> => {
   try {
     const response = await KohaApi.get<{ data: GaleriaAPI[] }>(
-      "/items/galeria?fields=*,imagenes.directus_files_id"
+      `/items/galeria?fields=*,${IMAGE_FIELDS}`
     );
+
     return (response.data.data ?? []).map((item) => ({
       ...item,
       imagenesConUrl: mapImagenes(item.imagenes),

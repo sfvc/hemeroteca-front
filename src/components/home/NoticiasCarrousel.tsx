@@ -15,10 +15,15 @@ export default function NoticiasCarousel() {
 
       if (!data || data.length === 0) return;
 
-      const activa = data.find((n) => n.activo);
-      if (!activa) return;
+      const activas = data.filter((n) => n.activo);
+
+      if (!activas.length) return;
+
+      const activa = activas[0];
 
       const urls = activa.imagenesConUrl.map((img) => img.url);
+
+      if (!urls.length) return;
 
       setImagenes(urls);
       setLink(activa.link);
@@ -56,7 +61,7 @@ export default function NoticiasCarousel() {
       </div>
 
       {/* Contenedor SOLO del carrusel */}
-      <div className="relative w-full h-[420px] overflow-hidden rounded-xl">
+      <div className="relative w-full h-105 overflow-hidden rounded-xl">
         <div
           className="flex h-full transition-transform duration-700 ease-in-out"
           style={{
@@ -115,9 +120,8 @@ export default function NoticiasCarousel() {
                 <div
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`h-2 rounded-full cursor-pointer transition-all ${
-                    i === current ? "bg-cyan-600 w-6" : "bg-white/90 w-2"
-                  }`}
+                  className={`h-2 rounded-full cursor-pointer transition-all ${i === current ? "bg-cyan-600 w-6" : "bg-white/90 w-2"
+                    }`}
                 />
               ))}
             </div>
