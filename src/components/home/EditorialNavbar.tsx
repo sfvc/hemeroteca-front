@@ -7,7 +7,7 @@ import {
   fetchEncabezado,
 } from "../../services/koha-service";
 import { formatFecha } from "../../util/formatFecha";
-import { Info } from "lucide-react";
+import { BookMarked, CalendarCheck, Check, Info } from "lucide-react";
 
 type Boton = {
   id: number;
@@ -174,7 +174,8 @@ export default function EditorialHero() {
                   onClick={() => setOpenModal(true)}
                   className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
                 >
-                  Solicitar Turno
+                 <CalendarCheck  className="h-5 w-5" />
+            Solicitar Turno
                 </button>
 
                 {/* IR A LA AGM DENUEVO */}
@@ -185,7 +186,8 @@ export default function EditorialHero() {
                   }
                   className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white shadow-md"
                 >
-                  Archivo General Municipal
+                  <BookMarked  className="h-5 w-5" />
+            Archivo General Municipal
                 </button>
 
                 {botonDerecho && (

@@ -37,7 +37,6 @@ export default function Footer() {
                 Contacto
               </h4>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li>XXXX-XXXX-XXXX</li>
                 <li>HemerotecaJuvenil@gmail.com</li>
               </ul>
             </div>
@@ -94,7 +93,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
             <p>© 2026 Municipalidad de Catamarca Capital</p>
             <p>Secretaría de Cultura</p>
-            <p>Programa Municipal Hemeroteca Juvenil v1.0</p>
+            <p>Programa Hemeroteca Municipal/Digital v1.0</p>
           </div>
         </div>
       </footer>

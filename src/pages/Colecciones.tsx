@@ -21,6 +21,10 @@ interface ItemColeccion {
   descripcion?: string;
 }
 
+{
+  /* CARD DE FILTROS EJEMPLO */
+}
+
 const filtros: FiltroCard[] = [
   {
     id: "colecciones",
@@ -49,11 +53,15 @@ const filtros: FiltroCard[] = [
   },
 ];
 
+{
+  /* MINI CARDS DE EJEMPLO (municipal y digital separadas) */
+}
+
 const itemsColeccion: Record<TipoHemeroteca, ItemColeccion[]> = {
   municipal: [
     {
       id: 1,
-      titulo: "El Ambato",
+      titulo: "El Ancasti",
       categoria: "diarios",
       imagen: "/Ancasti.jpg",
       descripcion: "Edición matutina",
@@ -67,30 +75,30 @@ const itemsColeccion: Record<TipoHemeroteca, ItemColeccion[]> = {
     },
     {
       id: 3,
-      titulo: "Boletín Municipal",
+      titulo: "El Ambato Edicion Histórica 1920-1950",
       categoria: "colecciones",
       imagen: "/Ambato.jpeg",
-      descripcion: "Colección institucional",
+      descripcion: "Colección institucional n° 23",
     },
     {
       id: 4,
-      titulo: "Periódico Regional",
+      titulo: "El Ambato Edicion Histórica 1920-1950",
       categoria: "colecciones",
       imagen: "/Ambato.jpeg",
-      descripcion: "Archivo de consulta",
+      descripcion: "Archivo de consulta n° 32",
     },
     {
       id: 5,
       titulo: "Revista Cultural",
       categoria: "revistas",
-      imagen: "/RevistaSol.jpg",
+      imagen: "/RevistaAroman.png",
       descripcion: "Edición especial",
     },
     {
       id: 6,
       titulo: "Revista Patrimonio",
       categoria: "revistas",
-      imagen: "/RevistaSol.jpg",
+      imagen: "/RevistaAroman.png",
       descripcion: "Archivo gráfico",
     },
     {
@@ -102,19 +110,20 @@ const itemsColeccion: Record<TipoHemeroteca, ItemColeccion[]> = {
     },
     {
       id: 8,
-      titulo: "Semanario del Valle",
+      titulo: "El Ambato Edicion Histórica 1920-1950",
       categoria: "colecciones",
       imagen: "/Ambato.jpeg",
-      descripcion: "Colección regional",
+      descripcion: "Colección regional n° 45",
     },
     {
       id: 9,
       titulo: "Revista Historia",
       categoria: "revistas",
-      imagen: "/RevistaSol.jpg",
+      imagen: "/RevistaAroman.png",
       descripcion: "Número de colección",
     },
   ],
+
   digital: [
     {
       id: 10,
@@ -135,26 +144,15 @@ const itemsColeccion: Record<TipoHemeroteca, ItemColeccion[]> = {
       id: 12,
       titulo: "Revista Digital Patrimonio",
       categoria: "revistas",
-      imagen: "/Revistas.png",
+      imagen: "/RevistaAroman.png",
       descripcion: "Publicación digital",
-    },
-    {
-      id: 13,
-      titulo: "Biblioteca de Boletines",
-      categoria: "colecciones",
-      imagen: "/ColeccionesLa.png",
-      descripcion: "Documentos digitalizados",
-    },
-    {
-      id: 14,
-      titulo: "Noticias del Archivo",
-      categoria: "diarios",
-      imagen:
-        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
-      descripcion: "Consulta online",
     },
   ],
 };
+
+{
+  /* NOMBRES DE CATEGORIAS */
+}
 
 const nombresCategoria: Record<Categoria, string> = {
   colecciones: "Colecciones",
@@ -171,6 +169,10 @@ function FiltroPrincipalCard({
   activo: boolean;
   onClick: () => void;
 }) {
+  {
+    /* CARDS FILTROS */
+  }
+
   return (
     <article
       onClick={onClick}
@@ -219,6 +221,10 @@ function FiltroPrincipalCard({
   );
 }
 
+{
+  /* MINI CARDS DE EJEMPLO (resultados de busqueda) */
+}
+
 function MiniCard({ item }: { item: ItemColeccion }) {
   return (
     <article className="group overflow-hidden bg-slate-100 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer">
@@ -254,6 +260,10 @@ function MiniCard({ item }: { item: ItemColeccion }) {
   );
 }
 
+{
+  /* FUNCION ACTIVO DE LAS CARDS FILTRO */
+}
+
 export default function Colecciones() {
   const [filtroActivo, setFiltroActivo] = useState<Categoria>("colecciones");
   const [tipoActivo, setTipoActivo] = useState<TipoHemeroteca>("municipal");
@@ -266,7 +276,11 @@ export default function Colecciones() {
 
   return (
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8">
+      {/* NAVBAR */}
+
       <EditorialHero />
+
+      {/* BOTONES DESLIZANTE HEMEROTECA MUNICIPAL/DIGITAL */}
 
       <div className="mt-5 mb-6 flex items-center justify-center gap-8">
         <button
