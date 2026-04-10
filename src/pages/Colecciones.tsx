@@ -53,68 +53,65 @@ const itemsColeccion: Record<TipoHemeroteca, ItemColeccion[]> = {
   municipal: [
     {
       id: 1,
-      titulo: "El Ancasti",
+      titulo: "El Ambato",
       categoria: "diarios",
-      imagen:
-        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      imagen: "/Ancasti.jpg",
       descripcion: "Edición matutina",
     },
     {
       id: 2,
       titulo: "La Unión",
       categoria: "diarios",
-      imagen:
-        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      imagen: "/Ancasti.jpg",
       descripcion: "Portada histórica",
     },
     {
       id: 3,
       titulo: "Boletín Municipal",
       categoria: "colecciones",
-      imagen: "/ColeccionesLa.png",
+      imagen: "/Ambato.jpeg",
       descripcion: "Colección institucional",
     },
     {
       id: 4,
       titulo: "Periódico Regional",
       categoria: "colecciones",
-      imagen: "/ColeccionesLa.png",
+      imagen: "/Ambato.jpeg",
       descripcion: "Archivo de consulta",
     },
     {
       id: 5,
       titulo: "Revista Cultural",
       categoria: "revistas",
-      imagen: "/Revistas.png",
+      imagen: "/RevistaSol.jpg",
       descripcion: "Edición especial",
     },
     {
       id: 6,
       titulo: "Revista Patrimonio",
       categoria: "revistas",
-      imagen: "/Revistas.png",
+      imagen: "/RevistaSol.jpg",
       descripcion: "Archivo gráfico",
     },
     {
       id: 7,
       titulo: "Crónica Local",
       categoria: "diarios",
-      imagen:
-        "https://files.pucp.education/puntoedu/wp-content/uploads/2021/02/23005346/abridora-diarios-1200x800.jpg",
+      imagen: "/Ancasti.jpg",
       descripcion: "Hemeroteca diaria",
     },
     {
       id: 8,
       titulo: "Semanario del Valle",
       categoria: "colecciones",
-      imagen: "/ColeccionesLa.png",
+      imagen: "/Ambato.jpeg",
       descripcion: "Colección regional",
     },
     {
       id: 9,
       titulo: "Revista Historia",
       categoria: "revistas",
-      imagen: "/Revistas.png",
+      imagen: "/RevistaSol.jpg",
       descripcion: "Número de colección",
     },
   ],
@@ -269,8 +266,7 @@ export default function Colecciones() {
 
   return (
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8">
-
-<EditorialHero />
+      <EditorialHero />
 
       <div className="mt-5 mb-6 flex items-center justify-center gap-8">
         <button
@@ -305,10 +301,10 @@ export default function Colecciones() {
           <div className="w-1/2 shrink-0 pr-4">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
-                Colección seleccionada
+                Categoria seleccionada
               </span>
               <h1 className="text-2xl font-bold uppercase text-slate-800 font-serif">
-                Selecciona el tipo de Documento:
+                Selecciona el tipo de Categoria:
               </h1>
             </div>
 
@@ -328,7 +324,7 @@ export default function Colecciones() {
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
-                  Colección seleccionada
+                  Categoria seleccionada
                 </span>
                 <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
                   {nombresCategoria[filtroActivo]}

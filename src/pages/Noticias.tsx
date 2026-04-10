@@ -116,17 +116,6 @@ export default function Noticias() {
           </div>
 
           <section className="mt-12 border-t border-slate-300 pt-8">
-            <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto]">
-              <div>
-                <p className="text-md font-bold uppercase tracking-windest text-cyan-600">
-                  Cobertura destacada
-                </p>
-                <h2 className="mt-2 font-serif text-2xl font-black uppercase leading-none sm:text-2xl">
-                  En otras Novedades...
-                </h2>
-              </div>
-            </div>
-
             <div className="mt-8 flex flex-col items-center gap-8">
               {featuredNews.map((news) => (
                 <div key={news.id} className="w-full max-w-7xl">
