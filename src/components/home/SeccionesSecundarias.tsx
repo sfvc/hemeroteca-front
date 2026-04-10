@@ -27,8 +27,8 @@ const CATEGORIAS: Record<number, string> = {
 
 const RUTAS_INTERNAS: Record<number, (link?: string) => string> = {
   0: () => "/colecciones",
-  1: (link) => `/video?url=${encodeURIComponent(link ?? "")}`,
-  2: (link) => `/video?url=${encodeURIComponent(link ?? "")}`,
+  1: (link) => `/video?section=2&url=${encodeURIComponent(link ?? "")}`,
+  2: (link) => `/video?section=3&url=${encodeURIComponent(link ?? "")}`,
 };
 
 const SkeletonCard = () => (
