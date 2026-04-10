@@ -283,7 +283,7 @@ export default function EditorialHero() {
             {/* BOTON CERRAR */}
             <button
               onClick={() => setOpenModal(false)}
-              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white"
+              className="cursor-pointer absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white"
               aria-label="Cerrar modal"
             >
               ✕
