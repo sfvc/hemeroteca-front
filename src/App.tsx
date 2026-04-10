@@ -4,18 +4,17 @@ import Home from "./pages/Home";
 import Noticias from "./pages/Noticias";
 import Nosotros from "./pages/Nosotros";
 import Footer from "./components/extrasFijos/Footer";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import ScrollToTop from "./util/ScrollToTop";
 import Equipo from "./pages/Equipo";
 import RetroTv from "./components/extrasFijos/RetroTv";
 import VideoPage from "./pages/Video";
-// import Colecciones from "./pages/Colecciones";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
+import Colecciones from "./pages/Colecciones";
 
 function App() {
   return (
     <div className="min-h-dvh bg-white text-slate-900">
-
       <main className="">
         <ScrollToTop />
         <Routes>
@@ -23,13 +22,12 @@ function App() {
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/equipo" element={<Equipo />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/login" element={<Login />} /> */}
+          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="/practicas-conservacion" element={<RetroTv />} />
           <Route path="/detras-foto" element={<RetroTv />} />
           <Route path="/video" element={<VideoPage />} />
-          {/* <Route path="/colecciones" element={<Colecciones />} /> */}
-
+          <Route path="/colecciones" element={<Colecciones />} />
         </Routes>
       </main>
       <Footer />
