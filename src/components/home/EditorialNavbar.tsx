@@ -7,7 +7,7 @@ import {
   fetchEncabezado,
 } from "../../services/koha-service";
 import { formatFecha } from "../../util/formatFecha";
-import { BookMarked, CalendarCheck, Check, Info } from "lucide-react";
+import { BookMarked, CalendarCheck, Info } from "lucide-react";
 
 type Boton = {
   id: number;
