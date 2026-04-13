@@ -11,6 +11,7 @@ interface FiltroCard {
   descripcion: string;
   imagen: string;
   badge: string;
+  bgColor?: string;
 }
 
 interface ItemColeccion {
@@ -33,6 +34,7 @@ const filtros: FiltroCard[] = [
       "Ediciones históricas y colecciones documentales para consulta y archivo.",
     imagen: "/ColeccionesMalvinas.jpg",
     badge: "Colecciones",
+    bgColor: "bg-blue-500",
   },
   {
     id: "diarios",
@@ -41,6 +43,7 @@ const filtros: FiltroCard[] = [
       "Publicaciones diarias con portadas destacadas y material de hemeroteca.",
     imagen: "/DiarioTimes.jpeg",
     badge: "Informativo",
+    bgColor: "#10b981",
   },
   {
     id: "revistas",
@@ -50,6 +53,7 @@ const filtros: FiltroCard[] = [
     imagen:
       "https://revistaestilopropio.com/wp-content/uploads/2020/02/slide-6.jpg",
     badge: "Archivo",
+    bgColor: "bg-purple-500",
   },
 ];
 
@@ -170,13 +174,21 @@ function FiltroPrincipalCard({
   onClick: () => void;
 }) {
   {
-    /* CARDS FILTROS */
+    /* Card de filtos + estado de activo/seleccionado */
   }
 
   return (
     <article
       onClick={onClick}
-      className="group w-full overflow-hidden bg-white shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-md cursor-pointer"
+      className={`
+    group w-full overflow-hidden shadow-md cursor-pointer
+    hover:shadow-md
+    ${
+      activo
+        ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
+        : "border border-transparent bg-white"
+    }
+  `}
     >
       <div className="relative aspect-9/4 overflow-hidden">
         <img
@@ -192,15 +204,18 @@ function FiltroPrincipalCard({
         </div>
 
         {activo && (
-          <div className="absolute right-0 top-0 m-4 flex items-center gap-1.5 rounded-full bg-cyan-600 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white shadow-lg">
-            <Check className="h-3 w-3" />
-            Activo
+          <div className="absolute right-0 top-0 m-4 flex items-center gap-1.5 rounded-full bg-green-600 px-2 py-1 text-white shadow-lg">
+            <Check className="h-5 w-5" />
           </div>
         )}
       </div>
 
       <div className="p-4">
-        <h3 className="font-serif text-xl font-black text-slate-900">
+        <h3
+          className={`font-serif text-xl font-black ${
+            activo ? "text-slate-900" : "text-slate-900"
+          }`}
+        >
           {item.titulo}
         </h3>
 
@@ -210,7 +225,7 @@ function FiltroPrincipalCard({
 
         <span
           className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold transition ${
-            activo ? "text-cyan-700" : "text-slate-800 group-hover:gap-3"
+            activo ? "text-slate-900" : "text-slate-800 group-hover:gap-3"
           }`}
         >
           {activo ? "Filtro seleccionado" : "Seleccionar filtro"}
@@ -227,7 +242,7 @@ function FiltroPrincipalCard({
 
 function MiniCard({ item }: { item: ItemColeccion }) {
   return (
-    <article className="group overflow-hidden bg-slate-100 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-md cursor-pointer">
+    <article className="group overflow-hidden bg-slate-100 shadow-lg cursor-pointer">
       <div className="relative aspect-3/4 overflow-hidden bg-slate-100">
         <img
           src={item.imagen}
@@ -251,7 +266,7 @@ function MiniCard({ item }: { item: ItemColeccion }) {
           </p>
         )}
 
-        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition group-hover:gap-3 cursor-pointer">
+        <span className="mt-4 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3 cursor-pointer">
           Ver más
           <ChevronRight className="h-4 w-4" />
         </span>
@@ -284,25 +299,33 @@ export default function Colecciones() {
 
       <div className="mt-5 mb-6 flex items-center justify-center gap-8">
         <button
+          title="Archivos Fisicos disponibles en la Hemeroteca"
           onClick={() => setTipoActivo("municipal")}
-          className={`pb-3 text-xl font-bold uppercase font-serif transition cursor-pointer ${
+          className={`pb-3 text-xl font-bold uppercase font-serif transition cursor-pointer flex flex-col items-center ${
             tipoActivo === "municipal"
               ? "text-slate-900 border-b-4 border-cyan-700"
               : "text-slate-500 border-b-2 border-transparent hover:text-slate-800"
           }`}
         >
-          Hemeroteca Municipal
+          <span>Hemeroteca Municipal</span>
+          <span className="text-sm normal-case font-normal text-slate-500">
+            (Archivos físicos)
+          </span>
         </button>
 
         <button
+          title="Archivos Digitales disponibles para su Descarga y visualización"
           onClick={() => setTipoActivo("digital")}
-          className={`pb-3 text-xl font-bold uppercase font-serif transition cursor-pointer ${
+          className={`pb-3 text-xl font-bold uppercase font-serif transition cursor-pointer flex flex-col items-center ${
             tipoActivo === "digital"
               ? "text-slate-900 border-b-4 border-cyan-700"
               : "text-slate-500 border-b-2 border-transparent hover:text-slate-800"
           }`}
         >
-          Hemeroteca Digital
+          <span>Hemeroteca Digital</span>
+          <span className="text-sm normal-case font-normal text-slate-500">
+            (Archivos digitales)
+          </span>
         </button>
       </div>
 

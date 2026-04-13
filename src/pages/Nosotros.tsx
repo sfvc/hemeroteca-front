@@ -25,14 +25,16 @@ function InfoCard({
     <article className="mx-auto mb-14 w-full max-w-7xl">
       <div className="relative overflow-hidden bg-white">
         <div
-          className={`grid items-stretch md:grid-cols-12 ${reverse
-            ? "md:[&_.visual-side]:order-2 md:[&_.text-side]:order-1"
-            : ""
-            }`}
+          className={`grid items-stretch md:grid-cols-12 ${
+            reverse
+              ? "md:[&_.visual-side]:order-2 md:[&_.text-side]:order-1"
+              : ""
+          }`}
         >
           <div
-            className={`text-side relative flex items-center md:col-span-5 ${variant === "brand" ? panelBrand : panelLight
-              }`}
+            className={`text-side relative flex items-center md:col-span-5 ${
+              variant === "brand" ? panelBrand : panelLight
+            }`}
           >
             <div className="w-full px-6 py-10 font-serif sm:px-10 sm:py-12 md:px-12">
               <div className="max-w-xl">
@@ -81,8 +83,6 @@ export default function Nosotros() {
       <main className="w-full px-6 pb-14 pt-2 lg:px-10 xl:px-16">
         <EditorialHero />
 
-              <Equipo />
-
         <div className="mx-auto w-full max-w-7xl py-8 sm:py-14 lg:py-16">
           <div className="space-y-10 sm:space-y-14 lg:space-y-16">
             <InfoCard
@@ -100,6 +100,8 @@ export default function Nosotros() {
               image="https://www.catamarcaciudad.gob.ar/wp-content/uploads/nodo-tecnologico.jpeg"
               variant="light"
             />
+
+            <Equipo />
 
             <Divider />
           </div>

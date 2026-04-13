@@ -66,12 +66,8 @@ const Equipo = () => {
 
   return (
     <section>
-        {/* <EditorialHero /> */}
       {/* Título de sección */}
       <div className="mb-10 text-center mt-6">
-        <span className="inline-block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">
-          Quiénes somos
-        </span>
         <h2 className="text-3xl font-bold text-slate-800 leading-tight">
           Nuestro Equipo
         </h2>
