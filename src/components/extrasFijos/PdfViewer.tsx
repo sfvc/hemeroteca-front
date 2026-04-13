@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 
@@ -25,98 +25,114 @@ export default function PdfViewer({
 }) {
     const [numPages, setNumPages] = useState(0);
     const [page, setPage] = useState(1);
-    const [zoom, setZoom] = useState(
+
+    const [zoom, setZoom] = useState(() =>
         typeof window !== "undefined" && window.innerWidth < 768 ? 0.9 : 1
     );
+
     const [viewport, setViewport] = useState(0);
 
     const isSpread = mode === "spread";
-
-    const pageWidth = useMemo(() => {
-        const vw =
-            typeof window !== "undefined"
-                ? window.innerWidth
-                : 800;
-
-        const isMobile = vw < 768;
-
-        const base = isMobile
-            ? vw * 0.92
-            : Math.min(vw * 0.85, 1100);
-
-        return base * zoom;
-    }, [zoom]);
 
     useEffect(() => {
         const onResize = () => setViewport(window.innerWidth);
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
+    }, []);
+
+    /**
+     * Escala real del PDF (más estable que width)
+     * - evita overflow raro en zoom alto
+     * - se adapta mejor a mobile/desktop
+     */
+    const scale = useMemo(() => {
+        const vw = typeof window !== "undefined" ? window.innerWidth : 800;
+        const vh = typeof window !== "undefined" ? window.innerHeight : 600;
+
+        const base = Math.min(vw / 900, vh / 1200);
+
+        return Math.max(0.5, Math.min(base * zoom, 3));
     }, [zoom, viewport]);
 
     return (
         <div className="fixed inset-0 z-50 bg-black flex flex-col">
 
-            {/* PDF */}
-            <div className="flex-1 overflow-auto flex justify-center items-center bg-slate-200">
-                <Document
-                    file={url}
-                    onLoadSuccess={({ numPages }) => {
-                        setNumPages(numPages);
-                        setPage(1);
-                    }}
-                >
+            {/* PDF AREA */}
+            <div
+                className="flex-1 overflow-auto bg-slate-200"
+                style={{
+                    scrollBehavior: "smooth",
+                }}
+            >
+                <div className="min-h-full flex justify-center py-6">
+                    <Document
+                        file={url}
+                        onLoadSuccess={({ numPages }) => {
+                            setNumPages(numPages);
+                            setPage(1);
+                        }}
+                    >
 
-                    {/* SINGLE PAGE */}
-                    {!isSpread && (
-                        <Page
-                            pageNumber={page}
-                            width={pageWidth}
-                        />
-                    )}
+                        {!isSpread && (
+                            <Page
+                                pageNumber={page}
+                                scale={scale}
+                                renderAnnotationLayer={true}
+                                renderTextLayer={true}
+                            />
+                        )}
 
-                    {/* DOUBLE PAGE (REVISTAS) */}
-                    {isSpread && (
-                        <div className="flex gap-2 justify-center">
-                            <Page pageNumber={page} width={pageWidth / 2} />
-                            <Page pageNumber={page + 1} width={pageWidth / 2} />
-                        </div>
-                    )}
+                        {isSpread && (
+                            <div className="flex gap-4 justify-center">
+                                <Page
+                                    pageNumber={page}
+                                    scale={scale}
+                                />
+                                <Page
+                                    pageNumber={page + 1}
+                                    scale={scale}
+                                />
+                            </div>
+                        )}
 
-                </Document>
+                    </Document>
+                </div>
             </div>
 
             {/* FOOTER */}
             <div className="flex flex-col gap-3 bg-slate-900 px-4 py-3 md:flex-row md:items-center md:justify-between">
 
-                {/* IZQUIERDA */}
+                {/* LEFT */}
                 <div className="flex justify-center md:justify-start">
                     <button
                         onClick={onClose}
-                        className="cursor-pointer text-white hover:opacity-80 transition"
+                        className="text-white hover:opacity-80 transition"
                     >
                         ← Volver
                     </button>
                 </div>
 
-                {/* CENTRO (PAGE + ZOOM) */}
+                {/* CENTER */}
                 <div className="flex items-center justify-center gap-4 bg-slate-800 px-3 py-2 rounded-md w-full md:w-auto">
 
-                    {/* páginas */}
+                    {/* pages */}
                     <div className="flex items-center gap-2 text-white">
                         <button
                             onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                            className="cursor-pointer hover:opacity-80"
+                            className="hover:opacity-80"
                         >
                             <ChevronLeft />
                         </button>
 
-                        <span className="cursor-pointer text-sm whitespace-nowrap">
+                        <span className="text-sm whitespace-nowrap">
                             {page} / {numPages}
                         </span>
 
                         <button
-                            onClick={() => setPage((p) => Math.min(p + 1, numPages))}
-                            className="cursor-pointer hover:opacity-80"
+                            onClick={() =>
+                                setPage((p) => Math.min(p + 1, numPages))
+                            }
+                            className="hover:opacity-80"
                         >
                             <ChevronRight />
                         </button>
@@ -127,42 +143,46 @@ export default function PdfViewer({
                     {/* zoom */}
                     <div className="flex items-center gap-2 text-white">
                         <button
-                            onClick={() => setZoom((z) => Math.max(0.5, z - 0.2))}
-                            className="cursor-pointer hover:opacity-80"
+                            onClick={() =>
+                                setZoom((z) => Math.max(0.5, z - 0.15))
+                            }
+                            className="hover:opacity-80"
                         >
                             <ZoomOut />
                         </button>
 
-                        <span className="text-xs w-10 text-center">
-                            {Math.round(zoom * 100)}%
+                        <span className="text-xs w-12 text-center">
+                            {Math.round(scale * 100)}%
                         </span>
 
                         <button
-                            onClick={() => setZoom((z) => Math.min(2.5, z + 0.2))}
-                            className="cursor-pointer hover:opacity-80"
+                            onClick={() =>
+                                setZoom((z) => Math.min(2.5, z + 0.15))
+                            }
+                            className="hover:opacity-80"
                         >
                             <ZoomIn />
                         </button>
                     </div>
-
                 </div>
 
-                {/* DERECHA (COLECCIONES) */}
-                <div className="flex flex-col gap-2 w-full md:w-auto md:flex-row md:gap-2">
+                {/* RIGHT */}
+                <div className="flex flex-col gap-2 w-full md:w-auto md:flex-row">
 
                     <button
                         onClick={onBack}
-                        className="cursor-pointer bg-slate-700 hover:bg-slate-600 transition text-white px-4 py-2 rounded-md w-full md:w-auto"
+                        className="bg-slate-700 hover:bg-slate-600 transition text-white px-4 py-2 rounded-md"
                     >
                         ← Anterior colección
                     </button>
 
                     <button
                         onClick={onNext}
-                        className="cursor-pointer bg-cyan-600 hover:bg-cyan-500 transition text-white px-4 py-2 rounded-md w-full md:w-auto"
+                        className="bg-cyan-600 hover:bg-cyan-500 transition text-white px-4 py-2 rounded-md"
                     >
                         Siguiente colección →
                     </button>
+
                 </div>
             </div>
         </div>
