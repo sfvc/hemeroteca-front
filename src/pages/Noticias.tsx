@@ -1,5 +1,4 @@
 import EditorialHero from "../components/home/EditorialNavbar";
-import Carrousel from "../components/extrasFijos/Carrousel";
 import {
   Music2,
   ExternalLink,
