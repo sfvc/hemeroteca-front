@@ -1,5 +1,4 @@
 import EditorialHero from "../components/home/EditorialNavbar";
-import Carrousel from "../components/extrasFijos/Carrousel";
 import {
   Music2,
   ExternalLink,
@@ -107,7 +106,7 @@ export default function Noticias() {
         <div className="mt-8">
           {/* Aca si banco que este el carrusel */}
 
-          <Carrousel />
+          {/* <Carrousel /> */}
 
           <div className="mt-8 flex justify-center">
             <div className="w-full max-w-7xl">
