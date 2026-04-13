@@ -15,7 +15,7 @@ import Colecciones from "./pages/Colecciones";
 function App() {
   return (
     <div className="min-h-dvh bg-white text-slate-900">
-      <main className="">
+      <main>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />

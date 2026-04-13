@@ -208,3 +208,21 @@ export const fetchGaleria = async (): Promise<Galeria[]> => {
     return [];
   }
 };
+
+// Secciones
+export const fetchPublicacion_1 = async () => fetchPublicacion("publicacion_1");
+export const fetchPublicacion_2 = async () => fetchPublicacion("publicacion_2");
+export const fetchPublicacion_3 = async () => fetchPublicacion("publicacion_3");
+export const fetchPublicacion_4 = async () => fetchPublicacion("publicacion_4");
+
+const fetchPublicacion = async (publicacion: string) => {
+  try {
+    const response = await KohaApi.get(
+      `/items/${publicacion}?filter[activo][_eq]=true`
+    );
+    return response.data.data?.[0] ?? null;
+  } catch (error) {
+    console.error(`Error fetching ${publicacion}:`, error);
+    return null;
+  }
+};
