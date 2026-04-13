@@ -3,6 +3,7 @@ import { ChevronRight, Check } from "lucide-react";
 import EditorialHero from "../components/home/EditorialNavbar";
 import KohaApi from "../api/kohaApi";
 import { fetchPublicacion_1, fetchPublicacion_2, fetchPublicacion_3, fetchPublicacion_4 } from "../services/koha-service";
+import PdfViewer from "../components/extrasFijos/PdfViewer";
 
 interface PublicacionAPI {
   id: number;
@@ -133,11 +134,10 @@ function FiltroPrincipalCard({
       className={`
     group w-full overflow-hidden shadow-md cursor-pointer
     hover:shadow-md
-    ${
-      activo
-        ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
-        : "border border-transparent bg-white"
-    }
+    ${activo
+          ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
+          : "border border-transparent bg-white"
+        }
   `}
     >
       <div className="relative aspect-9/4 overflow-hidden">
@@ -158,9 +158,8 @@ function FiltroPrincipalCard({
       </div>
       <div className="p-4">
         <h3
-          className={`font-serif text-xl font-black ${
-            activo ? "text-slate-900" : "text-slate-900"
-          }`}
+          className={`font-serif text-xl font-black ${activo ? "text-slate-900" : "text-slate-900"
+            }`}
         >
           {item.titulo}
         </h3>
@@ -179,9 +178,15 @@ function FiltroPrincipalCard({
   );
 }
 
-function MiniCard({ item }: { item: ItemColeccion }) {
+function MiniCard({
+  item,
+  onOpen,
+}: {
+  item: ItemColeccion;
+  onOpen: () => void;
+}) {
   const handleClick = () => {
-    if (item.archivoPdf) window.open(item.archivoPdf, "_blank");
+    if (item.archivoPdf) onOpen();
   };
 
   return (
@@ -255,6 +260,7 @@ interface PanelProps {
   items: ItemColeccion[];
   loading: boolean;
   labelCategoria: string;
+  onOpenPdf: (pdf: string, index: number) => void;
 }
 
 function Panel({
@@ -263,6 +269,7 @@ function Panel({
   items,
   loading,
   labelCategoria,
+  onOpenPdf,
 }: PanelProps) {
   // "colecciones" muestra todo; el resto filtra por su categoría
   const itemsFiltrados = useMemo(
@@ -319,8 +326,16 @@ function Panel({
         </div>
       ) : itemsFiltrados.length > 0 ? (
         <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {itemsFiltrados.map((item) => (
-            <MiniCard key={`${item.categoria}-${item.id}`} item={item} />
+          {itemsFiltrados.map((item, index) => (
+            <MiniCard
+              key={`${item.categoria}-${item.id}`}
+              item={item}
+              onOpen={() => {
+                if (item.archivoPdf) {
+                  onOpenPdf(item.archivoPdf, index);
+                }
+              }}
+            />
           ))}
         </div>
       ) : (
@@ -342,6 +357,9 @@ export default function Colecciones() {
   const [loadingMunicipal, setLoadingMunicipal] = useState(true);
   const [loadingDigital, setLoadingDigital] = useState(true);
 
+  // 👇 AGREGÁ ESTO ACÁ
+  const [pdfActivo, setPdfActivo] = useState<string | null>(null);
+  const [indexActual, setIndexActual] = useState<number>(0);
   const cargarItems = async (): Promise<ItemColeccion[]> => {
     const [pub1, pub2, pub3, pub4] = await Promise.all([
       fetchPublicacion_1(),
@@ -374,6 +392,32 @@ export default function Colecciones() {
 
     load();
   }, []);
+
+  const listaActual =
+    tipoActivo === "municipal" ? itemsMunicipal : itemsDigital;
+
+  if (pdfActivo) {
+    return (
+      <PdfViewer
+        url={pdfActivo}
+        onClose={() => setPdfActivo(null)}
+        onBack={() => {
+          const next = indexActual - 1;
+          if (next >= 0) {
+            setIndexActual(next);
+            setPdfActivo(listaActual[next].archivoPdf || null);
+          }
+        }}
+        onNext={() => {
+          const next = indexActual + 1;
+          if (next < listaActual.length) {
+            setIndexActual(next);
+            setPdfActivo(listaActual[next].archivoPdf || null);
+          }
+        }}
+      />
+    );
+  }
 
   return (
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8">
@@ -420,6 +464,10 @@ export default function Colecciones() {
               items={itemsMunicipal}
               loading={loadingMunicipal}
               labelCategoria="Documento"
+              onOpenPdf={(pdf, index) => {
+                setPdfActivo(pdf);
+                setIndexActual(index);
+              }}
             />
           </div>
 
@@ -430,6 +478,10 @@ export default function Colecciones() {
               items={itemsDigital}
               loading={loadingDigital}
               labelCategoria="Colección"
+              onOpenPdf={(pdf, index) => {
+                setPdfActivo(pdf);
+                setIndexActual(index);
+              }}
             />
           </div>
         </div>
