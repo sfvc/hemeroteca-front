@@ -372,7 +372,7 @@ export default function Colecciones() {
         </div>
       ) : itemsFiltrados.length > 0 ? (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {itemsFiltrados.map((item, idx) => (
+          {itemsFiltrados.map((item,) => (
             <MiniCard
               key={`${item.categoria}-${item.id}`}
               item={item}
