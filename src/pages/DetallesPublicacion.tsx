@@ -338,7 +338,7 @@ export default function DetallesPublicacion() {
                 <article
                   key={`${ejemplar.id}-${idx}`}
                   onClick={() => abrirPdf(idx)}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-[#1f232b] shadow-md transition hover:-translate-y-1 hover:shadow-xl"
+                  className="group cursor-pointer overflow-hidden border border-slate-200 bg-[#1f232b] shadow-md transition hover:shadow-xl"
                 >
                   <div className="relative aspect-3/4 overflow-hidden bg-slate-800">
                     <img
