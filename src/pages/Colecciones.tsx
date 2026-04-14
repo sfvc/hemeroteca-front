@@ -89,11 +89,18 @@ const filtros: FiltroCard[] = [
     badge: "Colecciones",
   },
   {
+    id: "especiales",
+    titulo: "Colecciones Especiales",
+    descripcion: "Materiales únicos de valor patrimonial.",
+    imagen: "/ColeccionesEsp.jpg",
+    badge: "Colecciones Especiales",
+  },
+  {
     id: "revistas",
     titulo: "Revistas",
     descripcion: "Revistas culturales y sociales.",
     imagen: "/RevistaAroman.png",
-    badge: "Archivo",
+    badge: "Informativo",
   },
   {
     id: "periodicos",
@@ -101,13 +108,6 @@ const filtros: FiltroCard[] = [
     descripcion: "Publicaciones diarias y material de hemeroteca.",
     imagen: "/DiarioTimes.jpeg",
     badge: "Informativo",
-  },
-  {
-    id: "especiales",
-    titulo: "Colecciones Especiales",
-    descripcion: "Materiales únicos de valor patrimonial.",
-    imagen: "/ColeccionesLa.png",
-    badge: "Especial",
   },
 ];
 
@@ -147,7 +147,7 @@ function FiltroPrincipalCard({
         </div>
         {activo && (
           <div className="absolute right-0 top-0 m-4 flex items-center gap-1.5 rounded-full bg-green-600 px-2 py-1 text-white shadow-lg">
-            <Check className="h-5 w-5" />
+            <Check className="h-6 w-6" />
           </div>
         )}
       </div>
