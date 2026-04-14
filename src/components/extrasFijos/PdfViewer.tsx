@@ -175,8 +175,8 @@ export default function PdfViewer({
                     </div>
                 </div>
                 <div className="flex gap-2 justify-center">
-                    <button onClick={onBack} className="cursor-pointer bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white text-xs px-4 py-2 rounded-md transition">Anterior</button>
-                    <button onClick={onNext} className="cursor-pointer bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-4 py-2 rounded-md transition font-medium">Siguiente</button>
+                    <button onClick={onBack} className="cursor-pointer bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white text-xs px-4 py-2 rounded-md transition">Anterior Publicación</button>
+                    <button onClick={onNext} className="cursor-pointer bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-4 py-2 rounded-md transition font-medium">Siguiente Publicación</button>
                 </div>
             </div>
         </div>
