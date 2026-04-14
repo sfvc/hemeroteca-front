@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { ChevronRight, Check } from "lucide-react";
 import EditorialHero from "../components/home/EditorialNavbar";
 import KohaApi from "../api/kohaApi";
+import { useNavigate } from "react-router-dom";
 import {
   fetchPublicacion_1,
   fetchPublicacion_2,
@@ -227,6 +228,7 @@ export default function Colecciones() {
   const [itemsMunicipal, setItemsMunicipal] = useState<ItemColeccion[]>([]);
   const [itemsDigital, setItemsDigital] = useState<ItemColeccion[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const [pdfActivo, setPdfActivo] = useState<string | null>(null);
   const [indexActual, setIndexActual] = useState<number>(0);
@@ -340,7 +342,7 @@ export default function Colecciones() {
         ))}
       </div>
 
-<div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-12">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-12">
         {filtros.map((f) => (
           <FiltroPrincipalCard
             key={f.id}
@@ -375,8 +377,19 @@ export default function Colecciones() {
               key={`${item.categoria}-${item.id}`}
               item={item}
               onOpen={() => {
-                setPdfActivo(item.archivoPdf!);
-                setIndexActual(idx);
+                navigate("/detalles-publicacion", {
+                  state: {
+                    item,
+                    relacionados: itemsFiltrados.filter(
+                      (i) =>
+                        i.categoria === item.categoria &&
+                        (i.titulo === item.titulo ||
+                          i.tipoReal === item.tipoReal),
+                    ),
+                    categoriaNombre: nombresCategoria[item.categoria],
+                    tipoHemeroteca: tipoActivo,
+                  },
+                });
               }}
             />
           ))}

@@ -11,6 +11,7 @@ import VideoPage from "./pages/Video";
 // import Login from "./pages/Login";
 // import Register from "./pages/Register";
 import Colecciones from "./pages/Colecciones";
+import DetallesPublicacion from "./pages/DetallesPublicacion";
 
 function App() {
   return (
@@ -22,12 +23,14 @@ function App() {
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/equipo" element={<Equipo />} />
-          {/* <Route path="/login" element={<Login />} /> */}
-          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="/practicas-conservacion" element={<RetroTv />} />
           <Route path="/detras-foto" element={<RetroTv />} />
           <Route path="/video" element={<VideoPage />} />
           <Route path="/colecciones" element={<Colecciones />} />
+          <Route
+            path="/detalles-publicacion"
+            element={<DetallesPublicacion />}
+          />
         </Routes>
       </main>
       <Footer />
