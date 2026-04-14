@@ -309,7 +309,7 @@ export default function Colecciones() {
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8 bg-white min-h-screen">
       <EditorialHero />
 
-      <div className="mt-5 mb-10 flex items-center justify-center gap-8 border-b border-slate-200">
+      <div className="mt-5 mb-10 flex items-center justify-center gap-8">
         {[
           {
             id: "municipal",
