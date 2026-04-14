@@ -179,7 +179,7 @@ function MiniCard({
   return (
     <article
       onClick={() => item.archivoPdf && onOpen()}
-      className="group overflow-hidden bg-slate-100 shadow-lg cursor-pointer"
+      className="group overflow-hidden bg-white shadow-lg cursor-pointer"
     >
       <div className="relative aspect-3/4 overflow-hidden bg-slate-200">
         <img
@@ -306,7 +306,7 @@ export default function Colecciones() {
   }
 
   return (
-    <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8 bg-slate-50 min-h-screen">
+    <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8 bg-white min-h-screen">
       <EditorialHero />
 
       <div className="mt-5 mb-10 flex items-center justify-center gap-8 border-b border-slate-200">
