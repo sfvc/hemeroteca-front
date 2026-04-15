@@ -229,6 +229,8 @@ export default function Colecciones() {
   const [itemsDigital, setItemsDigital] = useState<ItemColeccion[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [busqueda, setBusqueda] = useState("");
+  const [anio, setAnio] = useState("");
 
   const [pdfActivo, setPdfActivo] = useState<string | null>(null);
   const [indexActual, setIndexActual] = useState<number>(0);
@@ -266,13 +268,34 @@ export default function Colecciones() {
   const filtroActual =
     tipoActivo === "municipal" ? filtroMunicipal : filtroDigital;
 
-  const itemsFiltrados = useMemo(
-    () =>
+  const itemsFiltrados = useMemo(() => {
+    let resultado =
       filtroActual === "colecciones"
         ? listaActual
-        : listaActual.filter((i) => i.categoria === filtroActual),
-    [listaActual, filtroActual],
-  );
+        : listaActual.filter((i) => i.categoria === filtroActual);
+
+    // PALABRA CLAVE
+    if (busqueda.trim() !== "") {
+      const texto = busqueda.toLowerCase();
+
+      resultado = resultado.filter((item) =>
+        `${item.titulo} ${item.descripcion ?? ""} ${item.tipoReal ?? ""}`
+          .toLowerCase()
+          .includes(texto),
+      );
+    }
+
+    // AÑO
+    if (anio !== "") {
+      resultado = resultado.filter((item) => {
+        if (!item.fecha) return false;
+        const year = new Date(item.fecha).getFullYear().toString();
+        return year === anio;
+      });
+    }
+
+    return resultado;
+  }, [listaActual, filtroActual, busqueda, anio]);
 
   if (pdfActivo) {
     const itemData = itemsFiltrados[indexActual];
@@ -357,8 +380,9 @@ export default function Colecciones() {
         ))}
       </div>
 
-      <header className="mb-8">
-        <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+      <header className="mb-4">
+        <div className="border-t border-slate-300 pt-6"></div>
+        <span className="text-[13px] font-bold uppercase text-cyan-700">
           Resultados
         </span>
         <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
@@ -366,13 +390,64 @@ export default function Colecciones() {
         </h2>
       </header>
 
+      {/* FILTROS */}
+
+      <div className="mb-10 bg-slate-50 border border-slate-100 p-5 md:p-6 shadow-md">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+          {/* BUSQUEDA */}
+          <div className="md:col-span-6 flex flex-col gap-2">
+            <label className="text-[13px] font-bold uppercase text-cyan-700">
+              Búsqueda
+            </label>
+            <input
+              type="text"
+              placeholder="Buscar por palabra Clave/Título..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="h-12 w-full border-2 border-slate-300  bg-white px-4 text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+            />
+          </div>
+
+          {/* AÑO */}
+          <div className="md:col-span-3 flex flex-col gap-2">
+            <label className="text-[13px] font-bold uppercase text-cyan-700">
+              Año
+            </label>
+            <input
+              type="number"
+              placeholder="Escribir año de publicación..."
+              min="1800"
+              max={new Date().getFullYear()}
+              value={anio}
+              onChange={(e) => setAnio(e.target.value)}
+              className="h-12 w-full border-2 border-slate-300 bg-white px-4 text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+            />
+          </div>
+
+          {/* LIMPIAR FILTROS */}
+          <div className="md:col-span-3">
+            <button
+              onClick={() => {
+                setBusqueda("");
+                setAnio("");
+              }}
+              className="h-12 w-full cursor-pointer flex items-center justify-center bg-cyan-700 text-white font-bold transition hover:bg-slate-400 hover:text-slate-800 active:scale-[0.98]"
+            >
+              Limpiar filtros
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-slate-300 pt-6 mb-5"></div>
+
       {loading ? (
         <div className="flex justify-center py-20">
           <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent" />
         </div>
       ) : itemsFiltrados.length > 0 ? (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {itemsFiltrados.map((item,) => (
+          {itemsFiltrados.map((item) => (
             <MiniCard
               key={`${item.categoria}-${item.id}`}
               item={item}
