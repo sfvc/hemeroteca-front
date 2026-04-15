@@ -22,6 +22,7 @@ interface PublicacionAPI {
   fecha_publicacion?: string;
   numero_publicacion?: string;
   destino?: string[];
+  medio_publicador?: number;
 }
 
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
@@ -39,6 +40,7 @@ interface ItemColeccion {
   destino?: string[];
   numeroEdicion?: string;
   tipoReal?: string;
+  medio_publicador?: number;
 }
 
 interface FiltroCard {
@@ -74,6 +76,7 @@ const mapPublicacion = (
       : [item.destino]
     : undefined,
   numeroEdicion: item.numero_publicacion,
+  medio_publicador: item.medio_publicador,
   tipoReal: item.nombre || (categoria === "revistas" ? "Revista" : "Periódico"),
 });
 
@@ -457,12 +460,7 @@ export default function Colecciones() {
                 navigate("/detalles-publicacion", {
                   state: {
                     item,
-                    relacionados: itemsFiltrados.filter(
-                      (i) =>
-                        i.categoria === item.categoria &&
-                        (i.titulo === item.titulo ||
-                          i.tipoReal === item.tipoReal),
-                    ),
+                    relacionados: itemsFiltrados,
                     categoriaNombre: nombresCategoria[item.categoria],
                     tipoHemeroteca: tipoActivo,
                   },
