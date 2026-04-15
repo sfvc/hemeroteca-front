@@ -214,7 +214,7 @@ function MiniCard({
           </p>
         )}
         <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition group-hover:gap-3">
-          Ver PDF <ChevronRight className="h-4 w-4" />
+          Ver Resumen <ChevronRight className="h-4 w-4" />
         </span>
       </div>
     </article>

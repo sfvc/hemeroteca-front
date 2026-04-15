@@ -29,7 +29,7 @@ export default function Footer() {
             </div>
 
             <p className="pt-3 text-xs text-slate-800">
-              © 2026 · Programa Hemeroteca Municipal / Digital v1.0
+              © 2026 · Secretaria de Gabinete y Modernizacion
             </p>
           </div>
         </div>

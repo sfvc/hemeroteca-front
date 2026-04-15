@@ -5,10 +5,10 @@ import {
   CalendarDays,
   Newspaper,
   Search,
-  ChevronLeft,
+  // ChevronLeft,
   ChevronRight,
   FileText,
-  Eye,
+  // Eye,
 } from "lucide-react";
 import PdfViewer from "../components/extrasFijos/PdfViewer";
 import EditorialHero from "../components/home/EditorialNavbar";
@@ -80,83 +80,83 @@ function buildCollectionDate(item: ItemColeccion) {
   return item.numeroEdicion ? `Edición N°${item.numeroEdicion}` : "Sin fecha";
 }
 
-function EjemplarCard({
-  ejemplar,
-  esActivo,
-  onClick,
-}: {
-  ejemplar: ItemColeccion;
-  esActivo: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <article
-      onClick={onClick}
-      className={`group relative flex cursor-pointer flex-col overflow-hidden border transition-all duration-300 ${esActivo
-        ? "border-cyan-600 shadow-lg shadow-cyan-100 ring-1 ring-cyan-500"
-        : "border-slate-200 hover:border-slate-400 hover:shadow-md"
-        }`}
-    >
-      {/* Portada */}
-      <div className="relative aspect-3/4 overflow-hidden bg-slate-100">
-        <img
-          src={ejemplar.imagen}
-          alt={ejemplar.titulo}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          onError={(e) => {
-            e.currentTarget.src = "/placeholder.jpg";
-          }}
-        />
+// function EjemplarCard({
+//   ejemplar,
+//   esActivo,
+//   onClick,
+// }: {
+//   ejemplar: ItemColeccion;
+//   esActivo: boolean;
+//   onClick: () => void;
+// }) {
+//   return (
+//     <article
+//       onClick={onClick}
+//       className={`group relative flex cursor-pointer flex-col overflow-hidden border transition-all duration-300 ${esActivo
+//         ? "border-cyan-600 shadow-lg shadow-cyan-100 ring-1 ring-cyan-500"
+//         : "border-slate-200 hover:border-slate-400 hover:shadow-md"
+//         }`}
+//     >
+//       {/* Portada */}
+//       <div className="relative aspect-3/4 overflow-hidden bg-slate-100">
+//         <img
+//           src={ejemplar.imagen}
+//           alt={ejemplar.titulo}
+//           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+//           onError={(e) => {
+//             e.currentTarget.src = "/placeholder.jpg";
+//           }}
+//         />
 
-        {/* Overlay hover con ícono */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition duration-300 group-hover:bg-black/40">
-          <div className="flex h-10 w-10 scale-75 items-center justify-center rounded-full bg-white opacity-0 shadow-lg transition duration-300 group-hover:scale-100 group-hover:opacity-100">
-            <Eye className="h-5 w-5 text-slate-800" />
-          </div>
-        </div>
+//         {/* Overlay hover con ícono */}
+//         <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition duration-300 group-hover:bg-black/40">
+//           <div className="flex h-10 w-10 scale-75 items-center justify-center rounded-full bg-white opacity-0 shadow-lg transition duration-300 group-hover:scale-100 group-hover:opacity-100">
+//             <Eye className="h-5 w-5 text-slate-800" />
+//           </div>
+//         </div>
 
-        {/* Badge activo */}
-        {esActivo && (
-          <div className="absolute left-0 top-0 bg-cyan-600 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
-            Leyendo
-          </div>
-        )}
+//         {/* Badge activo */}
+//         {esActivo && (
+//           <div className="absolute left-0 top-0 bg-cyan-600 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
+//             Leyendo
+//           </div>
+//         )}
 
-        {/* Año en esquina inferior */}
-        {ejemplar.fecha && (
-          <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 text-[11px] font-bold text-white backdrop-blur-sm">
-            {obtenerAnio(ejemplar.fecha)}
-          </div>
-        )}
-      </div>
+//         {/* Año en esquina inferior */}
+//         {ejemplar.fecha && (
+//           <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 text-[11px] font-bold text-white backdrop-blur-sm">
+//             {obtenerAnio(ejemplar.fecha)}
+//           </div>
+//         )}
+//       </div>
 
-      {/* Info */}
-      <div className="flex flex-1 flex-col justify-between bg-white p-3">
-        <div>
-          <h3 className="line-clamp-2 font-serif text-sm font-black leading-tight text-slate-900">
-            {ejemplar.titulo}
-          </h3>
-          {ejemplar.numeroEdicion && (
-            <p className="mt-1 text-[11px] font-semibold text-cyan-700">
-              N° {ejemplar.numeroEdicion}
-            </p>
-          )}
-        </div>
+//       {/* Info */}
+//       <div className="flex flex-1 flex-col justify-between bg-white p-3">
+//         <div>
+//           <h3 className="line-clamp-2 font-serif text-sm font-black leading-tight text-slate-900">
+//             {ejemplar.titulo}
+//           </h3>
+//           {ejemplar.numeroEdicion && (
+//             <p className="mt-1 text-[11px] font-semibold text-cyan-700">
+//               N° {ejemplar.numeroEdicion}
+//             </p>
+//           )}
+//         </div>
 
-        <div className="mt-2 flex items-center justify-between">
-          <span className="text-[11px] text-slate-400">
-            {formatearFecha(ejemplar.fecha)}
-          </span>
-          {ejemplar.archivoPdf ? (
-            <FileText className="h-3.5 w-3.5 text-cyan-600" />
-          ) : (
-            <span className="text-[10px] text-slate-300">Sin PDF</span>
-          )}
-        </div>
-      </div>
-    </article>
-  );
-}
+//         <div className="mt-2 flex items-center justify-between">
+//           <span className="text-[11px] text-slate-400">
+//             {formatearFecha(ejemplar.fecha)}
+//           </span>
+//           {ejemplar.archivoPdf ? (
+//             <FileText className="h-3.5 w-3.5 text-cyan-600" />
+//           ) : (
+//             <span className="text-[10px] text-slate-300">Sin PDF</span>
+//           )}
+//         </div>
+//       </div>
+//     </article>
+//   );
+// }
 
 export default function DetallesPublicacion() {
   const navigate = useNavigate();
@@ -165,8 +165,8 @@ export default function DetallesPublicacion() {
 
   const [pdfActivo, setPdfActivo] = useState<string | null>(null);
   const [indexActual, setIndexActual] = useState(0);
-  const [paginaActual, setPaginaActual] = useState(0);
-  const ITEMS_POR_PAGINA = 10;
+  // const [paginaActual, setPaginaActual] = useState(0);
+  // const ITEMS_POR_PAGINA = 10;
   const { item, relacionados = [] } = state || {};
 
   const itemsOrdenados = useMemo(() => {
@@ -202,11 +202,11 @@ export default function DetallesPublicacion() {
     );
   }
 
-  const totalPaginas = Math.ceil(itemsOrdenados.length / ITEMS_POR_PAGINA);
-  const itemsPagina = itemsOrdenados.slice(
-    paginaActual * ITEMS_POR_PAGINA,
-    (paginaActual + 1) * ITEMS_POR_PAGINA,
-  );
+  // const totalPaginas = Math.ceil(itemsOrdenados.length / ITEMS_POR_PAGINA);
+  // const itemsPagina = itemsOrdenados.slice(
+  //   paginaActual * ITEMS_POR_PAGINA,
+  //   (paginaActual + 1) * ITEMS_POR_PAGINA,
+  // );
 
   const abrirPdf = (indexGlobal: number) => {
     const seleccionado = itemsOrdenados[indexGlobal];
@@ -274,11 +274,11 @@ export default function DetallesPublicacion() {
               <h1 className="font-serif text-4xl font-black uppercase tracking-tight text-slate-950 md:text-6xl">
                 {item?.titulo || item?.subtitulo}
               </h1>
-              <p className="mt-3 max-w-3xl text-lg text-slate-500">
+              <p className="mt-4 max-w-3xl text-lg text-slate-500">
                 {item?.subtitulo || "Subtítulo o lema del ejemplar"}
               </p>
 
-              <div className="mt-8 border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mt-4 border border-slate-200 bg-white p-6 shadow-sm">
                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-700">
                   Descripción
                 </p>
@@ -344,18 +344,35 @@ export default function DetallesPublicacion() {
                   Acciones
                 </p>
                 <div className="space-y-3">
-                  {/* Ver PDF - acción principal */}
                   {primerIndexConPdf >= 0 ? (
-                    <button
-                      onClick={() => abrirPdf(primerIndexConPdf)}
-                      className="flex w-full items-center justify-between rounded-none border border-cyan-700 bg-cyan-700 px-4 py-3 text-left text-sm font-semibold text-white transition hover:bg-cyan-800 cursor-pointer"
-                    >
-                      <span className="inline-flex items-center gap-2">
-                        <FileText className="h-4 w-4" />
-                        Abrir visor PDF
-                      </span>
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
+                    <>
+                      {/* Abrir visor */}
+                      <button
+                        onClick={() => abrirPdf(primerIndexConPdf)}
+                        className="flex w-full items-center justify-between rounded-none border border-cyan-700 bg-cyan-700 px-4 py-3 text-left text-sm font-semibold text-white transition hover:bg-cyan-800 cursor-pointer"
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          <FileText className="h-4 w-4" />
+                          Abrir visor PDF
+                        </span>
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+
+                      {/* Descargar PDF */}
+                      <a
+                        href={itemsOrdenados[primerIndexConPdf]?.archivoPdf || "#"}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex w-full items-center justify-between rounded-none border border-emerald-700 bg-emerald-700 px-4 py-3 text-left text-sm font-semibold text-white transition hover:bg-emerald-800"
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          <FileText className="h-4 w-4" />
+                          Descargar PDF
+                        </span>
+                        <ChevronRight className="h-4 w-4" />
+                      </a>
+                    </>
                   ) : (
                     <div className="flex w-full items-center gap-2 border border-slate-200 px-4 py-3 text-sm text-slate-400">
                       <FileText className="h-4 w-4" />
@@ -364,14 +381,12 @@ export default function DetallesPublicacion() {
                   )}
                 </div>
               </div>
-
-
             </aside>
           </div>
         </div>
 
         {/* SECCIÓN RELACIONADOS */}
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
@@ -394,7 +409,6 @@ export default function DetallesPublicacion() {
               </p>
             </div>
 
-            {/* Paginación superior (solo si hay más de una página) */}
             {totalPaginas > 1 && (
               <div className="flex items-center gap-2">
                 <span className="text-sm text-slate-500">
@@ -440,7 +454,6 @@ export default function DetallesPublicacion() {
                 })}
               </div>
 
-              {/* Paginación inferior */}
               {totalPaginas > 1 && (
                 <div className="mt-8 flex items-center justify-center gap-2">
                   <button
@@ -485,7 +498,7 @@ export default function DetallesPublicacion() {
               </p>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </section>
   );
