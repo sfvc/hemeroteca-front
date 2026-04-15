@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="w-full bg-gray-50 text-slate-800 border-t border-slate-300">
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-8">
         {/* Mini diario abajo */}
-        <div className="border-t border-slate-300 pt-6 mb-18">
+        <div className="border-t border-slate-300 pt-6 mb-12">
           <div className="flex flex-col items-center text-center gap-3">
             <p className="text-[10px] uppercase tracking-[0.35em] text-sky-700 font-bold">
               Edición Digital
