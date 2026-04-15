@@ -15,6 +15,7 @@ interface PublicacionAPI {
   id: number;
   titulo: string;
   subtitulo?: string | null;
+  descripcion?: string | null;
   portada_publicacion?: string | null;
   archivo_pdf?: string | null;
   nombre?: string;
@@ -32,6 +33,7 @@ interface ItemColeccion {
   categoria: Categoria;
   imagen: string;
   descripcion?: string;
+  subtitulo?: string;
   archivoPdf?: string;
   fecha?: string;
   destino?: string[];
@@ -62,7 +64,8 @@ const mapPublicacion = (
   imagen: item.portada_publicacion
     ? getAssetUrl(item.portada_publicacion)
     : "/placeholder.jpg",
-  descripcion: item.subtitulo ?? undefined,
+  descripcion: item.descripcion ?? undefined,
+  subtitulo: item.subtitulo ?? undefined,
   archivoPdf: item.archivo_pdf ? getAssetUrl(item.archivo_pdf) : undefined,
   fecha: item.fecha_publicacion ?? undefined,
   destino: item.destino
@@ -131,11 +134,10 @@ function FiltroPrincipalCard({
   return (
     <article
       onClick={onClick}
-      className={`group w-full overflow-hidden shadow-md cursor-pointer transition-all ${
-        activo
-          ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
-          : "border border-transparent bg-white"
-      }`}
+      className={`group w-full overflow-hidden shadow-md cursor-pointer transition-all ${activo
+        ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
+        : "border border-transparent bg-white"
+        }`}
     >
       <div className="relative aspect-9/4 overflow-hidden">
         <img
@@ -241,6 +243,7 @@ export default function Colecciones() {
         fetchPublicacion_3(),
         fetchPublicacion_4(),
       ]);
+
       return [
         ...toArray(pub1).map((i) => mapPublicacion(i, "revistas")),
         ...toArray(pub2).map((i) => mapPublicacion(i, "periodicos")),
@@ -330,11 +333,10 @@ export default function Colecciones() {
             key={tab.id}
             title={tab.title}
             onClick={() => setTipoActivo(tab.id as TipoHemeroteca)}
-            className={`pb-4 text-xl font-bold uppercase font-serif transition cursor-pointer flex flex-col items-center ${
-              tipoActivo === tab.id
-                ? "text-slate-900 border-b-4 border-cyan-700"
-                : "text-slate-500 border-b-4 border-transparent hover:text-slate-800"
-            }`}
+            className={`pb-4 text-xl font-bold uppercase font-serif transition cursor-pointer flex flex-col items-center ${tipoActivo === tab.id
+              ? "text-slate-900 border-b-4 border-cyan-700"
+              : "text-slate-500 border-b-4 border-transparent hover:text-slate-800"
+              }`}
           >
             <span>{tab.label}</span>
             <span className="text-xs normal-case font-normal">{tab.sub}</span>

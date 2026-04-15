@@ -220,7 +220,7 @@ const fetchPublicacion = async (publicacion: string) => {
     const response = await KohaApi.get(
       `/items/${publicacion}?filter[activo][_eq]=true`
     );
-    return response.data.data?.[0] ?? null;
+    return response.data.data ?? null;
   } catch (error) {
     console.error(`Error fetching ${publicacion}:`, error);
     return null;
