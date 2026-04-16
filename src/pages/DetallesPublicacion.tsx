@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -181,6 +181,10 @@ export default function DetallesPublicacion() {
         return fa - fb;
       });
   }, [relacionados, item]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.key]);
 
   const indexDelItem = useMemo(
     () => itemsOrdenados.findIndex((i) => i.id === item?.id),
