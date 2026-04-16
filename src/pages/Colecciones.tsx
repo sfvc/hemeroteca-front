@@ -87,6 +87,10 @@ const toArray = (
   return Array.isArray(data) ? data : [data];
 };
 
+{
+  /* CONTENIDO FILTRO CARDS */
+}
+
 const filtros: FiltroCard[] = [
   {
     id: "colecciones",
@@ -134,13 +138,18 @@ function FiltroPrincipalCard({
   activo: boolean;
   onClick: () => void;
 }) {
+  {
+    /* CARDS DE FILTRO */
+  }
+
   return (
     <article
       onClick={onClick}
-      className={`group w-full overflow-hidden shadow-md cursor-pointer transition-all ${activo
-        ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
-        : "border border-transparent bg-white"
-        }`}
+      className={`group w-full overflow-hidden shadow-md cursor-pointer transition-all ${
+        activo
+          ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
+          : "border border-transparent bg-white"
+      }`}
     >
       <div className="relative aspect-9/4 overflow-hidden">
         <img
@@ -173,6 +182,10 @@ function FiltroPrincipalCard({
       </div>
     </article>
   );
+}
+
+{
+  /* MINI CARDS DE RESULTADO */
 }
 
 function MiniCard({
@@ -222,6 +235,10 @@ function MiniCard({
       </div>
     </article>
   );
+}
+
+{
+  /* MUCHAS COSAS */
 }
 
 export default function Colecciones() {
@@ -338,7 +355,11 @@ export default function Colecciones() {
 
   return (
     <section className="px-4 pb-6 pt-2 md:px-6 lg:px-8 bg-white min-h-screen">
+      {/* EDITORIAL NAVBAR */}
+
       <EditorialHero />
+
+      {/* BOTONES DESLIZANTE HEMEROTECA MUNICIPAL/DIGITAL */}
 
       <div className="mt-5 mb-10 flex items-center justify-center gap-8">
         {[
@@ -359,10 +380,11 @@ export default function Colecciones() {
             key={tab.id}
             title={tab.title}
             onClick={() => setTipoActivo(tab.id as TipoHemeroteca)}
-            className={`pb-4 text-xl font-bold uppercase font-serif transition cursor-pointer flex flex-col items-center ${tipoActivo === tab.id
-              ? "text-slate-900 border-b-4 border-cyan-700"
-              : "text-slate-500 border-b-4 border-transparent hover:text-slate-800"
-              }`}
+            className={`pb-4 text-xl font-bold uppercase font-serif transition cursor-pointer flex flex-col items-center ${
+              tipoActivo === tab.id
+                ? "text-slate-900 border-b-4 border-cyan-700"
+                : "text-slate-500 border-b-4 border-transparent hover:text-slate-800"
+            }`}
           >
             <span>{tab.label}</span>
             <span className="text-xs normal-case font-normal">{tab.sub}</span>
@@ -385,7 +407,7 @@ export default function Colecciones() {
         ))}
       </div>
 
-      <header className="mb-4">
+      <header className="mb-1">
         <div className="border-t border-slate-300 pt-6"></div>
         <span className="text-[13px] font-bold uppercase text-cyan-700">
           Resultados
@@ -397,11 +419,11 @@ export default function Colecciones() {
 
       {/* FILTROS */}
 
-      <div className="mb-10 bg-slate-50 border border-slate-100 p-5 md:p-6 shadow-md">
+      <div className="mb-2 p-5 md:p-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
           {/* BUSQUEDA */}
           <div className="md:col-span-6 flex flex-col gap-2">
-            <label className="text-[13px] font-bold uppercase text-cyan-700">
+            <label className="text-[13px] font-bold uppercase text-cyan-700 rounded-full border border-slate-100 bg-gray-50 w-max px-2">
               Búsqueda
             </label>
             <input
@@ -409,13 +431,13 @@ export default function Colecciones() {
               placeholder="Buscar por palabra Clave/Título..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
-              className="h-12 w-full border-2 border-slate-300  bg-white px-4 text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+              className="h-12 w-full border-2 border-slate-300 bg-white px-4 text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-slate-100 focus:ring-2 focus:ring-cyan-700/10 font-semibold"
             />
           </div>
 
           {/* AÑO */}
           <div className="md:col-span-3 flex flex-col gap-2">
-            <label className="text-[13px] font-bold uppercase text-cyan-700">
+            <label className="text-[13px] font-bold uppercase text-cyan-700 rounded-full border border-slate-100 bg-gray-50 w-max px-2">
               Año
             </label>
             <input
@@ -425,7 +447,7 @@ export default function Colecciones() {
               max={new Date().getFullYear()}
               value={anio}
               onChange={(e) => setAnio(e.target.value)}
-              className="h-12 w-full border-2 border-slate-300 bg-white px-4 text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+              className="h-12 w-full border-2 border-slate-300 bg-white px-4 text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-slate-100 focus:ring-2 focus:ring-cyan-700/10 font-semibold"
             />
           </div>
 
@@ -436,7 +458,7 @@ export default function Colecciones() {
                 setBusqueda("");
                 setAnio("");
               }}
-              className="h-12 w-full cursor-pointer flex items-center justify-center bg-cyan-700 text-white font-bold transition hover:bg-slate-400 hover:text-slate-800 active:scale-[0.98]"
+              className="h-12 w-full cursor-pointer flex items-center justify-center bg-cyan-700 text-white font-bold transition hover:bg-slate-600 hover:text-slate-100 active:scale-[0.98]"
             >
               Limpiar filtros
             </button>

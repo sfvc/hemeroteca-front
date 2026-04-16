@@ -13,11 +13,32 @@ import VideoPage from "./pages/Video";
 import Colecciones from "./pages/Colecciones";
 import DetallesPublicacion from "./pages/DetallesPublicacion";
 
+import LoaderEditorial from "./components/extrasFijos/LoaderEditorial";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 function App() {
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1600);
+
+    return () => clearTimeout(timeout);
+  }, [location]);
+
   return (
     <div className="min-h-dvh bg-white text-slate-900">
+      {/* LOADER */}
+      {loading && <LoaderEditorial />}
+
       <main>
         <ScrollToTop />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/noticias" element={<Noticias />} />
@@ -33,6 +54,7 @@ function App() {
           />
         </Routes>
       </main>
+
       <Footer />
     </div>
   );
