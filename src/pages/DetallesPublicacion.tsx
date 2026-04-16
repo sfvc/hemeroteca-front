@@ -174,17 +174,18 @@ export default function DetallesPublicacion() {
     if (!item?.medio_publicador) return [];
 
     return relacionados
-      .filter(
-        (rel) =>
-          rel.medio_publicador === item.medio_publicador &&
-          rel.id !== item.id
-      )
+      .filter((rel) => rel.medio_publicador === item.medio_publicador)
       .sort((a, b) => {
         const fa = a.fecha ? new Date(a.fecha).getTime() : 0;
         const fb = b.fecha ? new Date(b.fecha).getTime() : 0;
         return fa - fb;
       });
   }, [relacionados, item]);
+
+  const indexDelItem = useMemo(
+    () => itemsOrdenados.findIndex((i) => i.id === item?.id),
+    [itemsOrdenados, item]
+  );
 
   const rangoAnios = useMemo(
     () => obtenerRangoAnios(itemsOrdenados),
@@ -225,6 +226,17 @@ export default function DetallesPublicacion() {
   };
 
   const primerIndexConPdf = itemsOrdenados.findIndex((i) => !!i.archivoPdf);
+
+  const irAEjemplar = (ejemplar: ItemColeccion) => {
+    navigate("/detalles-publicacion", {
+      state: {
+        item: ejemplar,
+        relacionados: relacionados, // el array original del state
+        categoriaNombre: nombresCategoria[ejemplar.categoria],
+        tipoHemeroteca: state?.tipoHemeroteca,
+      },
+    });
+  };
 
   /* ── Vista PDF ───────────────────────────────────────────────── */
   if (pdfActivo) {
@@ -357,7 +369,7 @@ export default function DetallesPublicacion() {
                     <>
                       {/* Abrir visor */}
                       <button
-                        onClick={() => abrirPdf(primerIndexConPdf)}
+                        onClick={() => abrirPdf(indexDelItem)}
                         className="flex w-full items-center justify-between rounded-none border border-cyan-700 bg-cyan-700 px-4 py-3 text-left text-sm font-semibold text-white transition hover:bg-cyan-800 cursor-pointer"
                       >
                         <span className="inline-flex items-center gap-2">
@@ -369,7 +381,7 @@ export default function DetallesPublicacion() {
 
                       {/* Descargar PDF */}
                       <a
-                        href={itemsOrdenados[primerIndexConPdf]?.archivoPdf || "#"}
+                        href={itemsOrdenados[indexDelItem]?.archivoPdf || "#"}
                         download
                         target="_blank"
                         rel="noopener noreferrer"
@@ -456,8 +468,8 @@ export default function DetallesPublicacion() {
                     <EjemplarCard
                       key={`${ejemplar.id}-${indexGlobal}`}
                       ejemplar={ejemplar}
-                      esActivo={false}
-                      onClick={() => abrirPdf(indexGlobal)}
+                      esActivo={ejemplar.id === item?.id}
+                      onClick={() => irAEjemplar(ejemplar)}
                     />
                   );
                 })}
