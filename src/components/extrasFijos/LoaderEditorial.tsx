@@ -29,7 +29,7 @@ export default function LoaderEditorial() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-[clamp(2.8rem,8vw,6rem)] leading-none font-serif font-bold tracking-tight text-slate-950"
         >
-          HEMEROTECA MUNICIPAL
+          HEMEROTECA
         </motion.h1>
 
         {/* SUBTITULO */}

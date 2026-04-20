@@ -6,8 +6,8 @@ import {
   fetchBotonIzquierdo,
   fetchEncabezado,
 } from "../../services/koha-service";
-import { formatFecha } from "../../util/formatFecha";
 import { BookMarked, CalendarCheck, Info } from "lucide-react";
+import ModoToggle from "../extrasFijos/ModoToggle";
 
 type Boton = {
   id: number;
@@ -33,6 +33,9 @@ export default function EditorialHero() {
   const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
   const [loading, setLoading] = useState(true);
   const [hora, setHora] = useState("");
+  const [modoActivo, setModoActivo] = useState<
+    "HEMEROTECA MUNICIPAL" | "HEMEROTECA DIGITAL"
+  >("HEMEROTECA MUNICIPAL");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -107,10 +110,7 @@ export default function EditorialHero() {
       }
     };
 
-    // Mañana: 08:00 - 12:30
     agregarRango(8, 12);
-
-    // Tarde: 15:00 - 18:30
     agregarRango(15, 18);
 
     return horarios;
@@ -124,14 +124,14 @@ export default function EditorialHero() {
           {loading ? (
             <div className="flex w-full items-center justify-between animate-pulse">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 bg-slate-200 rounded-md" />
-                <div className="h-4 w-40 bg-slate-200 rounded" />
+                <div className="h-10 w-10 rounded-md bg-slate-200" />
+                <div className="h-4 w-40 rounded bg-slate-200" />
               </div>
 
-              <div className="hidden sm:flex gap-3">
-                <div className="h-9 w-28 bg-slate-200 rounded-2xl" />
-                <div className="h-9 w-32 bg-slate-200 rounded-2xl" />
-                <div className="h-9 w-28 bg-slate-200 rounded-2xl" />
+              <div className="hidden gap-3 sm:flex">
+                <div className="h-9 w-28 rounded-2xl bg-slate-200" />
+                <div className="h-9 w-32 rounded-2xl bg-slate-200" />
+                <div className="h-9 w-28 rounded-2xl bg-slate-200" />
               </div>
             </div>
           ) : (
@@ -144,7 +144,7 @@ export default function EditorialHero() {
                     className="h-10 object-contain sm:h-10"
                   />
                   <span className="font-extrabold uppercase tracking-[0.2em]">
-                    Hemeroteca Municipal
+                    La Hemeroteca
                   </span>
                   <span className="hidden sm:inline">|</span>
                   <span className="hidden sm:inline uppercase">
@@ -162,29 +162,27 @@ export default function EditorialHero() {
                     }
                     disabled={!botonIzquierdo.activo}
                     style={getButtonStyle(botonIzquierdo)}
-                    className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
+                    className="flex cursor-pointer items-center gap-2 bg-cyan-700 px-4 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 hover:opacity-90"
                   >
                     {botonIzquierdo.titulo}
                   </button>
                 )}
 
-                {/* SOLICITAR TURNO PRESENCIAL */}
-
-                <button
-                  onClick={() => setOpenModal(true)}
-                  className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
-                >
-                  <CalendarCheck className="h-5 w-5" />
-                  Solicitar Turno
-                </button>
-
-                {/* IR A LA AGM DENUEVO */}
+                {modoActivo === "HEMEROTECA MUNICIPAL" && (
+                  <button
+                    onClick={() => setOpenModal(true)}
+                    className="flex cursor-pointer items-center gap-2 bg-cyan-700 px-4 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 hover:opacity-90"
+                  >
+                    <CalendarCheck className="h-5 w-5" />
+                    Solicitar Turno
+                  </button>
+                )}
 
                 <button
                   onClick={() =>
                     window.open("https://agm.cc.gob.ar/", "_blank")
                   }
-                  className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white shadow-md"
+                  className="flex cursor-pointer items-center gap-2 bg-cyan-700 px-4 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 hover:opacity-90"
                 >
                   <BookMarked className="h-5 w-5" />
                   Archivo General Municipal
@@ -197,7 +195,7 @@ export default function EditorialHero() {
                     }
                     disabled={!botonDerecho.activo}
                     style={getButtonStyle(botonDerecho)}
-                    className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
+                    className="flex cursor-pointer items-center gap-2 bg-cyan-700 px-4 py-2 text-sm font-medium text-white shadow-md transition-all duration-300 hover:scale-105 hover:opacity-90"
                   >
                     {botonDerecho.titulo}
                   </button>
@@ -210,32 +208,13 @@ export default function EditorialHero() {
 
       {/* CONTENIDO */}
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
+        {/* TOGGLE CENTRADO Y GRANDE */}
         <div className="border-b border-slate-300 pb-6">
-          <div className="text-center">
+          <div className="flex w-full justify-center">
             {loading ? (
-              <div className="flex flex-col items-center gap-4 animate-pulse">
-                <div className="h-3 w-32 bg-orange-200 rounded" />
-                <div className="h-10 w-64 bg-slate-300 rounded" />
-                <div className="h-3 w-40 bg-slate-200 rounded" />
-              </div>
+              <div className="h-44 w-205 animate-pulse rounded-[3rem] bg-slate-200" />
             ) : (
-              <>
-                <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-cyan-500">
-                  {encabezado?.temaDelMes}
-                </p>
-
-                <h1 className="mt-2 font-serif text-4xl font-black uppercase text-slate-950 sm:text-5xl lg:text-7xl">
-                  {encabezado?.nombre}
-                </h1>
-
-                {encabezado?.lugar && (
-                  <p className="mt-3 text-xs uppercase tracking-widest text-slate-500">
-                    {encabezado.lugar}
-                    {encabezado.fechaFantasia &&
-                      ` — ${formatFecha(encabezado.fechaFantasia)}`}
-                  </p>
-                )}
-              </>
+              <ModoToggle value={modoActivo} onChange={setModoActivo} />
             )}
           </div>
         </div>
@@ -244,27 +223,51 @@ export default function EditorialHero() {
         <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-b border-slate-200 py-4 text-sm font-medium">
           {loading ? (
             <div className="flex gap-4 animate-pulse">
-              <div className="h-4 w-16 bg-slate-200 rounded" />
-              <div className="h-4 w-24 bg-slate-200 rounded" />
-              <div className="h-4 w-20 bg-slate-200 rounded" />
-              <div className="h-4 w-20 bg-slate-200 rounded" />
-              <div className="h-4 w-20 bg-slate-200 rounded" />
+              <div className="h-4 w-16 rounded bg-slate-200" />
+              <div className="h-4 w-24 rounded bg-slate-200" />
+              <div className="h-4 w-20 rounded bg-slate-200" />
+              <div className="h-4 w-20 rounded bg-slate-200" />
+              <div className="h-4 w-20 rounded bg-slate-200" />
             </div>
-          ) : (
+          ) : modoActivo === "HEMEROTECA MUNICIPAL" ? (
             <>
               <Link to="/" className={navClass("/")}>
                 Inicio
               </Link>
-              {/* <Link to="/login" className={navClass("/login")}>
-                Hemeroteca Digital
-              </Link> */}
-              <Link to="/colecciones" className={navClass("/colecciones")}>
+              <Link to="/catalogo" className={navClass("/catalogo")}>
                 Catalogo
+              </Link>
+              <Link to="/colecciones" className={navClass("/colecciones")}>
+                Colecciones
               </Link>
               <Link to="/noticias" className={navClass("/noticias")}>
                 Noticias
               </Link>
               <Link to="/nosotros" className={navClass("/nosotros")}>
+                Nosotros
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/digital" className={navClass("/digital")}>
+                Inicio
+              </Link>
+              <Link
+                to="/digital/catalogo"
+                className={navClass("/digital/catalogo")}
+              >
+                Catálogo digital
+              </Link>
+              <Link
+                to="/digital/colecciones"
+                className={navClass("/digital/colecciones")}
+              >
+                Colecciones
+              </Link>
+              <Link
+                to="/digital/nosotros"
+                className={navClass("/digital/nosotros")}
+              >
                 Nosotros
               </Link>
             </>
@@ -279,19 +282,17 @@ export default function EditorialHero() {
           onClick={() => setOpenModal(false)}
         >
           <div
-            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-white px-5 pb-5 pt-4 shadow-2xl sm:px-8 sm:pb-8 sm:pt-5"
+            className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto bg-white px-5 pt-4 pb-5 shadow-2xl sm:px-8 sm:pt-5 sm:pb-8"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* BOTON CERRAR */}
             <button
               onClick={() => setOpenModal(false)}
-              className="cursor-pointer absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white"
+              className="absolute top-4 right-4 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-700 transition hover:bg-cyan-700 hover:text-white"
               aria-label="Cerrar modal"
             >
               ✕
             </button>
 
-            {/* HEADER */}
             <div className="mb-6 border-b border-slate-200 py-4 pr-12">
               <h2 className="mb-3 font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
                 Solicitar Turno Presencial
@@ -309,10 +310,8 @@ export default function EditorialHero() {
               </div>
             </div>
 
-            {/* FORMULARIO */}
             <form className="space-y-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {/* DIA */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Día
@@ -323,7 +322,6 @@ export default function EditorialHero() {
                   />
                 </div>
 
-                {/* HORA */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
                     Hora
@@ -347,7 +345,6 @@ export default function EditorialHero() {
                 </div>
               </div>
 
-              {/* NOMBRE */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Nombre y Apellido
@@ -362,7 +359,6 @@ export default function EditorialHero() {
                 </p>
               </div>
 
-              {/* TELÉFONO */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   Teléfono
@@ -377,7 +373,6 @@ export default function EditorialHero() {
                 </p>
               </div>
 
-              {/* EMAIL */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Quién solicita?
@@ -392,7 +387,6 @@ export default function EditorialHero() {
                 </p>
               </div>
 
-              {/* DETALLE */}
               <div>
                 <label className="mb-2 block text-sm font-semibold text-slate-700">
                   ¿Qué solicita?
@@ -404,7 +398,6 @@ export default function EditorialHero() {
                 />
               </div>
 
-              {/* BOTON */}
               <div className="pt-2">
                 <button
                   type="submit"

@@ -10,7 +10,7 @@ import RetroTv from "./components/extrasFijos/RetroTv";
 import VideoPage from "./pages/Video";
 // import Login from "./pages/Login";
 // import Register from "./pages/Register";
-import Colecciones from "./pages/Colecciones";
+import Catalogo from "./pages/Catalogo";
 import DetallesPublicacion from "./pages/DetallesPublicacion";
 
 import LoaderEditorial from "./components/extrasFijos/LoaderEditorial";
@@ -47,7 +47,7 @@ function App() {
           <Route path="/practicas-conservacion" element={<RetroTv />} />
           <Route path="/detras-foto" element={<RetroTv />} />
           <Route path="/video" element={<VideoPage />} />
-          <Route path="/colecciones" element={<Colecciones />} />
+          <Route path="/catalogo" element={<Catalogo />} />
           <Route
             path="/detalles-publicacion"
             element={<DetallesPublicacion />}
