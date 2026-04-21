@@ -274,18 +274,6 @@ export default function CatalogoDigital() {
     });
   }, [itemsDigital, busqueda]);
 
-  if (loadingColeccionDigital) {
-    return (
-      <section className="flex min-h-screen items-center justify-center bg-[#f7f8fb]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-14 w-14 animate-spin rounded-full border-4 border-cyan-200 border-t-cyan-700" />
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-800">
-            Cargando colección digital...
-          </p>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="min-h-screen bg-[#f7f8fb] px-4 pb-10 pt-2 md:px-6 lg:px-8">

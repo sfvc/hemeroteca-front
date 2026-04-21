@@ -8,7 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DATOS ESTÁTICOS
+// DATOS ESTÁTICOS 
 // ─────────────────────────────────────────────────────────────────────────────
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
 
@@ -181,13 +181,7 @@ function formatearFecha(fecha?: string) {
   });
 }
 
-function HeroHemerotecaDigital({
-  onGoHome,
-  onGoCatalogoDigital,
-}: {
-  onGoHome: () => void;
-  onGoCatalogoDigital: () => void;
-}) {
+function HeroHemerotecaDigital({ navigate }: { navigate: ReturnType<typeof useNavigate> }) {
   return (
     <div className="relative overflow-hidden rounded-4xl bg-[#06124a] px-6 py-12 shadow-2xl md:px-10 md:py-16">
       <div className="absolute inset-0 opacity-90">
@@ -238,13 +232,13 @@ function HeroHemerotecaDigital({
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <button
-            onClick={onGoHome}
+            onClick={() => navigate("/")}
             className="inline-flex min-w-55 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
           >
             Hemeroteca Municipal
           </button>
           <button
-            onClick={onGoCatalogoDigital}
+            onClick={() => navigate("/catalogo-digital")}
             className="inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-300 hover:text-slate-950"
           >
             Catálogo Digital
@@ -276,9 +270,7 @@ function FiltroPrincipalCard({
           src={item.imagen}
           alt={item.titulo}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          onError={(e) => {
-            e.currentTarget.src = "/placeholder.jpg";
-          }}
+          onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }}
         />
         <div className="absolute inset-0 bg-linear-to-t from-slate-950/70 via-slate-900/20 to-transparent" />
         <div className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-700 backdrop-blur">
@@ -310,14 +302,12 @@ function FiltroPrincipalCard({
 
 function PublicacionCard({
   item,
-  onOpen,
 }: {
   item: ItemColeccion;
   onOpen: () => void;
 }) {
   return (
     <article
-      onClick={onOpen}
       className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-600 hover:shadow-xl"
     >
       <div className="relative aspect-3/4 overflow-hidden bg-slate-100">
@@ -325,9 +315,7 @@ function PublicacionCard({
           src={item.imagen}
           alt={item.titulo}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          onError={(e) => {
-            e.currentTarget.src = "/placeholder.jpg";
-          }}
+          onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }}
         />
         <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-700 backdrop-blur-sm">
           {nombresCategoria[item.categoria]}
@@ -361,60 +349,31 @@ function PublicacionCard({
 export default function HemerotecaDigital() {
   const navigate = useNavigate();
   const [filtroActivo, setFiltroActivo] = useState<Categoria>("colecciones");
-  const [loadingDigital, setLoadingDigital] = useState(false);
 
   const itemsFiltrados = useMemo(() => {
     return ITEMS_ESTATICOS.filter((i) => i.categoria === filtroActivo);
   }, [filtroActivo]);
 
-  const irConLoaderDigital = (ruta: string, state?: unknown) => {
-    setLoadingDigital(true);
-
-    setTimeout(() => {
-      navigate(ruta, state ? { state } : undefined);
-    }, 300);
-  };
-
-  if (loadingDigital) {
-    return (
-      <section className="flex min-h-screen items-center justify-center bg-[#f7f8fb]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="h-14 w-14 animate-spin rounded-full border-4 border-cyan-200 border-t-cyan-700" />
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-800">
-            Cargando catálogo digital...
-          </p>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="min-h-screen bg-[#f7f8fb] pb-12 text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
-        <HeroHemerotecaDigital
-          onGoHome={() => navigate("/")}
-          onGoCatalogoDigital={() => irConLoaderDigital("/catalogo-digital")}
-        />
+        <HeroHemerotecaDigital navigate={navigate} />
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-          <button
-            type="button"
-            onClick={() => irConLoaderDigital("/catalogo-digital")}
-            className="text-left transition hover:opacity-80"
-          >
+          <div>
             <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-700">
               Colección digital
             </p>
             <h2 className="mt-1 font-serif text-2xl font-black text-slate-950 md:text-3xl">
               Observá estos ejemplos de nuestro contenido:
             </h2>
-          </button>
-
+          </div>
           <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
             {itemsFiltrados.length} resultado{itemsFiltrados.length === 1 ? "" : "s"}
           </div>
         </div>
 
+        {/* Tarjetas de filtro */}
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {filtros.map((filtro) => (
             <FiltroPrincipalCard
@@ -437,6 +396,7 @@ export default function HemerotecaDigital() {
           </div>
         </div>
 
+        {/* Grid de publicaciones */}
         {itemsFiltrados.length > 0 ? (
           <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {itemsFiltrados.map((item) => (
