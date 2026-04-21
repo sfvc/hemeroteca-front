@@ -1,14 +1,9 @@
 import { useMemo, useState } from "react";
-import {
-  ChevronRight,
-  Check,
-  CalendarDays,
-  FileText,
-} from "lucide-react";
+import { ChevronRight, Check, CalendarDays, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// DATOS ESTÁTICOS 
+// DATOS ESTÁTICOS
 // ─────────────────────────────────────────────────────────────────────────────
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
 
@@ -181,7 +176,11 @@ function formatearFecha(fecha?: string) {
   });
 }
 
-function HeroHemerotecaDigital({ navigate }: { navigate: ReturnType<typeof useNavigate> }) {
+function HeroHemerotecaDigital({
+  navigate,
+}: {
+  navigate: ReturnType<typeof useNavigate>;
+}) {
   return (
     <div className="relative overflow-hidden rounded-4xl bg-[#06124a] px-6 py-12 shadow-2xl md:px-10 md:py-16">
       <div className="absolute inset-0 opacity-90">
@@ -195,9 +194,18 @@ function HeroHemerotecaDigital({ navigate }: { navigate: ReturnType<typeof useNa
           aria-hidden="true"
         >
           <g stroke="rgba(148, 197, 255, 0.25)" strokeWidth="1.2">
-            <path d="M0 70 L250 160 L420 40 L610 150 L820 20 L1200 140" fill="none" />
-            <path d="M0 220 L180 130 L360 260 L520 110 L740 250 L930 80 L1200 210" fill="none" />
-            <path d="M0 340 L220 280 L430 360 L690 240 L860 320 L1200 260" fill="none" />
+            <path
+              d="M0 70 L250 160 L420 40 L610 150 L820 20 L1200 140"
+              fill="none"
+            />
+            <path
+              d="M0 220 L180 130 L360 260 L520 110 L740 250 L930 80 L1200 210"
+              fill="none"
+            />
+            <path
+              d="M0 340 L220 280 L430 360 L690 240 L860 320 L1200 260"
+              fill="none"
+            />
             <path d="M110 0 L210 500" fill="none" />
             <path d="M300 0 L420 500" fill="none" />
             <path d="M520 0 L560 500" fill="none" />
@@ -227,8 +235,8 @@ function HeroHemerotecaDigital({ navigate }: { navigate: ReturnType<typeof useNa
           <span className="block text-cyan-100">Digital</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-200 md:text-base">
-          Consultá publicaciones digitalizadas, colecciones especiales, revistas y periódicos
-          históricos desde un solo lugar.
+          Consultá publicaciones digitalizadas, colecciones especiales, revistas
+          y periódicos históricos desde un solo lugar.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <button
@@ -262,7 +270,9 @@ function FiltroPrincipalCard({
     <article
       onClick={onClick}
       className={`group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 ${
-        activo ? "-translate-y-1 ring-2 ring-cyan-700" : "hover:-translate-y-1 hover:shadow-xl"
+        activo
+          ? "-translate-y-1 ring-2 ring-cyan-700"
+          : "hover:-translate-y-1 hover:shadow-xl"
       }`}
     >
       <div className="relative aspect-6/5 overflow-hidden">
@@ -270,7 +280,9 @@ function FiltroPrincipalCard({
           src={item.imagen}
           alt={item.titulo}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }}
+          onError={(e) => {
+            e.currentTarget.src = "/placeholder.jpg";
+          }}
         />
         <div className="absolute inset-0 bg-linear-to-t from-slate-950/70 via-slate-900/20 to-transparent" />
         <div className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-slate-700 backdrop-blur">
@@ -307,15 +319,15 @@ function PublicacionCard({
   onOpen: () => void;
 }) {
   return (
-    <article
-      className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-600 hover:shadow-xl"
-    >
+    <article className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-600 hover:shadow-xl">
       <div className="relative aspect-3/4 overflow-hidden bg-slate-100">
         <img
           src={item.imagen}
           alt={item.titulo}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }}
+          onError={(e) => {
+            e.currentTarget.src = "/placeholder.jpg";
+          }}
         />
         <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-700 backdrop-blur-sm">
           {nombresCategoria[item.categoria]}
@@ -354,67 +366,68 @@ export default function HemerotecaDigital() {
     return ITEMS_ESTATICOS.filter((i) => i.categoria === filtroActivo);
   }, [filtroActivo]);
 
-return (
-  <section className="min-h-screen bg-[#f7f8fb] pb-12 text-slate-900">
-    <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
-      <HeroHemerotecaDigital navigate={navigate} />
+  return (
+    <section className="min-h-screen bg-[#f7f8fb] pb-12 text-slate-900">
+      <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
+        <HeroHemerotecaDigital navigate={navigate} />
 
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-700">
-            Colección digital
-          </p>
-          <h2 className="mt-1 font-serif text-2xl font-black text-slate-950 md:text-3xl">
-            Observá estos ejemplos de nuestro contenido:
-          </h2>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-700">
+              Colección digital
+            </p>
+            <h2 className="mt-1 font-serif text-2xl font-black text-slate-950 md:text-3xl">
+              Observá estos ejemplos de nuestro contenido:
+            </h2>
+          </div>
+          <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
+            {itemsFiltrados.length} resultado
+            {itemsFiltrados.length === 1 ? "" : "s"}
+          </div>
         </div>
-        <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
-          {itemsFiltrados.length} resultado{itemsFiltrados.length === 1 ? "" : "s"}
-        </div>
-      </div>
 
-      {/* Tarjetas de filtro */}
-      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        {filtros.map((filtro) => (
-          <FiltroPrincipalCard
-            key={filtro.id}
-            item={filtro}
-            activo={filtroActivo === filtro.id}
-            onClick={() => setFiltroActivo(filtro.id)}
-          />
-        ))}
-      </div>
-
-      <div className="mt-8 flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
-            Resultados disponibles
-          </p>
-          <h3 className="mt-2 font-serif text-3xl font-black text-slate-950">
-            {nombresCategoria[filtroActivo]}
-          </h3>
-        </div>
-      </div>
-
-      {/* Grid de publicaciones */}
-      {itemsFiltrados.length > 0 ? (
-        <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {itemsFiltrados.map((item) => (
-            <PublicacionCard
-              key={`${item.categoria}-${item.id}`}
-              item={item}
-              onOpen={() => {}} // 👈 NO HACE NADA
+        {/* Tarjetas de filtro */}
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {filtros.map((filtro) => (
+            <FiltroPrincipalCard
+              key={filtro.id}
+              item={filtro}
+              activo={filtroActivo === filtro.id}
+              onClick={() => setFiltroActivo(filtro.id)}
             />
           ))}
         </div>
-      ) : (
-        <div className="mt-10 rounded-2xl border-2 border-dashed border-slate-300 bg-white py-20 text-center">
-          <p className="font-serif text-xl font-bold text-slate-400">
-            No se encontraron publicaciones con los filtros seleccionados
-          </p>
+
+        <div className="mt-8 flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+              Resultados disponibles
+            </p>
+            <h3 className="mt-2 font-serif text-3xl font-black text-slate-950">
+              {nombresCategoria[filtroActivo]}
+            </h3>
+          </div>
         </div>
-      )}
-    </div>
-  </section>
-);
+
+        {/* Grid de publicaciones */}
+        {itemsFiltrados.length > 0 ? (
+          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {itemsFiltrados.map((item) => (
+              <PublicacionCard
+                key={`${item.categoria}-${item.id}`}
+                item={item}
+                onOpen={() => {}}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 rounded-2xl border-2 border-dashed border-slate-300 bg-white py-20 text-center">
+            <p className="font-serif text-xl font-bold text-slate-400">
+              No se encontraron publicaciones con los filtros seleccionados
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
