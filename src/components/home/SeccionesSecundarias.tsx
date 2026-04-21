@@ -19,7 +19,7 @@ interface Seccion {
 }
 
 const CATEGORIAS: Record<number, string> = {
-  0: "Colecciones",
+  0: "Conocimiento",
   1: "Informativo",
   2: "Informativo",
   3: "Investigación",
@@ -43,11 +43,7 @@ const SkeletonCard = () => (
   </div>
 );
 
-interface Props {
-  esMunicipal: boolean;
-}
-
-export default function SeccionesSecundarias({ esMunicipal }: Props) {
+export default function SeccionesSecundarias() {
   const [secciones, setSecciones] = useState<(Seccion | null)[]>([null, null, null, null]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -89,20 +85,12 @@ export default function SeccionesSecundarias({ esMunicipal }: Props) {
     }
   };
 
-  const indicesVisibles = esMunicipal
-    ? [0, 1, 2, 3]
-    : [0, 3];
-
-  const seccionesFiltradas = indicesVisibles
-    .map((i) => ({ item: secciones[i], index: i }))
-    .filter(({ item }) => Boolean(item));
-
-  const colsClass = esMunicipal
-    ? seccionesFiltradas.length === 4 ? "sm:grid-cols-2 xl:grid-cols-4"
-      : seccionesFiltradas.length === 3 ? "sm:grid-cols-2 xl:grid-cols-3"
-        : seccionesFiltradas.length === 2 ? "sm:grid-cols-2"
-          : "grid-cols-1"
-    : "sm:grid-cols-2";
+  const visibles = secciones.filter(Boolean).length;
+  const colsClass =
+    visibles === 4 ? "sm:grid-cols-2 xl:grid-cols-4"
+      : visibles === 3 ? "sm:grid-cols-2 xl:grid-cols-3"
+        : visibles === 2 ? "sm:grid-cols-2"
+          : "grid-cols-1";
 
   return (
     <section>
@@ -110,8 +98,8 @@ export default function SeccionesSecundarias({ esMunicipal }: Props) {
 
       <div className={`grid gap-6 ${colsClass}`}>
         {loading
-          ? Array.from({ length: esMunicipal ? 4 : 2 }).map((_, i) => <SkeletonCard key={i} />)
-          : seccionesFiltradas.map(({ item, index }) => {
+          ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+          : secciones.map((item, index) => {
             if (!item) return null;
 
             const imagenUrl = item.imagen ? `${apiUrl}/assets/${item.imagen}` : null;
