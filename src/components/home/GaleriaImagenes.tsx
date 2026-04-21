@@ -64,7 +64,7 @@ export default function GaleriaHome() {
           <img
             key={images[current]}
             src={images[current]}
-            className="w-full h-100 md:h-125 object-contain bg-slate-100 transition duration-500 ease-in-out"
+            className="w-full h-100 md:h-125 object-cover bg-slate-100 transition duration-500 ease-in-out"
           />
 
           {/* overlay suave */}
@@ -82,9 +82,9 @@ export default function GaleriaHome() {
                   e.stopPropagation();
                   setCurrent((c) => (c - 1 + images.length) % images.length);
                 }}
-                className="cursor-pointer absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-md p-3 shadow hover:bg-white/40 transition opacity-0 group-hover:opacity-100"
+                className="cursor-pointer absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-md p-3 shadow hover:bg-white/40 transition group-hover:opacity-100"
               >
-                <ChevronLeft className="text-black" />
+                <ChevronLeft className="text-white" />
               </button>
 
               <button
@@ -92,9 +92,9 @@ export default function GaleriaHome() {
                   e.stopPropagation();
                   setCurrent((c) => (c + 1) % images.length);
                 }}
-                className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-md p-3 shadow hover:bg-white/40 transition opacity-0 group-hover:opacity-100"
+                className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/20 backdrop-blur-md p-3 shadow hover:bg-white/40 transition group-hover:opacity-100"
               >
-                <ChevronRight className="text-black" />
+                <ChevronRight className="text-white" />
               </button>
 
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
@@ -142,7 +142,7 @@ export default function GaleriaHome() {
           <div className="relative w-full max-w-5xl">
             <button
               onClick={() => setOpen(false)}
-              className="absolute -top-12 right-0 text-white hover:scale-110 transition"
+              className="cursor-pointer absolute -top-12 right-0 text-white hover:scale-110 transition"
             >
               <X size={28} />
             </button>
