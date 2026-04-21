@@ -11,7 +11,7 @@ import {
   Eye,
 } from "lucide-react";
 import PdfViewer from "../components/extrasFijos/PdfViewer";
-import EditorialHero from "../components/home/EditorialNavbar";
+import EditorialHero from "../components/extrasFijos/EditorialNavbar";
 
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
 

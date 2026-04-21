@@ -1,4 +1,4 @@
-import EditorialHero from "../components/home/EditorialNavbar";
+import EditorialHero from "../components/extrasFijos/EditorialNavbar";
 import Equipo from "./Equipo";
 
 type InfoCardsProps = {

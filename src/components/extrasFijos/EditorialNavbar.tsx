@@ -170,13 +170,13 @@ export default function EditorialHero() {
 
                 {/* SOLICITAR TURNO PRESENCIAL */}
 
-                <button
+                {/* <button
                   onClick={() => setOpenModal(true)}
                   className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium shadow-md transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white"
                 >
                   <CalendarCheck className="h-5 w-5" />
                   Solicitar Turno
-                </button>
+                </button> */}
 
                 {/* IR A LA AGM DENUEVO */}
 
@@ -187,7 +187,7 @@ export default function EditorialHero() {
                   className="cursor-pointer flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-300 hover:opacity-90 bg-cyan-700   hover:scale-105 text-white shadow-md"
                 >
                   <BookMarked className="h-5 w-5" />
-                  Archivo General Municipal
+                  Archivo General Municipal (AGM)
                 </button>
 
                 {botonDerecho && (

@@ -1,11 +1,11 @@
-import EditorialHero from "../components/home/EditorialNavbar";
-import SeccionesSecundarias from "../components/home/SeccionesSecundarias";
-import TablonNovedades from "../components/home/TablonNovedades";
-import GaleriaImagenes from "../components/home/GaleriaImagenes";
-import Reseñas from "../components/home/Reseñas";
-import Ubicaciones from "../components/home/Ubicacion";
+import EditorialHero from "../components/extrasFijos/EditorialNavbar";
+import SeccionesSecundarias from "../components/HemerotecaMunicipal/SeccionesSecundarias";
+import TablonNovedades from "../components/HemerotecaMunicipal/TablonNovedades";
+import GaleriaImagenes from "../components/HemerotecaMunicipal/GaleriaImagenes";
+import Reseñas from "../components/HemerotecaMunicipal/Reseñas";
+import Ubicaciones from "../components/HemerotecaMunicipal/Ubicacion";
 import Carrousel from "../components/extrasFijos/Carrousel";
-import NoticiasCarousel from "../components/home/NoticiasCarrousel";
+import NoticiasCarousel from "../components/HemerotecaMunicipal/NoticiasCarrousel";
 
 export default function Home() {
   return (
