@@ -205,7 +205,7 @@ export default function DetallesPublicacion() {
           </h1>
           <p className="mt-4 text-slate-600">No llegaron datos a esta página.</p>
           <button
-            onClick={() => navigate("/colecciones")}
+            onClick={() => navigate("/catalogo")}
             className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-800"
           >
             <ArrowLeft className="h-4 w-4" />

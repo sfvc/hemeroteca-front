@@ -11,10 +11,10 @@ function ModoToggle({ value, onChange }: ModoToggleProps) {
         <button
           type="button"
           onClick={() => onChange("HEMEROTECA MUNICIPAL")}
-          className={`relative flex w-full items-center justify-center px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition-all duration-300 sm:min-h-24 sm:flex-1 sm:px-8 sm:py-5 sm:text-base md:px-10 md:text-lg lg:text-xl ${
+          className={`cursor-pointer relative flex w-full items-center justify-center px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition-all duration-300 sm:min-h-24 sm:flex-1 sm:px-8 sm:py-5 sm:text-base md:px-10 md:text-lg lg:text-xl ${
             value === "HEMEROTECA MUNICIPAL"
               ? "text-slate-100"
-              : "text-slate-500 hover:text-slate-800"
+              : "text-slate-500 hover:text-slate-800 bg-slate-200"
           }`}
         >
           {value === "HEMEROTECA MUNICIPAL" && (
@@ -42,10 +42,10 @@ function ModoToggle({ value, onChange }: ModoToggleProps) {
         <button
           type="button"
           onClick={() => onChange("HEMEROTECA DIGITAL")}
-          className={`relative w-full rounded-4xl px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition-all duration-300 sm:min-h-24 sm:flex-1 sm:px-8 sm:py-5 sm:text-base md:px-10 md:text-lg lg:text-xl ${
+          className={`cursor-pointer relative w-full rounded-4xl px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition-all duration-300 sm:min-h-24 sm:flex-1 sm:px-8 sm:py-5 sm:text-base md:px-10 md:text-lg lg:text-xl ${
             value === "HEMEROTECA DIGITAL"
               ? "bg-[url('/digital.jpg')] text-white shadow-md"
-              : "text-slate-500 hover:text-slate-800"
+              : "text-slate-500 hover:text-slate-800 bg-slate-200"
           }`}
         >
           HEMEROTECA DIGITAL

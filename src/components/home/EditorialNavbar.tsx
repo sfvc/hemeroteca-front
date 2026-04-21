@@ -26,16 +26,21 @@ type Encabezado = {
   activo?: boolean;
 };
 
-export default function EditorialHero() {
+type Props = {
+  modoActivo?: "HEMEROTECA MUNICIPAL" | "HEMEROTECA DIGITAL";
+  onModoChange?: (modo: "HEMEROTECA MUNICIPAL" | "HEMEROTECA DIGITAL") => void;
+};
+
+export default function EditorialHero({
+  modoActivo = "HEMEROTECA MUNICIPAL",
+  onModoChange
+}: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [botonIzquierdo, setBotonIzquierdo] = useState<Boton | null>(null);
   const [botonDerecho, setBotonDerecho] = useState<Boton | null>(null);
-  const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
+  const [, setEncabezado] = useState<Encabezado | null>(null);
   const [loading, setLoading] = useState(true);
   const [hora, setHora] = useState("");
-  const [modoActivo, setModoActivo] = useState<
-    "HEMEROTECA MUNICIPAL" | "HEMEROTECA DIGITAL"
-  >("HEMEROTECA MUNICIPAL");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -71,10 +76,9 @@ export default function EditorialHero() {
   };
 
   const navClass = (route: string) =>
-    `transition ${
-      isActive(route)
-        ? "text-cyan-600 font-bold"
-        : "text-slate-700 hover:text-slate-950"
+    `transition ${isActive(route)
+      ? "text-cyan-600 font-bold"
+      : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -214,7 +218,7 @@ export default function EditorialHero() {
             {loading ? (
               <div className="h-44 w-205 animate-pulse rounded-[3rem] bg-slate-200" />
             ) : (
-              <ModoToggle value={modoActivo} onChange={setModoActivo} />
+              <ModoToggle value={modoActivo} onChange={onModoChange ?? (() => { })} />
             )}
           </div>
         </div>
@@ -235,7 +239,7 @@ export default function EditorialHero() {
                 Inicio
               </Link>
               <Link to="/catalogo" className={navClass("/catalogo")}>
-                Catalogo
+                Catálogo
               </Link>
               <Link to="/colecciones" className={navClass("/colecciones")}>
                 Colecciones
