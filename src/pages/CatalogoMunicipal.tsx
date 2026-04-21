@@ -367,13 +367,6 @@ export default function Colecciones() {
           )}
         </div>
 
-        {/* Cargando */}
-        {loading && (
-          <div className="mt-12 flex justify-center">
-            <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-700 border-t-transparent" />
-          </div>
-        )}
-
         {/* Estado inicial */}
         {!loading && !hayBusqueda && (
           <div className="mt-10 border-2 border-dashed border-slate-200 bg-white py-16 text-center">
