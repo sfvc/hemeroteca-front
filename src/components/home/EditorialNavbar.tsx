@@ -8,6 +8,7 @@ import {
 } from "../../services/koha-service";
 import { BookMarked, CalendarCheck, Info } from "lucide-react";
 import ModoToggle from "../extrasFijos/ModoToggle";
+import LoaderDigital from "../extrasFijos/LoaderDigital";
 
 type Boton = {
   id: number;
@@ -33,7 +34,7 @@ type Props = {
 
 export default function EditorialHero({
   modoActivo = "HEMEROTECA MUNICIPAL",
-  onModoChange
+  onModoChange,
 }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [botonIzquierdo, setBotonIzquierdo] = useState<Boton | null>(null);
@@ -41,6 +42,7 @@ export default function EditorialHero({
   const [, setEncabezado] = useState<Encabezado | null>(null);
   const [loading, setLoading] = useState(true);
   const [hora, setHora] = useState("");
+  const [showDigitalLoader, setShowDigitalLoader] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -75,10 +77,28 @@ export default function EditorialHero({
     return location.pathname.startsWith(route);
   };
 
+  const handleModoToggle = (
+    modo: "HEMEROTECA MUNICIPAL" | "HEMEROTECA DIGITAL",
+  ) => {
+    if (modo === "HEMEROTECA DIGITAL" && modoActivo !== "HEMEROTECA DIGITAL") {
+      setShowDigitalLoader(true);
+
+      setTimeout(() => {
+        setShowDigitalLoader(false);
+        onModoChange?.(modo);
+      }, 1800);
+
+      return;
+    }
+
+    onModoChange?.(modo);
+  };
+
   const navClass = (route: string) =>
-    `transition ${isActive(route)
-      ? "text-cyan-600 font-bold"
-      : "text-slate-700 hover:text-slate-950"
+    `transition ${
+      isActive(route)
+        ? "text-cyan-600 font-bold"
+        : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -122,6 +142,7 @@ export default function EditorialHero({
 
   return (
     <header className="w-full bg-white">
+      {showDigitalLoader && <LoaderDigital />}
       {/* HEADER SUPERIOR */}
       <div className="border-b border-slate-200">
         <div className="flex w-full items-center justify-between px-4 py-3 text-xs sm:px-6 lg:px-8">
@@ -218,7 +239,7 @@ export default function EditorialHero({
             {loading ? (
               <div className="h-44 w-205 animate-pulse rounded-[3rem] bg-slate-200" />
             ) : (
-              <ModoToggle value={modoActivo} onChange={onModoChange ?? (() => { })} />
+              <ModoToggle value={modoActivo} onChange={handleModoToggle} />
             )}
           </div>
         </div>

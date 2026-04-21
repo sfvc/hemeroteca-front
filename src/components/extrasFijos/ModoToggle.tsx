@@ -20,11 +20,11 @@ function ModoToggle({ value, onChange }: ModoToggleProps) {
           {value === "HEMEROTECA MUNICIPAL" && (
             <>
               {/* cuerpo principal */}
-              <span className="absolute inset-y-0 left-6 right-0 rounded-4xl bg-[url('/biblioteca2.jpg')] shadow-md sm:left-8" />
+              <span className="absolute inset-y-0 left-6 right-0 bg-sky-800 shadow-md sm:left-8" />
 
               {/* flecha izquierda */}
               <span
-                className="absolute left-0 top-0 h-full w-12 bg-[url('biblioteca2.jpg')] sm:w-16 md:w-20"
+                className="absolute left-0 top-0 h-full w-12 bg-sky-800 sm:w-16 md:w-20"
                 style={{
                   clipPath:
                     "polygon(100% 0%, 100% 50%, 100% 100%, 0% 100%, 42% 50%, 0% 0%)",
@@ -42,9 +42,9 @@ function ModoToggle({ value, onChange }: ModoToggleProps) {
         <button
           type="button"
           onClick={() => onChange("HEMEROTECA DIGITAL")}
-          className={`cursor-pointer relative w-full rounded-4xl px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition-all duration-300 sm:min-h-24 sm:flex-1 sm:px-8 sm:py-5 sm:text-base md:px-10 md:text-lg lg:text-xl ${
+          className={`cursor-pointer relative w-full rounded-full px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] transition-all duration-300 sm:min-h-24 sm:flex-1 sm:px-8 sm:py-5 sm:text-base md:px-10 md:text-lg lg:text-xl ${
             value === "HEMEROTECA DIGITAL"
-              ? "bg-[url('/digital.jpg')] text-white shadow-md"
+              ? "bg-cyan-700 text-white shadow-md"
               : "text-slate-500 hover:text-slate-800 bg-slate-200"
           }`}
         >
