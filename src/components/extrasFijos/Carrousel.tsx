@@ -130,9 +130,11 @@ export default function Carrousel() {
           </h2>
 
           {item.descripcion && (
-            <p className="mt-2 text-sm leading-6" style={{ color: textColor }}>
-              {item.descripcion}
-            </p>
+            <div
+              className="mt-2 text-sm leading-6"
+              style={{ color: textColor }}
+              dangerouslySetInnerHTML={{ __html: item.descripcion }}
+            />
           )}
 
           {item.link && (

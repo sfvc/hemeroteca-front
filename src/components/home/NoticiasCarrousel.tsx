@@ -57,7 +57,10 @@ export default function NoticiasCarousel() {
           {titulo}
         </h3>
 
-        <p className="text-sm text-slate-600 max-w-2xl mt-2">{descripcion}</p>
+        <div
+          className="text-sm text-slate-600 mt-2 prose prose-sm max-w-none"
+          dangerouslySetInnerHTML={{ __html: descripcion }}
+        />
       </div>
 
       {/* Contenedor SOLO del carrusel */}

@@ -119,9 +119,10 @@ export default function GaleriaHome() {
 
         {/* DESCRIPCIÓN */}
         {galeria.descripcion && (
-          <p className="mt-5 max-w-2xl text-sm leading-6 text-slate-600">
-            {galeria.descripcion}
-          </p>
+          <div
+            className="mt-5 text-sm leading-6 text-slate-600"
+            dangerouslySetInnerHTML={{ __html: galeria.descripcion }}
+          />
         )}
 
         {/* LINK */}
