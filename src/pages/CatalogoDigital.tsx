@@ -168,7 +168,7 @@ function MiniCard({
       onClick={onOpen}
       className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl"
     >
-      <div className="relative aspect-[3/4] overflow-hidden bg-slate-200">
+      <div className="relative aspect-3/4 overflow-hidden bg-slate-200">
         <img
           src={item.imagen}
           alt={item.titulo}
