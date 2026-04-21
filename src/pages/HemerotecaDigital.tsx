@@ -354,76 +354,67 @@ export default function HemerotecaDigital() {
     return ITEMS_ESTATICOS.filter((i) => i.categoria === filtroActivo);
   }, [filtroActivo]);
 
-  return (
-    <section className="min-h-screen bg-[#f7f8fb] pb-12 text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
-        <HeroHemerotecaDigital navigate={navigate} />
+return (
+  <section className="min-h-screen bg-[#f7f8fb] pb-12 text-slate-900">
+    <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
+      <HeroHemerotecaDigital navigate={navigate} />
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-700">
-              Colección digital
-            </p>
-            <h2 className="mt-1 font-serif text-2xl font-black text-slate-950 md:text-3xl">
-              Observá estos ejemplos de nuestro contenido:
-            </h2>
-          </div>
-          <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
-            {itemsFiltrados.length} resultado{itemsFiltrados.length === 1 ? "" : "s"}
-          </div>
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-cyan-700">
+            Colección digital
+          </p>
+          <h2 className="mt-1 font-serif text-2xl font-black text-slate-950 md:text-3xl">
+            Observá estos ejemplos de nuestro contenido:
+          </h2>
         </div>
+        <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
+          {itemsFiltrados.length} resultado{itemsFiltrados.length === 1 ? "" : "s"}
+        </div>
+      </div>
 
-        {/* Tarjetas de filtro */}
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {filtros.map((filtro) => (
-            <FiltroPrincipalCard
-              key={filtro.id}
-              item={filtro}
-              activo={filtroActivo === filtro.id}
-              onClick={() => setFiltroActivo(filtro.id)}
+      {/* Tarjetas de filtro */}
+      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {filtros.map((filtro) => (
+          <FiltroPrincipalCard
+            key={filtro.id}
+            item={filtro}
+            activo={filtroActivo === filtro.id}
+            onClick={() => setFiltroActivo(filtro.id)}
+          />
+        ))}
+      </div>
+
+      <div className="mt-8 flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
+            Resultados disponibles
+          </p>
+          <h3 className="mt-2 font-serif text-3xl font-black text-slate-950">
+            {nombresCategoria[filtroActivo]}
+          </h3>
+        </div>
+      </div>
+
+      {/* Grid de publicaciones */}
+      {itemsFiltrados.length > 0 ? (
+        <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {itemsFiltrados.map((item) => (
+            <PublicacionCard
+              key={`${item.categoria}-${item.id}`}
+              item={item}
+              onOpen={() => {}} // 👈 NO HACE NADA
             />
           ))}
         </div>
-
-        <div className="mt-8 flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">
-              Resultados disponibles
-            </p>
-            <h3 className="mt-2 font-serif text-3xl font-black text-slate-950">
-              {nombresCategoria[filtroActivo]}
-            </h3>
-          </div>
+      ) : (
+        <div className="mt-10 rounded-2xl border-2 border-dashed border-slate-300 bg-white py-20 text-center">
+          <p className="font-serif text-xl font-bold text-slate-400">
+            No se encontraron publicaciones con los filtros seleccionados
+          </p>
         </div>
-
-        {/* Grid de publicaciones */}
-        {itemsFiltrados.length > 0 ? (
-          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {itemsFiltrados.map((item) => (
-              <PublicacionCard
-                key={`${item.categoria}-${item.id}`}
-                item={item}
-                onOpen={() => {
-                  navigate("/detalles-publicacion", {
-                    state: {
-                      item,
-                      relacionados: itemsFiltrados,
-                      categoriaNombre: nombresCategoria[item.categoria],
-                      tipoHemeroteca: "digital",
-                    },
-                  });
-                }}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="mt-10 rounded-2xl border-2 border-dashed border-slate-300 bg-white py-20 text-center">
-            <p className="font-serif text-xl font-bold text-slate-400">
-              No se encontraron publicaciones con los filtros seleccionados
-            </p>
-          </div>
-        )}
-      </div>
-    </section>
-  );
+      )}
+    </div>
+  </section>
+);
 }
