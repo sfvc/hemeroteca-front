@@ -103,9 +103,18 @@ function HeroCatalogoDigital({
           aria-hidden="true"
         >
           <g stroke="rgba(148, 197, 255, 0.25)" strokeWidth="1.2">
-            <path d="M0 70 L250 160 L420 40 L610 150 L820 20 L1200 140" fill="none" />
-            <path d="M0 220 L180 130 L360 260 L520 110 L740 250 L930 80 L1200 210" fill="none" />
-            <path d="M0 340 L220 280 L430 360 L690 240 L860 320 L1200 260" fill="none" />
+            <path
+              d="M0 70 L250 160 L420 40 L610 150 L820 20 L1200 140"
+              fill="none"
+            />
+            <path
+              d="M0 220 L180 130 L360 260 L520 110 L740 250 L930 80 L1200 210"
+              fill="none"
+            />
+            <path
+              d="M0 340 L220 280 L430 360 L690 240 L860 320 L1200 260"
+              fill="none"
+            />
             <path d="M110 0 L210 500" fill="none" />
             <path d="M300 0 L420 500" fill="none" />
             <path d="M520 0 L560 500" fill="none" />
@@ -126,6 +135,8 @@ function HeroCatalogoDigital({
         </svg>
       </div>
 
+      {/* HERO NAVBAR */}
+
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
           Archivo patrimonial
@@ -135,18 +146,19 @@ function HeroCatalogoDigital({
           <span className="block text-cyan-100">Digital</span>
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-200 md:text-base">
-          Buscá ejemplares digitalizados por nombre y accedé a sus detalles desde un solo lugar.
+          Buscá ejemplares digitalizados por nombre y accedé a sus detalles
+          desde un solo lugar.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <button
             onClick={onGoHome}
-            className="inline-flex min-w-55 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
+            className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
           >
             Hemeroteca Municipal
           </button>
           <button
             onClick={onGoColeccionDigital}
-            className="inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-300 hover:text-slate-950"
+            className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-300 hover:text-slate-950"
           >
             Colección Digital
           </button>
@@ -154,6 +166,10 @@ function HeroCatalogoDigital({
       </div>
     </div>
   );
+}
+
+{
+  /* CARDS DE RESULTADO */
 }
 
 function MiniCard({
@@ -274,7 +290,6 @@ export default function CatalogoDigital() {
     });
   }, [itemsDigital, busqueda]);
 
-
   return (
     <section className="min-h-screen bg-[#f7f8fb] px-4 pb-10 pt-2 md:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl py-6">
@@ -284,6 +299,8 @@ export default function CatalogoDigital() {
             irConLoaderColeccionDigital("/hemeroteca-digital")
           }
         />
+
+        {/* FILTRO DE BUSQUEDA */}
 
         <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:items-end">
@@ -303,7 +320,7 @@ export default function CatalogoDigital() {
                 {busqueda && (
                   <button
                     onClick={() => setBusqueda("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+                    className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
                     aria-label="Limpiar búsqueda"
                   >
                     <X className="h-4 w-4" />
@@ -314,7 +331,7 @@ export default function CatalogoDigital() {
             <div>
               <button
                 onClick={() => setBusqueda("")}
-                className="h-12 w-full rounded-xl bg-cyan-700 px-5 text-sm font-bold text-white transition hover:bg-slate-600 hover:text-slate-100 active:scale-[0.98] md:w-auto"
+                className="cursor-pointer h-12 w-full rounded-xl bg-cyan-700 px-5 text-sm font-bold text-white transition hover:bg-slate-600 hover:text-slate-100 active:scale-[0.98] md:w-auto"
               >
                 Limpiar búsqueda
               </button>
@@ -322,9 +339,13 @@ export default function CatalogoDigital() {
           </div>
         </div>
 
+        {/* SECCION DE RESULTADOS */}
+
         <header className="mb-1 mt-8">
           <div className="border-t border-slate-300 pt-6" />
-          <span className="text-[13px] font-bold uppercase text-cyan-700">Resultados</span>
+          <span className="text-[13px] font-bold uppercase text-cyan-700">
+            Resultados
+          </span>
           <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
             Ejemplares digitales
           </h2>

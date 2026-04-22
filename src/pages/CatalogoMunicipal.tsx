@@ -1,5 +1,15 @@
 import { useMemo, useState, useEffect } from "react";
-import { Search, CheckCircle2, CalendarCheck, Info, X, BookOpen, FileText, Newspaper, Archive } from "lucide-react";
+import {
+  Search,
+  CheckCircle2,
+  CalendarCheck,
+  Info,
+  X,
+  BookOpen,
+  FileText,
+  Newspaper,
+  Archive,
+} from "lucide-react";
 import EditorialHero from "../components/extrasFijos/EditorialNavbar";
 import KohaApi from "../api/kohaApi";
 import {
@@ -45,24 +55,33 @@ const getAssetUrl = (fileId: string): string => {
   return `${apiUrl}/assets/${fileId}`;
 };
 
-const mapPublicacion = (item: PublicacionAPI, categoria: Categoria): ItemColeccion => ({
+const mapPublicacion = (
+  item: PublicacionAPI,
+  categoria: Categoria,
+): ItemColeccion => ({
   id: item.id,
   titulo: item.titulo,
   categoria,
-  imagen: item.portada_publicacion ? getAssetUrl(item.portada_publicacion) : "/placeholder.jpg",
+  imagen: item.portada_publicacion
+    ? getAssetUrl(item.portada_publicacion)
+    : "/placeholder.jpg",
   descripcion: item.descripcion ?? undefined,
   subtitulo: item.subtitulo ?? undefined,
   archivoPdf: item.archivo_pdf ? getAssetUrl(item.archivo_pdf) : undefined,
   fecha: item.fecha_publicacion ?? undefined,
   destino: item.destino
-    ? Array.isArray(item.destino) ? item.destino : [item.destino]
+    ? Array.isArray(item.destino)
+      ? item.destino
+      : [item.destino]
     : undefined,
   numeroEdicion: item.numero_publicacion,
   medio_publicador: item.medio_publicador,
   tipoReal: item.nombre || (categoria === "revistas" ? "Revista" : "Periódico"),
 });
 
-const toArray = (data: PublicacionAPI | PublicacionAPI[] | null): PublicacionAPI[] => {
+const toArray = (
+  data: PublicacionAPI | PublicacionAPI[] | null,
+): PublicacionAPI[] => {
   if (!data) return [];
   return Array.isArray(data) ? data : [data];
 };
@@ -85,7 +104,11 @@ function formatearFecha(fecha?: string) {
   if (!fecha) return null;
   const date = new Date(fecha);
   if (isNaN(date.getTime())) return null;
-  return date.toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" });
+  return date.toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 function generarHorarios() {
@@ -101,8 +124,18 @@ function generarHorarios() {
   return horarios;
 }
 
-function ModalTurno({ item, onClose }: { item: ItemColeccion; onClose: () => void }) {
+function ModalTurno({
+  item,
+  onClose,
+}: {
+  item: ItemColeccion;
+  onClose: () => void;
+}) {
   const [hora, setHora] = useState("");
+
+  {
+    /* FORMULARIO DE SOLICITUD DE TURNO */
+  }
 
   return (
     <div
@@ -126,7 +159,8 @@ function ModalTurno({ item, onClose }: { item: ItemColeccion; onClose: () => voi
             Solicitar Turno Presencial
           </h2>
           <p className="text-sm text-slate-500">
-            Para: <span className="font-semibold text-slate-700">{item.titulo}</span>
+            Para:
+            <span className="font-semibold text-slate-700">{item.titulo}</span>
           </p>
 
           <div className="mt-4 flex items-start gap-3 rounded-2xl border border-cyan-100 bg-cyan-50/70 p-4 text-sm text-slate-700">
@@ -134,8 +168,9 @@ function ModalTurno({ item, onClose }: { item: ItemColeccion; onClose: () => voi
               <Info className="h-5 w-5 text-cyan-700" />
             </div>
             <p className="leading-relaxed">
-              Este formulario es para solicitar un turno presencial en la hemeroteca. Podrás asistir
-              a las oficinas en la fecha seleccionada y consultar los materiales solicitados.
+              Este formulario es para solicitar un turno presencial en la
+              hemeroteca. Podrás asistir a las oficinas en la fecha seleccionada
+              y consultar los materiales solicitados.
             </p>
           </div>
         </div>
@@ -143,22 +178,28 @@ function ModalTurno({ item, onClose }: { item: ItemColeccion; onClose: () => voi
         <form className="space-y-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">Día</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Día
+              </label>
               <input
                 type="date"
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
+                className="w-full border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">Hora</label>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Hora
+              </label>
               <select
                 value={hora}
                 onChange={(e) => setHora(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
+                className="w-full border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
               >
                 <option value="">Seleccionar horario</option>
                 {generarHorarios().map((h) => (
-                  <option key={h} value={h}>{h}</option>
+                  <option key={h} value={h}>
+                    {h}
+                  </option>
                 ))}
               </select>
               <p className="mt-2 text-xs text-slate-500">
@@ -168,38 +209,46 @@ function ModalTurno({ item, onClose }: { item: ItemColeccion; onClose: () => voi
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">Nombre y Apellido</label>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Nombre y Apellido
+            </label>
             <input
               type="text"
               placeholder="Tu nombre y apellido"
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
+              className="w-full border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">Teléfono</label>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Teléfono
+            </label>
             <input
               type="tel"
               placeholder="Tu número de teléfono"
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
+              className="w-full border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">Correo electrónico</label>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              Correo electrónico
+            </label>
             <input
               type="email"
               placeholder="tuemail@ejemplo.com"
-              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
+              className="w-full border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">¿Qué solicita?</label>
+            <label className="mb-2 block text-sm font-semibold text-slate-700">
+              ¿Qué solicita?
+            </label>
             <textarea
               rows={4}
               defaultValue={`Solicito consulta del material: "${item.titulo}" (${nombresCategoria[item.categoria]})`}
-              className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
+              className="w-full resize-none border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-cyan-100"
             />
           </div>
 
@@ -217,22 +266,34 @@ function ModalTurno({ item, onClose }: { item: ItemColeccion; onClose: () => voi
   );
 }
 
-function ResultCard({ item, onSolicitarTurno }: { item: ItemColeccion; onSolicitarTurno: () => void }) {
+{
+  /* CARDS RECTANGULARES DE RESULTADO */
+}
+
+function ResultCard({
+  item,
+  onSolicitarTurno,
+}: {
+  item: ItemColeccion;
+  onSolicitarTurno: () => void;
+}) {
   const Icono = iconosCategoria[item.categoria];
 
   return (
-    <div className="flex items-stretch overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:border-cyan-200">
+    <div className="flex items-stretch overflow-hidden border border-slate-200 bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:border-cyan-200">
       {/* Imagen lateral */}
       <div className="relative hidden w-28 shrink-0 overflow-hidden sm:block">
         <img
           src={item.imagen}
           alt={item.titulo}
           className="h-full w-full object-cover"
-          onError={(e) => { e.currentTarget.src = "/placeholder.jpg"; }}
+          onError={(e) => {
+            e.currentTarget.src = "/placeholder.jpg";
+          }}
         />
       </div>
 
-      {/* Contenido */}
+      {/* CNTENIDO DE LA CARD */}
       <div className="flex flex-1 flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center">
         <div className="flex-1 min-w-0">
           <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -267,7 +328,7 @@ function ResultCard({ item, onSolicitarTurno }: { item: ItemColeccion; onSolicit
         <div className="shrink-0">
           <button
             onClick={onSolicitarTurno}
-            className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-cyan-700 px-5 py-3 text-sm font-bold text-white shadow-md transition hover:bg-cyan-800 hover:shadow-lg active:scale-[0.98] whitespace-nowrap"
+            className="inline-flex cursor-pointer items-center gap-2 bg-cyan-700 px-5 py-3 text-sm font-bold text-white shadow-md transition hover:bg-cyan-800 hover:shadow-lg active:scale-[0.98] whitespace-nowrap"
           >
             <CalendarCheck className="h-4 w-4" />
             Solicitar turno
@@ -320,10 +381,17 @@ export default function Colecciones() {
   }, []);
 
   const itemsFiltrados = useMemo(() => {
-    const texto = busqueda.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const texto = busqueda
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
     if (!texto) return [];
     return items.filter((item) => {
-      const titulo = item.titulo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const titulo = item.titulo
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
       return titulo.includes(texto);
     });
   }, [items, busqueda]);
@@ -335,17 +403,18 @@ export default function Colecciones() {
       <EditorialHero />
 
       <div className="mx-auto max-w-4xl px-4 py-12 md:px-6">
-        {/* Encabezado */}
+        {/* HEADER */}
         <div className="mb-10 text-center">
           <h2 className="mt-2 font-serif text-3xl font-black text-slate-950 sm:text-4xl">
             Buscá en nuestra colección
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-slate-500">
-            Ingresá el título de la publicación para ver si está disponible y solicitar un turno presencial.
+            Ingresá el título de la publicación para ver si está disponible y
+            solicitar un turno presencial.
           </p>
         </div>
 
-        {/* Buscador */}
+        {/* BARRA DE BUSQUEDA */}
         <div className="relative">
           <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
           <input
@@ -359,7 +428,7 @@ export default function Colecciones() {
           {busqueda && (
             <button
               onClick={() => setBusqueda("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+              className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
               aria-label="Limpiar búsqueda"
             >
               <X className="h-5 w-5" />
@@ -367,7 +436,6 @@ export default function Colecciones() {
           )}
         </div>
 
-        {/* Estado inicial */}
         {!loading && !hayBusqueda && (
           <div className="mt-10 border-2 border-dashed border-slate-200 bg-white py-16 text-center">
             <Search className="mx-auto h-10 w-10 text-slate-300" />
@@ -377,7 +445,7 @@ export default function Colecciones() {
           </div>
         )}
 
-        {/* Resultados */}
+        {/* RESULTADOS */}
         {!loading && hayBusqueda && (
           <div className="mt-8">
             <p className="mb-4 text-sm font-semibold text-slate-500">

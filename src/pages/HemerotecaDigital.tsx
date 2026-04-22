@@ -226,6 +226,8 @@ function HeroHemerotecaDigital({
         </svg>
       </div>
 
+      {/* CONTENIDO HERO NAVBAR */}
+
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
           Archivo patrimonial
@@ -241,13 +243,13 @@ function HeroHemerotecaDigital({
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <button
             onClick={() => navigate("/")}
-            className="inline-flex min-w-55 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
+            className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
           >
             Hemeroteca Municipal
           </button>
           <button
             onClick={() => navigate("/catalogo-digital")}
-            className="inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-300 hover:text-slate-950"
+            className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-300 hover:text-slate-950"
           >
             Catálogo Digital
           </button>
@@ -255,6 +257,10 @@ function HeroHemerotecaDigital({
       </div>
     </div>
   );
+}
+
+{
+  /* FILTRO PRINCIPAL CARDS */
 }
 
 function FiltroPrincipalCard({
@@ -312,6 +318,10 @@ function FiltroPrincipalCard({
   );
 }
 
+{
+  /* CARDS DE RESULTADO */
+}
+
 function PublicacionCard({
   item,
 }: {
@@ -356,6 +366,10 @@ function PublicacionCard({
       </div>
     </article>
   );
+}
+
+{
+  /* SECCION DE CARDS RESULTADO */
 }
 
 export default function HemerotecaDigital() {
