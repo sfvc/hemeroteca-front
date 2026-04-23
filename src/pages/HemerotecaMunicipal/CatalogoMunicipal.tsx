@@ -8,7 +8,7 @@ import {
   fetchPublicacion_3,
   fetchPublicacion_4,
 } from "../../services/koha-service";
-import PdfViewer from "../../components/extras/PdfViewer";
+// import PdfViewer from "../../components/extras/PdfViewer";
 import { useNavigate } from "react-router-dom";
 
 interface PublicacionAPI {
