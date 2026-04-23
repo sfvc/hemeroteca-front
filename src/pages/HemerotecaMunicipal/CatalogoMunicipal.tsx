@@ -145,13 +145,12 @@ function FiltroPrincipalCard({
   return (
     <article
       onClick={onClick}
-      className={`group w-full overflow-hidden shadow-md cursor-pointer transition-all ${
-        activo
-          ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
-          : "border border-transparent bg-white"
-      }`}
+      className={`group w-full overflow-hidden shadow-md cursor-pointer transition-all ${activo
+        ? "border-2 border-cyan-700 bg-white ring-1 ring-cyan-600"
+        : "border border-transparent bg-white"
+        }`}
     >
-      <div className="relative aspect-[9/4] overflow-hidden">
+      <div className="relative aspect-9/4 overflow-hidden">
         <img
           src={item.imagen}
           alt={item.titulo}
@@ -175,9 +174,8 @@ function FiltroPrincipalCard({
           {item.descripcion}
         </p>
         <span
-          className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold transition ${
-            activo ? "text-slate-900" : "text-slate-800 group-hover:gap-3"
-          }`}
+          className={`mt-4 inline-flex items-center gap-2 text-sm font-semibold transition ${activo ? "text-slate-900" : "text-slate-800 group-hover:gap-3"
+            }`}
         >
           {activo ? "Filtro seleccionado" : "Seleccionar filtro"}
           <ChevronRight className="h-4 w-4" />
@@ -197,7 +195,7 @@ function ResultadoMunicipalCard({
   return (
     <article className="overflow-hidden bg-white shadow-lg border border-slate-200">
       <div className="grid md:grid-cols-[180px_1fr]">
-        <div className="relative h-full min-h-[220px] bg-slate-200">
+        <div className="relative h-full min-h-55 bg-slate-200">
           <img
             src={item.imagen}
             alt={item.titulo}
@@ -252,7 +250,7 @@ function ResultadoMunicipalCard({
           <div className="mt-6">
             <button
               onClick={onSolicitarTurno}
-              className="inline-flex items-center gap-2 bg-cyan-700 px-5 py-3 font-bold text-white transition hover:bg-slate-700"
+              className="cursor-pointer inline-flex items-center gap-2 bg-cyan-700 px-5 py-3 font-bold text-white transition hover:bg-slate-700"
             >
               <CalendarDays className="h-5 w-5" />
               Solicitar turno
@@ -309,7 +307,7 @@ function ResultadoDigitalCard({
           </p>
         )}
 
-        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition group-hover:gap-3">
+        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-800">
           Ver resultado <Eye className="h-4 w-4" />
         </span>
       </div>
@@ -570,6 +568,8 @@ function ModalSolicitarTurno({
 }
 
 export default function Catalogo() {
+  const ITEMS_POR_PAGINA = 6;
+  const [paginaActual, setPaginaActual] = useState(1);
   const [filtroMunicipal, setFiltroMunicipal] =
     useState<Categoria>("colecciones");
   const [filtroDigital, setFiltroDigital] = useState<Categoria>("colecciones");
@@ -624,10 +624,10 @@ export default function Catalogo() {
     init();
   }, []);
 
-  useEffect(() => {
-    setBusquedaMunicipal("");
-    setBusquedaDigital("");
-  }, [tipoActivo]);
+  // useEffect(() => {
+  //   setBusquedaMunicipal("");
+  //   setBusquedaDigital("");
+  // }, [tipoActivo]);
 
   const abrirModalTurno = (item: ItemCatalogo) => {
     setItemSeleccionado(item);
@@ -651,10 +651,16 @@ export default function Catalogo() {
   const itemsFiltrados = useMemo(() => {
     let resultado = listaActual;
 
-    if (filtroActual === "colecciones") {
-      resultado = resultado.filter((item) => item.categoria === "colecciones");
-    } else {
-      resultado = resultado.filter((item) => item.categoria === filtroActual);
+    if (filtroActual === "especiales") {
+      resultado = resultado.filter(
+        (item) =>
+          item.categoria === "especiales" ||
+          item.categoria === "colecciones"
+      );
+    } else if (filtroActual !== "colecciones") {
+      resultado = resultado.filter(
+        (item) => item.categoria === filtroActual
+      );
     }
 
     if (busquedaActual.trim() !== "") {
@@ -663,12 +669,24 @@ export default function Catalogo() {
       resultado = resultado.filter((item) =>
         `${item.titulo} ${item.descripcion ?? ""} ${item.subtitulo ?? ""} ${item.tipoReal ?? ""} ${item.numeroEdicion ?? ""}`
           .toLowerCase()
-          .includes(texto),
+          .includes(texto)
       );
     }
 
     return resultado;
   }, [listaActual, filtroActual, busquedaActual]);
+
+  const totalPaginas = Math.ceil(itemsFiltrados.length / ITEMS_POR_PAGINA);
+
+  const itemsPaginados = useMemo(() => {
+    const inicio = (paginaActual - 1) * ITEMS_POR_PAGINA;
+    const fin = inicio + ITEMS_POR_PAGINA;
+    return itemsFiltrados.slice(inicio, fin);
+  }, [itemsFiltrados, paginaActual]);
+
+  // useEffect(() => {
+  //   setPaginaActual(1);
+  // }, [filtroActual, busquedaActual, tipoActivo]);
 
   return (
     <section className="min-h-screen bg-white px-4 pb-6 pt-2 md:px-6 lg:px-8">
@@ -693,11 +711,10 @@ export default function Catalogo() {
             key={tab.id}
             title={tab.title}
             onClick={() => setTipoActivo(tab.id as TipoHemeroteca)}
-            className={`flex cursor-pointer flex-col items-center border-b-4 pb-4 text-xl font-bold uppercase font-serif transition ${
-              tipoActivo === tab.id
-                ? "border-cyan-700 text-slate-900"
-                : "border-transparent text-slate-500 hover:text-slate-800"
-            }`}
+            className={`flex cursor-pointer flex-col items-center border-b-4 pb-4 text-xl font-bold uppercase font-serif transition ${tipoActivo === tab.id
+              ? "border-cyan-700 text-slate-900"
+              : "border-transparent text-slate-500 hover:text-slate-800"
+              }`}
           >
             <span>{tab.label}</span>
             <span className="text-xs normal-case font-normal">{tab.sub}</span>
@@ -769,7 +786,7 @@ export default function Catalogo() {
       ) : itemsFiltrados.length > 0 ? (
         tipoActivo === "municipal" ? (
           <div className="grid grid-cols-1 gap-6">
-            {itemsFiltrados.map((item) => (
+            {itemsPaginados.map((item) => (
               <ResultadoMunicipalCard
                 key={`${item.categoria}-${item.id}`}
                 item={item}
@@ -778,8 +795,8 @@ export default function Catalogo() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {itemsFiltrados.map((item) => (
+          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+            {itemsPaginados.map((item) => (
               <ResultadoDigitalCard
                 key={`${item.categoria}-${item.id}`}
                 item={item}
@@ -812,6 +829,40 @@ export default function Catalogo() {
           onClose={cerrarModalTurno}
         />
       )}
+
+      {totalPaginas > 1 && (
+        <div className="mt-10 flex justify-center items-center gap-2 flex-wrap">
+          <button
+            disabled={paginaActual === 1}
+            onClick={() => setPaginaActual((p) => p - 1)}
+            className="cursor-pointer px-4 py-2 border bg-white disabled:opacity-40"
+          >
+            Anterior
+          </button>
+
+          {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((num) => (
+            <button
+              key={num}
+              onClick={() => setPaginaActual(num)}
+              className={`cursor-pointer px-4 py-2 border ${paginaActual === num
+                ? "bg-cyan-700 text-white"
+                : "bg-white hover:bg-slate-100"
+                }`}
+            >
+              {num}
+            </button>
+          ))}
+
+          <button
+            disabled={paginaActual === totalPaginas}
+            onClick={() => setPaginaActual((p) => p + 1)}
+            className="cursor-pointer px-4 py-2 border bg-white disabled:opacity-40"
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
     </section>
+
   );
 }
