@@ -91,8 +91,9 @@ export default function ResenasHome() {
 
       {/* MODAL */}
       {open && (
-        <div className="fixed inset-0 z-90 bg-black/60 backdrop-blur-sm p-4">
-          <div className="mx-auto max-w-3xl rounded-2xl bg-white p-6">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center min-h-dvh">
+          <div className="w-full max-w-3xl mx-4 rounded-2xl bg-white p-6 max-h-[85dvh] flex flex-col">
+
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Todas las reseñas</h3>
               <button
@@ -103,7 +104,7 @@ export default function ResenasHome() {
               </button>
             </div>
 
-            <div className="space-y-4 max-h-[70vh] overflow-y-auto">
+            <div className="space-y-4 overflow-y-auto">
               {reviews
                 .filter((r) => r.activo === true)
                 .map((r) => (
@@ -118,6 +119,7 @@ export default function ResenasHome() {
                   </div>
                 ))}
             </div>
+
           </div>
         </div>
       )}

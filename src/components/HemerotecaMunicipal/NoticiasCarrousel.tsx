@@ -42,7 +42,7 @@ export default function NoticiasCarousel() {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [imagenes]);
+  }, [imagenes, current]);
 
   if (imagenes.length === 0) return null;
 

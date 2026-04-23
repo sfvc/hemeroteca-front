@@ -47,7 +47,9 @@ export default function LoaderTech() {
           animate={{ opacity: 1, y: 0 }}
           className="text-[clamp(2.5rem,7vw,5rem)] font-bold text-white"
         >
-          HEMEROTECA<span className="text-cyan-400">.DGT</span>
+          HEMEROTECA
+          <br />
+          <span className="text-cyan-400">DIGITAL</span>
         </motion.h1>
 
         {/* SUB */}
