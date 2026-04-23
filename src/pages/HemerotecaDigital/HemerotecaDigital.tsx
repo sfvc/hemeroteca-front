@@ -247,12 +247,15 @@ function HeroHemerotecaDigital({
           >
             Hemeroteca Municipal
           </button>
-          <button
+
+          {/* BOTON A HEMEROTECA DIGITAL QUE YA MURIO */}
+
+          {/* <button
             onClick={() => navigate("/catalogo-digital")}
             className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-300 hover:text-slate-950"
           >
             Catálogo Digital
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
@@ -393,6 +396,12 @@ export default function HemerotecaDigital() {
             <h2 className="mt-1 font-serif text-2xl font-black text-slate-950 md:text-3xl">
               Observá estos ejemplos de nuestro contenido:
             </h2>
+              <p className="text-[15px] font-bold text-slate-700">
+              Si quieres ver mas a detalle todo, pasa por nuestro catalogo:
+              <a href="/catalogo" className="ml-2 text-cyan-600 hover:underline">
+                Ver catalogo completo
+              </a>
+            </p>
           </div>
           <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-600">
             {itemsFiltrados.length} resultado

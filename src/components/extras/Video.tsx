@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import RetroTv from "../components/extrasFijos/RetroTv";
-import { fetchSeccion_2, fetchSeccion_3 } from "../services/koha-service";
+import RetroTv from "../componentsInicio/RetroTv";
+import { fetchSeccion_2, fetchSeccion_3 } from "../../services/koha-service";
 
 interface SeccionVideo {
   link: string;

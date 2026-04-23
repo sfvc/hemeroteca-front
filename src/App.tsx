@@ -2,19 +2,19 @@ import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import Home from "./pages/HemerotecaInicio";
-import Noticias from "./pages/Noticias";
-import Nosotros from "./pages/Nosotros";
-import Footer from "./components/extrasFijos/Footer";
+import Home from "./pages/HemerotecaMunicipal/HemerotecaInicio";
+import Noticias from "./pages/HemerotecaMunicipal/Noticias";
+import Nosotros from "./pages/HemerotecaMunicipal/Nosotros";
+import Footer from "./components/extras/Footer";
 import ScrollToTop from "./util/ScrollToTop";
-import Equipo from "./pages/Equipo";
-import RetroTv from "./components/extrasFijos/RetroTv";
-import VideoPage from "./pages/Video";
-import Catalogo from "./pages/CatalogoMunicipal";
-import DetallesPublicacion from "./pages/DetallesPublicacion";
-import LoaderEditorial from "./components/extrasFijos/LoaderEditorial";
-import HemerotecaDigital from "./pages/HemerotecaDigital";
-import CatalogoDigital from "./pages/CatalogoDigital";
+import Equipo from "./components/extras/Equipo";
+import RetroTv from "./components/componentsInicio/RetroTv";
+import VideoPage from "./components/extras/Video";
+import Catalogo from "./pages/HemerotecaMunicipal/CatalogoMunicipal";
+import DetallesPublicacion from "./pages/HemerotecaMunicipal/DetallesPublicacion";
+import LoaderEditorial from "./components/extras/LoaderEditorial";
+import HemerotecaDigital from "./pages/HemerotecaDigital/HemerotecaDigital";
+// import CatalogoDigital from "./pages/HemerotecaDigital/CatalogoDigital";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -53,6 +53,10 @@ function App() {
           <Route path="/detras-foto" element={<RetroTv />} />
           <Route path="/video" element={<VideoPage />} />
           <Route path="/catalogo" element={<Catalogo />} />
+          <Route
+            path="/detalles-publicacion"
+            element={<DetallesPublicacion />}
+          />
 
           {/* EXTRAS */}
           <Route path="/nosotros" element={<Nosotros />} />
@@ -60,11 +64,7 @@ function App() {
 
           {/* HEMEROTECA DIGITAL */}
           <Route path="/hemeroteca-digital" element={<HemerotecaDigital />} />
-          <Route path="/catalogo-digital" element={<CatalogoDigital />} />
-          <Route
-            path="/detalles-publicacion"
-            element={<DetallesPublicacion />}
-          />
+          {/* <Route path="/catalogo-digital" element={<CatalogoDigital />} /> */}
         </Routes>
       </main>
 

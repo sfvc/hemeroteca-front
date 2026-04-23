@@ -1,5 +1,5 @@
-import EditorialHero from "../components/extrasFijos/EditorialNavbar";
-import Equipo from "./Equipo";
+import EditorialHero from "../../components/extras/EditorialNavbar";
+import Equipo from "../../components/extras/Equipo";
 
 type InfoCardsProps = {
   title: string;

@@ -1,4 +1,4 @@
-import EditorialHero from "../components/extrasFijos/EditorialNavbar";
+import EditorialHero from "../../components/extras/EditorialNavbar";
 import {
   Music2,
   ExternalLink,

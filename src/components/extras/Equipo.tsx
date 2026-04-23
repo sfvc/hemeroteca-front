@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchEquipo } from "../services/koha-service";
-import KohaApi from "../api/kohaApi";
+import { fetchEquipo } from "../../services/koha-service";
+import KohaApi from "../../api/kohaApi";
 // import EditorialHero from "../components/home/EditorialNavbar";
 
 interface Miembro {

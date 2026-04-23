@@ -8,7 +8,7 @@ import {
   fetchSeccion_3,
   fetchSeccion_4,
 } from "../../services/koha-service";
-import LoaderDigital from "../extrasFijos/LoaderDigital";
+import LoaderDigital from "../extras/LoaderDigital";
 
 interface Seccion {
   id: number;

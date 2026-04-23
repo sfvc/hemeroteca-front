@@ -1,5 +1,5 @@
 import React from "react";
-import EditorialHero from "./EditorialNavbar";
+import EditorialHero from "../extras/EditorialNavbar";
 
 type RetroTvProps = {
   text?: string;

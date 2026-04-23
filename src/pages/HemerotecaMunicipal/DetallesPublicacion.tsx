@@ -10,8 +10,8 @@ import {
   FileText,
   Eye,
 } from "lucide-react";
-import PdfViewer from "../components/extrasFijos/PdfViewer";
-import EditorialHero from "../components/extrasFijos/EditorialNavbar";
+import PdfViewer from "../../components/extras/PdfViewer";
+import EditorialHero from "../../components/extras/EditorialNavbar";
 
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
 
