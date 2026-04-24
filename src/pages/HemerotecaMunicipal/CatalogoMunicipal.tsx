@@ -566,6 +566,7 @@ function ModalSolicitarTurno({
     </div>
   );
 }
+import { useRef } from "react";
 
 export default function Catalogo() {
   const ITEMS_POR_PAGINA = 6;
@@ -574,6 +575,7 @@ export default function Catalogo() {
     useState<Categoria>("colecciones");
   const [filtroDigital, setFiltroDigital] = useState<Categoria>("colecciones");
   const [tipoActivo, setTipoActivo] = useState<TipoHemeroteca>("municipal");
+  const resultadosRef = useRef<HTMLDivElement | null>(null);
 
   const [itemsMunicipal, setItemsMunicipal] = useState<ItemCatalogo[]>([]);
   const [itemsDigital, setItemsDigital] = useState<ItemCatalogo[]>([]);
@@ -710,7 +712,16 @@ export default function Catalogo() {
           <button
             key={tab.id}
             title={tab.title}
-            onClick={() => setTipoActivo(tab.id as TipoHemeroteca)}
+            onClick={() => {
+              setTipoActivo(tab.id as TipoHemeroteca);
+
+              setTimeout(() => {
+                resultadosRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }, 100);
+            }}
             className={`flex cursor-pointer flex-col items-center border-b-4 pb-4 text-xl font-bold uppercase font-serif transition ${tipoActivo === tab.id
               ? "border-cyan-700 text-slate-900"
               : "border-transparent text-slate-500 hover:text-slate-800"
@@ -739,17 +750,19 @@ export default function Catalogo() {
         ))}
       </div>
 
-      <header className="mb-4">
-        <div className="border-t border-slate-300 pt-6" />
-        <span className="text-[13px] font-bold uppercase text-cyan-700">
-          Resultados
-        </span>
-        <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
-          {tipoActivo === "municipal"
-            ? `${nombresCategoria[filtroActual]}`
-            : `${nombresCategoria[filtroActual]}`}
-        </h2>
-      </header>
+      <div ref={resultadosRef}>
+        <header className="mb-4">
+          <div className="border-t border-slate-300 pt-6" />
+          <span className="text-[13px] font-bold uppercase text-cyan-700">
+            Resultados
+          </span>
+          <h2 className="mt-2 font-serif text-3xl font-black text-slate-900">
+            {tipoActivo === "municipal"
+              ? `${nombresCategoria[filtroActual]}`
+              : `${nombresCategoria[filtroActual]}`}
+          </h2>
+        </header>
+      </div>
 
       <div className="mb-6">
         <div className="max-w-2xl">

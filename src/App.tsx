@@ -14,6 +14,7 @@ import Catalogo from "./pages/HemerotecaMunicipal/CatalogoMunicipal";
 import DetallesPublicacion from "./pages/HemerotecaMunicipal/DetallesPublicacion";
 import LoaderEditorial from "./components/extras/LoaderEditorial";
 import HemerotecaDigital from "./pages/HemerotecaDigital/HemerotecaDigital";
+import BlogPage from "./pages/BlogPage";
 // import CatalogoDigital from "./pages/HemerotecaDigital/CatalogoDigital";
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           <Route path="/practicas-conservacion" element={<RetroTv />} />
           <Route path="/detras-foto" element={<RetroTv />} />
           <Route path="/video" element={<VideoPage />} />
+          <Route path="/blog" element={<BlogPage />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route
             path="/detalles-publicacion"

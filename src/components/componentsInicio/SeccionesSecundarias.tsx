@@ -28,8 +28,8 @@ const CATEGORIAS: Record<number, string> = {
 
 const RUTAS_INTERNAS: Record<number, (link?: string) => string> = {
   0: () => "/catalogo",
-  1: (link) => `/video?section=2&url=${encodeURIComponent(link ?? "")}`,
-  2: (link) => `/video?section=3&url=${encodeURIComponent(link ?? "")}`,
+  1: (link: string | undefined) => `/video?section=2&url=${encodeURIComponent(link ?? "")}`,
+  2: () => `/blog`,
 };
 
 const SkeletonCard = () => (
@@ -156,8 +156,8 @@ export default function SeccionesSecundarias() {
                       {item.titulo}
                     </h4>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
-                      {item.descripcion}
+                    <p className="mt-3 text-sm leading-6 text-slate-600 line-clamp-3">
+                      {item.descripcion.replace(/<[^>]+>/g, "")}
                     </p>
 
                     <span className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3">
