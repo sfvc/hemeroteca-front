@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import EditorialHero from "../../components/extras/EditorialNavbar";
 import Equipo from "../../components/extras/Equipo";
+import { fetchQueHacemos, type QueHacemos } from "../../services/koha-service";
 
 type InfoCardsProps = {
   title: string;
@@ -8,6 +10,7 @@ type InfoCardsProps = {
   eyebrow?: string;
   variant?: "light" | "brand";
   reverse?: boolean;
+  isHtml?: boolean;
 };
 
 function InfoCard({
@@ -15,15 +18,12 @@ function InfoCard({
   description,
   image,
   eyebrow,
-  variant = "brand",
   reverse = false,
 }: InfoCardsProps) {
-  const panelBrand = "bg-white text-slate-800";
-  const panelLight = "bg-white text-white";
-
   return (
-    <article className="mx-auto mb-14 w-full max-w-7xl">
-      <div className="relative overflow-hidden bg-white">
+    <article className="mx-auto w-full max-w-7xl">
+      <div className="group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+
         <div
           className={`grid items-stretch md:grid-cols-12 ${
             reverse
@@ -31,44 +31,47 @@ function InfoCard({
               : ""
           }`}
         >
-          <div
-            className={`text-side relative flex items-center md:col-span-5 ${
-              variant === "brand" ? panelBrand : panelLight
-            }`}
-          >
-            <div className="w-full px-6 py-10 font-serif sm:px-10 sm:py-12 md:px-12">
-              <div className="max-w-xl">
-                <h3 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
-                  {title}
-                </h3>
+          {/* 📝 TEXTO */}
+          <div className="text-side relative flex items-center md:col-span-5">
+            <div className="w-full px-6 py-10 sm:px-10 sm:py-12 md:px-12">
 
-                <p className="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
-                  {description}
-                </p>
-              </div>
+              {/* Eyebrow */}
+              {eyebrow && (
+                <span className="inline-block text-xs font-semibold tracking-wide text-slate-400 uppercase">
+                  {eyebrow}
+                </span>
+              )}
+
+              <h3 className="mt-2 text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
+                {title}
+              </h3>
+
+              <div
+                className="mt-5 text-slate-600 text-base leading-relaxed sm:text-lg
+                [&_p]:mb-4
+                [&_span]:text-inherit"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             </div>
           </div>
 
-          <div className="visual-side relative p-4 sm:p-5 md:col-span-7">
-            <div className="grid h-full min-h-105 grid-cols-6 grid-rows-2 gap-4 md:min-h-130">
-              <div className="relative col-span-12 row-span-2 overflow-hidden md:col-span-8">
-                <img
-                  src={image}
-                  alt={title}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
+          {/* 🖼️ IMAGEN */}
+          <div className="visual-side relative md:col-span-7">
+            <div className="relative h-full min-h-65 md:min-h-105 overflow-hidden">
 
-                <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-black/0 to-black/0" />
+              <img
+                src={image}
+                alt={title}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
 
-                {eyebrow ? (
-                  <div className="absolute left-5 top-5">
-                    <span className="inline-flex items-center rounded-md bg-white/90 px-3 py-1 text-xs font-semibold text-slate-800 shadow-sm">
-                      {eyebrow}
-                    </span>
-                  </div>
-                ) : null}
-              </div>
+              {/* Overlay elegante */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
+
+              {/* Glow sutil */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-br from-white/10 to-transparent" />
+
             </div>
           </div>
         </div>
@@ -78,6 +81,17 @@ function InfoCard({
 }
 
 export default function Nosotros() {
+  const [info, setInfo] = useState<QueHacemos | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await fetchQueHacemos();
+      setInfo(data);
+    };
+
+    load();
+  }, []);
+
   return (
     <section className="bg-white">
       <main className="w-full px-6 pb-14 pt-2 lg:px-10 xl:px-16">
@@ -85,21 +99,29 @@ export default function Nosotros() {
 
         <div className="mx-auto w-full max-w-7xl py-8 sm:py-14 lg:py-16">
           <div className="space-y-10 sm:space-y-14 lg:space-y-16">
-            <InfoCard
-              title="¿Quiénes somos en Hemeroteca Municipal?"
-              description={`Consulta las colecciones digitales de diarios, periódicos y revistas de Catamarca que estamos preservando y poniendo en línea. También podés solicitar una noticia en particular para recibirla por correo electrónico.`}
-              image="/HM.png"
-              variant="brand"
-            />
+
+            {/* 🔹 QUIENES SOMOS */}
+            {info?.quienesSomos && (
+              <InfoCard
+                title={info.quienesSomos.titulo}
+                description={info.quienesSomos.descripcion}
+                image={info.quienesSomos.imagenUrl}
+                variant="brand"
+              />
+            )}
 
             <Divider />
 
-            <InfoCard
-              title="¿Quiénes desarrollamos Hemeroteca Municipal?"
-              description={`En el Nodo Tecnológico de la Secretaría Municipal de Modernización del Gobierno de Catamarca, trabajamos para preservar y difundir el patrimonio periodístico de nuestra provincia a través de la Hemeroteca Municipal. Nuestro equipo se dedica a digitalizar, catalogar y poner a disposición del público las colecciones de diarios, periódicos y revistas que forman parte de la historia de Catamarca.`}
-              image="https://www.catamarcaciudad.gob.ar/wp-content/uploads/nodo-tecnologico.jpeg"
-              variant="light"
-            />
+            {/* 🔹 QUE HACEMOS */}
+            {info?.queHacemos && (
+              <InfoCard
+                title={info.queHacemos.titulo}
+                description={info.queHacemos.descripcion}
+                image={info.queHacemos.imagenUrl}
+                variant="light"
+                reverse
+              />
+            )}
 
             <Equipo />
 
@@ -113,8 +135,8 @@ export default function Nosotros() {
 
 function Divider() {
   return (
-    <div className="flex justify-center">
-      <div className="h-px w-full max-w-xs rounded-full bg-slate-200 sm:max-w-md lg:max-w-lg" />
+    <div className="flex justify-center py-2">
+      <div className="h-px w-full max-w-xl bg-linear-to-r from-transparent via-slate-200 to-transparent" />
     </div>
   );
 }

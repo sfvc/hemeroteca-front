@@ -47,6 +47,36 @@ export interface Galeria {
   imagenesConUrl: { url: string }[];
 }
 
+interface QueHacemosAPI {
+  id: number;
+  quienes_somos_titulo: string;
+  quienes_somos: string;
+  quienes_somos_imagen: string;
+  que_hacemos_titulo: string;
+  que_hacemos: string;
+  que_hacemos_imagen: string;
+}
+
+export interface SeccionInfo {
+  titulo: string;
+  descripcion: string;
+  imagenUrl: string;
+}
+
+export interface QueHacemos {
+  quienesSomos: SeccionInfo;
+  queHacemos: SeccionInfo;
+}
+
+export interface SolicitudTurnoPayload {
+  dia: string;
+  hora: string;
+  nombreCompleto: string;
+  telefono?: string;
+  email: string;
+  pedido?: string;
+}
+
 /* ─── Constantes ────────────────────────────────────────── */
 
 const IMAGE_FIELDS =
@@ -224,5 +254,46 @@ const fetchPublicacion = async (publicacion: string) => {
   } catch (error) {
     console.error(`Error fetching ${publicacion}:`, error);
     return null;
+  }
+};
+
+export const fetchQueHacemos = async (): Promise<QueHacemos | null> => {
+  try {
+    const response = await KohaApi.get<{ data: QueHacemosAPI[] }>(
+      "/items/que_hacemos"
+    );
+
+    const item = response.data.data?.[0];
+    if (!item) return null;
+
+    const apiUrl = KohaApi.defaults.baseURL || "";
+
+    return {
+      quienesSomos: {
+        titulo: item.quienes_somos_titulo,
+        descripcion: item.quienes_somos,
+        imagenUrl: `${apiUrl}/assets/${item.quienes_somos_imagen}`,
+      },
+      queHacemos: {
+        titulo: item.que_hacemos_titulo,
+        descripcion: item.que_hacemos,
+        imagenUrl: `${apiUrl}/assets/${item.que_hacemos_imagen}`,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching que_hacemos:", error);
+    return null;
+  }
+};
+
+export const createSolicitudTurno = async (
+  payload: SolicitudTurnoPayload
+) => {
+  try {
+    const response = await KohaApi.post("/items/solicitudes", payload);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error creando solicitud de turno:", error);
+    throw error;
   }
 };

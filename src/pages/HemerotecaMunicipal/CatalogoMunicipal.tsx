@@ -3,6 +3,7 @@ import { ChevronRight, Check, CalendarDays, Eye, Info } from "lucide-react";
 import EditorialHero from "../../components/extras/EditorialNavbar";
 import KohaApi from "../../api/kohaApi";
 import {
+  createSolicitudTurno,
   fetchPublicacion_1,
   fetchPublicacion_2,
   fetchPublicacion_3,
@@ -349,22 +350,81 @@ function ModalSolicitarTurno({
     return horarios;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const hoy = new Date().toISOString().split("T")[0];
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    console.log("Solicitud de turno presencial", {
-      item,
-      categoriaNombre,
-      dia,
-      hora,
-      nombreApellido,
-      telefono,
-      email,
-      detalle,
-    });
+    if (loading) return;
 
-    onClose();
+    try {
+      setLoading(true);
+
+      await createSolicitudTurno({
+        dia,
+        hora: `${hora}:00`,
+        nombreCompleto: nombreApellido,
+        telefono,
+        email,
+        pedido: `
+        Material: ${item.titulo}
+        Categoría: ${categoriaNombre}
+        Detalle: ${detalle}
+        `,
+      });
+
+      setSuccess(true);
+      setHora("");
+      setDia("");
+      setNombreApellido("");
+      setTelefono("");
+      setEmail("");
+      setDetalle("");
+
+    } catch (error) {
+      console.error("Error al enviar solicitud", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (success) {
+    return (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-3 py-2 backdrop-blur-sm"
+        onClick={onClose}
+      >
+        <div
+          className="w-full max-w-md bg-white p-8 text-center shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="mb-4 flex justify-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <Check className="h-8 w-8 text-green-600" />
+            </div>
+          </div>
+
+          <h2 className="font-serif text-2xl font-bold text-slate-900">
+            Solicitud enviada
+          </h2>
+
+          <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+            Tu solicitud de turno fue enviada correctamente.
+            Nos vamos a comunicar con vos para confirmarla.
+          </p>
+
+          <button
+            onClick={onClose}
+            className="mt-6 w-full cursor-pointer bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-700"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -459,6 +519,7 @@ function ModalSolicitarTurno({
               </label>
               <input
                 type="date"
+                min={hoy}
                 value={dia}
                 onChange={(e) => setDia(e.target.value)}
                 required
@@ -512,9 +573,14 @@ function ModalSolicitarTurno({
               Teléfono
             </label>
             <input
+              inputMode="numeric"
+              pattern="[0-9]*"
               type="tel"
               value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
+              onChange={(e) => {
+                const soloNumeros = e.target.value.replace(/\D/g, "");
+                setTelefono(soloNumeros);
+              }}
               placeholder="Tu número de teléfono"
               className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
             />
@@ -556,9 +622,14 @@ function ModalSolicitarTurno({
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full cursor-pointer bg-cyan-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-cyan-600 hover:shadow-lg"
+              disabled={loading}
+              className={`w-full cursor-pointer px-4 py-3 font-semibold text-white shadow-md transition
+    ${loading
+                  ? "bg-slate-400 cursor-not-allowed"
+                  : "bg-cyan-500 hover:bg-cyan-600 hover:shadow-lg"
+                }`}
             >
-              Enviar solicitud
+              {loading ? "Enviando..." : "Enviar solicitud"}
             </button>
           </div>
         </form>
