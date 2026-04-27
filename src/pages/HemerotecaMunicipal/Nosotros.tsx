@@ -13,6 +13,20 @@ type InfoCardsProps = {
   isHtml?: boolean;
 };
 
+const hasContent = (item?: {
+  titulo?: string;
+  descripcion?: string;
+  imagenUrl?: string;
+} | null) => {
+  if (!item) return false;
+
+  return (
+    Boolean(item.titulo?.trim()) ||
+    Boolean(item.descripcion?.trim()) ||
+    Boolean(item.imagenUrl?.trim())
+  );
+};
+
 function InfoCard({
   title,
   description,
@@ -20,60 +34,66 @@ function InfoCard({
   eyebrow,
   reverse = false,
 }: InfoCardsProps) {
+  const hasText = title || description || eyebrow;
+  const hasImage = image;
+
+  // 🚫 Si no hay nada, no renderiza
+  if (!hasText && !hasImage) return null;
+
   return (
     <article className="mx-auto w-full max-w-7xl">
       <div className="group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
 
         <div
-          className={`grid items-stretch md:grid-cols-12 ${
-            reverse
-              ? "md:[&_.visual-side]:order-2 md:[&_.text-side]:order-1"
-              : ""
-          }`}
+          className={`grid items-stretch md:grid-cols-12 ${reverse
+            ? "md:[&_.visual-side]:order-2 md:[&_.text-side]:order-1"
+            : ""
+            }`}
         >
           {/* 📝 TEXTO */}
-          <div className="text-side relative flex items-center md:col-span-5">
-            <div className="w-full px-6 py-10 sm:px-10 sm:py-12 md:px-12">
+          {hasText && (
+            <div className="text-side relative flex items-center md:col-span-5">
+              <div className="w-full px-6 py-10 sm:px-10 sm:py-12 md:px-12">
 
-              {/* Eyebrow */}
-              {eyebrow && (
-                <span className="inline-block text-xs font-semibold tracking-wide text-slate-400 uppercase">
-                  {eyebrow}
-                </span>
-              )}
+                {eyebrow && (
+                  <span className="inline-block text-xs font-semibold tracking-wide text-slate-400 uppercase">
+                    {eyebrow}
+                  </span>
+                )}
 
-              <h3 className="mt-2 text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-                {title}
-              </h3>
+                {title && (
+                  <h3 className="mt-2 text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
+                    {title}
+                  </h3>
+                )}
 
-              <div
-                className="mt-5 text-slate-600 text-base leading-relaxed sm:text-lg
-                [&_p]:mb-4
-                [&_span]:text-inherit"
-                dangerouslySetInnerHTML={{ __html: description }}
-              />
+                {description && (
+                  <div
+                    className="mt-5 text-slate-600 text-base leading-relaxed sm:text-lg
+                    [&_p]:mb-4
+                    [&_span]:text-inherit"
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* 🖼️ IMAGEN */}
-          <div className="visual-side relative md:col-span-7">
-            <div className="relative h-full min-h-65 md:min-h-105 overflow-hidden">
+          {hasImage && (
+            <div className="visual-side relative md:col-span-7">
+              <div className="relative h-full min-h-65 md:min-h-105 overflow-hidden">
+                <img
+                  src={image}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
 
-              <img
-                src={image}
-                alt={title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-
-              {/* Overlay elegante */}
-              <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
-
-              {/* Glow sutil */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-br from-white/10 to-transparent" />
-
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-br from-white/10 to-transparent" />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </article>
@@ -101,7 +121,7 @@ export default function Nosotros() {
           <div className="space-y-10 sm:space-y-14 lg:space-y-16">
 
             {/* 🔹 QUIENES SOMOS */}
-            {info?.quienesSomos && (
+            {hasContent(info?.quienesSomos) && info?.quienesSomos && (
               <InfoCard
                 title={info.quienesSomos.titulo}
                 description={info.quienesSomos.descripcion}
@@ -113,7 +133,7 @@ export default function Nosotros() {
             <Divider />
 
             {/* 🔹 QUE HACEMOS */}
-            {info?.queHacemos && (
+            {hasContent(info?.queHacemos) && info?.queHacemos && (
               <InfoCard
                 title={info.queHacemos.titulo}
                 description={info.queHacemos.descripcion}

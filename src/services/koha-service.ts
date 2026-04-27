@@ -64,8 +64,8 @@ export interface SeccionInfo {
 }
 
 export interface QueHacemos {
-  quienesSomos: SeccionInfo;
-  queHacemos: SeccionInfo;
+  quienesSomos: SeccionInfo | null;
+  queHacemos: SeccionInfo | null;
 }
 
 export interface SolicitudTurnoPayload {
@@ -268,17 +268,35 @@ export const fetchQueHacemos = async (): Promise<QueHacemos | null> => {
 
     const apiUrl = KohaApi.defaults.baseURL || "";
 
+    const quienesSomos =
+      item.quienes_somos ||
+      item.quienes_somos_titulo ||
+      item.quienes_somos_imagen
+        ? {
+            titulo: item.quienes_somos_titulo ?? "",
+            descripcion: item.quienes_somos ?? "",
+            imagenUrl: item.quienes_somos_imagen
+              ? `${apiUrl}/assets/${item.quienes_somos_imagen}`
+              : "", // 👈 importante
+          }
+        : null;
+
+    const queHacemos =
+      item.que_hacemos ||
+      item.que_hacemos_titulo ||
+      item.que_hacemos_imagen
+        ? {
+            titulo: item.que_hacemos_titulo ?? "",
+            descripcion: item.que_hacemos ?? "",
+            imagenUrl: item.que_hacemos_imagen
+              ? `${apiUrl}/assets/${item.que_hacemos_imagen}`
+              : "",
+          }
+        : null;
+
     return {
-      quienesSomos: {
-        titulo: item.quienes_somos_titulo,
-        descripcion: item.quienes_somos,
-        imagenUrl: `${apiUrl}/assets/${item.quienes_somos_imagen}`,
-      },
-      queHacemos: {
-        titulo: item.que_hacemos_titulo,
-        descripcion: item.que_hacemos,
-        imagenUrl: `${apiUrl}/assets/${item.que_hacemos_imagen}`,
-      },
+      quienesSomos,
+      queHacemos,
     };
   } catch (error) {
     console.error("Error fetching que_hacemos:", error);
