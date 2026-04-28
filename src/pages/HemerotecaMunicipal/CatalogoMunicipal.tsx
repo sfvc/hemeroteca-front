@@ -150,7 +150,7 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
             {item.numeroEdicion && <span>Edición N° {item.numeroEdicion}</span>}
             {item.tipoReal && <span>{item.tipoReal}</span>}
           </div>
-           <button
+          <button
             // onClick={() => navigate("/catalogo-digital")}
             className="cursor-pointer inline-flex min-w-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-600 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-700 hover:text-white mt-5"
           >
@@ -217,7 +217,7 @@ function ResultadoDigitalCard({
 }
 
 export default function Catalogo() {
-  const [tipoActivo, setTipoActivo] = useState<TipoHemeroteca>("municipal");
+  const [tipoActivo] = useState<TipoHemeroteca>("municipal");
 
   const [itemsMunicipal, setItemsMunicipal] = useState<ItemCatalogo[]>([]);
   const [itemsDigital, setItemsDigital] = useState<ItemCatalogo[]>([]);
