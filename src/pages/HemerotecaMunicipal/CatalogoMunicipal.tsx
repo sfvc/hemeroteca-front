@@ -113,7 +113,10 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
         <div className="p-5">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-emerald-700">
-              Disponible
+              DISPONIBLE
+            </span>
+            <span className="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-cyan-700">
+              En digital
             </span>
           </div>
 
@@ -147,6 +150,12 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
             {item.numeroEdicion && <span>Edición N° {item.numeroEdicion}</span>}
             {item.tipoReal && <span>{item.tipoReal}</span>}
           </div>
+           <button
+            // onClick={() => navigate("/catalogo-digital")}
+            className="cursor-pointer inline-flex min-w-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-600 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-700 hover:text-white mt-5"
+          >
+            Ver Digital
+          </button>
         </div>
       </div>
     </article>
@@ -304,16 +313,14 @@ export default function Catalogo() {
       <EditorialHero />
 
       <div className="mt-10">
-        <div className="border-t border-slate-300 pt-6" />
-
-        <h2 className="mt-2 mb-6 font-serif text-3xl font-black text-slate-900">
-          Buscar publicaciones
+        <h2 className="mt-2 mb-6 font-serif text-3xl font-black text-slate-700 justify-center flex">
+          BUSCAR CONTENIDO:
         </h2>
 
-        <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="mb-4 flex flex-wrap items-end gap-4 justify-center">
           <div>
-            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700">
-              Buscar por título
+            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700 italic">
+              Título
             </label>
 
             <input
@@ -321,13 +328,13 @@ export default function Catalogo() {
               placeholder="Título..."
               value={busquedaTitulo}
               onChange={(e) => setBusquedaTitulo(e.target.value)}
-              className="h-12 w-full border-2 border-slate-300 bg-white px-4 font-semibold text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+              className="h-12 w-full rounded-2xl border-2 border-cyan-700 bg-white px-4 font-semibold text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700">
-              Buscar por descripción
+            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700 italic">
+              Descripción
             </label>
 
             <input
@@ -335,13 +342,13 @@ export default function Catalogo() {
               placeholder="Descripción..."
               value={busquedaDescripcion}
               onChange={(e) => setBusquedaDescripcion(e.target.value)}
-              className="h-12 w-full border-2 border-slate-300 bg-white px-4 font-semibold text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+              className="h-12 w-full rounded-2xl border-2 border-cyan-700 bg-white px-4 font-semibold text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700">
-              Buscar por año
+            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700 italic">
+              Año
             </label>
 
             <input
@@ -349,20 +356,27 @@ export default function Catalogo() {
               placeholder="Año..."
               value={busquedaAnio}
               onChange={(e) => setBusquedaAnio(e.target.value)}
-              className="h-12 w-full border-2 border-slate-300 bg-white px-4 font-semibold text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
+              className="h-12 w-full rounded-2xl border-2 border-cyan-700 bg-white px-4 font-semibold text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-cyan-700 focus:ring-2 focus:ring-cyan-700/10"
             />
           </div>
-        </div>
 
-        {hayBusqueda && (
-          <div className="mb-8 flex justify-end">
-            <button
-              type="button"
-              onClick={limpiarFiltros}
-              className="cursor-pointer bg-slate-100 px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-cyan-700 hover:text-white"
-            >
-              Limpiar filtros
-            </button>
+          {hayBusqueda && (
+            <div className="flex items-end justify-end">
+              <button
+                type="button"
+                onClick={limpiarFiltros}
+                className="h-12 cursor-pointer rounded-2xl bg-slate-200 px-4 text-md font-bold text-slate-700 transition hover:bg-cyan-700 hover:text-white"
+              >
+                Limpiar filtros
+              </button>
+            </div>
+          )}
+        </div>
+        {(!hayBusqueda || (hayBusqueda && itemsFiltrados.length === 0)) && (
+          <div className="mt-10 rounded-xl border-2 border-dashed border-slate-300 py-20 text-center">
+            <p className="font-serif text-xl font-bold text-slate-500">
+              Filtra para ver resultados aquí
+            </p>
           </div>
         )}
       </div>

@@ -210,7 +210,7 @@ export default function EditorialHero() {
 
       {/* CONTENIDO */}
       <div className="w-full px-4 pt-6 sm:px-6 lg:px-8">
-        <div className="border-b border-slate-300 pb-6">
+        <div className="border-b border-slate-200 pb-6">
           <div className="text-center">
             {loading ? (
               <div className="flex flex-col items-center gap-4 animate-pulse">
