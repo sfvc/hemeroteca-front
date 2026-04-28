@@ -15,7 +15,7 @@ import DetallesPublicacion from "./pages/HemerotecaMunicipal/DetallesPublicacion
 import LoaderEditorial from "./components/extras/LoaderEditorial";
 import HemerotecaDigital from "./pages/HemerotecaDigital/HemerotecaDigital";
 import BlogPage from "./pages/BlogPage";
-// import CatalogoDigital from "./pages/HemerotecaDigital/CatalogoDigital";
+import CatalogoDigital from "./pages/HemerotecaDigital/CatalogoDigital";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -66,7 +66,9 @@ function App() {
 
           {/* HEMEROTECA DIGITAL */}
           <Route path="/hemeroteca-digital" element={<HemerotecaDigital />} />
-          {/* <Route path="/catalogo-digital" element={<CatalogoDigital />} /> */}
+          <Route path="/catalogo-digital" element={<CatalogoDigital />} />
+          {/* <Route path="/detalles-general" element={<DetallesGeneral />} /> */}
+          {/* <Route path="/detalles-particular" element={<DetallesParticular />} /> */}
         </Routes>
       </main>
 

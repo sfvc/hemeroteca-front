@@ -8,9 +8,6 @@ export default function Footer() {
         {/* Mini diario abajo */}
         <div className="border-t border-slate-300 pt-6 mb-12">
           <div className="flex flex-col items-center text-center gap-3">
-            <p className="text-[10px] uppercase tracking-[0.35em] text-sky-700 font-bold">
-              Edición Digital
-            </p>
 
             <h3 className="text-2xl md:text-3xl font-serif tracking-tight text-slate-900">
               Hemeroteca Municipal
