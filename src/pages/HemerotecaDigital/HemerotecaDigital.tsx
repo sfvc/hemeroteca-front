@@ -20,6 +20,10 @@ interface ItemColeccion {
   tipoReal?: string;
 }
 
+{
+  /* ACA EN LOS EJEMPLOS PONGAMOS LOS GENERALES DEL DIRECTUS Y QUE LLEVEN AL CATALOGO O AL DETAIL DE ESE GENERAL */
+}
+
 const ITEMS_ESTATICOS: ItemColeccion[] = [
   // ── COLECCIONES (2 items) ──────────────────────────────────────────────────
   {
@@ -127,6 +131,10 @@ interface FiltroCard {
   badge: string;
 }
 
+{
+  /* CARDS FILTRO */
+}
+
 const filtros: FiltroCard[] = [
   {
     id: "colecciones",
@@ -184,6 +192,10 @@ function HeroHemerotecaDigital({
   onGoHome: () => void;
   onGoCatalogo: () => void;
 }) {
+  {
+    /* ESTA ES LA "IMAGEN" FLAYERA DE FONDO Q LA HIZO CLAUDE NI IDEA */
+  }
+
   return (
     <div className="relative overflow-hidden rounded-4xl bg-[#06124a] px-6 py-12 shadow-2xl md:px-10 md:py-16">
       <div className="absolute inset-0 opacity-90">
@@ -229,6 +241,8 @@ function HeroHemerotecaDigital({
         </svg>
       </div>
 
+      {/* HEADER */}
+
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
           Archivo patrimonial
@@ -269,6 +283,10 @@ function FiltroPrincipalCard({
   activo: boolean;
   onClick: () => void;
 }) {
+  {
+    /* CONTENIDO CARDS FILTRO MAS PEQUEÑAS */
+  }
+
   return (
     <article
       onClick={onClick}
@@ -321,6 +339,10 @@ function PublicacionCard({
   item: ItemColeccion;
   onOpen: () => void;
 }) {
+  {
+    /* CARDS DE LOS EJEMPLOS */
+  }
+
   return (
     <article className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-600 hover:shadow-xl">
       <div className="relative aspect-3/4 overflow-hidden bg-slate-100">

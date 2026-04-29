@@ -135,6 +135,8 @@ function HeroCatalogoDigital({
         </svg>
       </div>
 
+      {/* HEADER */}
+
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
           Archivo patrimonial
@@ -164,6 +166,10 @@ function HeroCatalogoDigital({
       </div>
     </div>
   );
+}
+
+{
+  /* CARDS RESULTADO */
 }
 
 function MiniCard({
@@ -275,6 +281,10 @@ export default function CatalogoDigital() {
     });
   }, [itemsDigital, busqueda]);
 
+  {
+    /* CONTENIDO */
+  }
+
   return (
     <section className="min-h-screen bg-[#f7f8fb] px-4 pb-10 pt-2 md:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl py-6">
@@ -282,6 +292,8 @@ export default function CatalogoDigital() {
           onGoHome={() => navigate("/")}
           onGoColeccionDigital={() => navigate("/hemeroteca-digital")}
         />
+
+        {/* FILTRO BUSQUEDA */}
 
         <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:items-end">
@@ -338,8 +350,6 @@ export default function CatalogoDigital() {
         </header>
 
         {loading ? (
-          // Spinner interno pequeño mientras la API responde
-          // (el LoaderDigital principal ya pasó, esto cubre el fetch extra)
           <div className="flex justify-center py-20">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent" />
           </div>

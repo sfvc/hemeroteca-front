@@ -1,3 +1,6 @@
+
+  {/* SACARON LAS NOTICIAS PORQUE YA NO LAS QUIEREN? -.- */}
+
 import EditorialHero from "../../components/extras/EditorialNavbar";
 import {
   Music2,

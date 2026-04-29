@@ -18,6 +18,8 @@ import HemerotecaDigital from "./pages/HemerotecaDigital/HemerotecaDigital";
 import BlogPage from "./pages/BlogPage";
 import CatalogoDigital from "./pages/HemerotecaDigital/CatalogoDigital";
 
+  {/* PARA DEFINIR BIEN DONDE QUIERO EL LOADER DIGITAL */}
+
 const RUTAS_DIGITALES = ["/hemeroteca-digital", "/catalogo-digital"];
 
 function App() {
@@ -44,7 +46,7 @@ function App() {
     }, duracion);
 
     return () => clearTimeout(timeout);
-  }, [location.pathname]); // solo pathname, no el objeto entero
+  }, [location.pathname]); 
 
   return (
     <div className="min-h-dvh bg-white text-slate-900">

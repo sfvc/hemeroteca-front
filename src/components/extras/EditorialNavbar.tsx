@@ -278,9 +278,9 @@ export default function EditorialHero() {
               <Link to="/catalogo" className={navClass("/catalogo")}>
                 Catalogo
               </Link>
-              {/* <Link to="/noticias" className={navClass("/noticias")}>
+              <Link to="/noticias" className={navClass("/noticias")}>
                 Noticias
-              </Link> */}
+              </Link>
               <Link to="/nosotros" className={navClass("/nosotros")}>
                 Nosotros
               </Link>
