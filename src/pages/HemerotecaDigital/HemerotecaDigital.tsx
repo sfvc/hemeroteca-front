@@ -1,8 +1,6 @@
-import { useMemo, useState, useEffect, } from "react";
+import { useMemo, useState } from "react";
 import { ChevronRight, Check, CalendarDays, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-import LoaderDigital from "../../components/extras/LoaderDigital";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DATOS ESTÁTICOS
@@ -186,7 +184,7 @@ function HeroHemerotecaDigital({
 }: {
   navigate: ReturnType<typeof useNavigate>;
 }) {
-  
+
   return (
     <div className="relative overflow-hidden rounded-4xl bg-[#06124a] px-6 py-12 shadow-2xl md:px-10 md:py-16">
       <div className="absolute inset-0 opacity-90">

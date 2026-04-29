@@ -248,6 +248,8 @@ export default function DetallesPublicacion() {
     return (
       <PdfViewer
         url={pdfActivo}
+        downloadUrl={pdfActivo}
+        downloadName={itemData.titulo}
         collectionName={itemData.titulo}
         collectionType={itemData.tipoReal || nombresCategoria[itemData.categoria]}
         collectionDate={buildCollectionDate(itemData)}

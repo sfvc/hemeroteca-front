@@ -226,7 +226,7 @@ export default function CatalogoDigital() {
   const [itemsDigital, setItemsDigital] = useState<ItemColeccion[]>([]);
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState("");
-  const [loadingColeccionDigital, setLoadingColeccionDigital] = useState(false);
+  const [, setLoadingColeccionDigital] = useState(false);
 
   const irConLoaderColeccionDigital = (ruta: string) => {
     setLoadingColeccionDigital(true);

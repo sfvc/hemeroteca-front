@@ -1,6 +1,16 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, FileText, BookOpen, Calendar, Hash, Loader2 } from "lucide-react";
+import {
+    ChevronLeft,
+    ChevronRight,
+    ZoomIn,
+    ZoomOut,
+    FileText,
+    BookOpen,
+    Calendar,
+    Hash,
+    Loader2,
+} from "lucide-react";
 
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -16,76 +26,148 @@ function Loader() {
             <Loader2 className="w-10 h-10 animate-spin text-cyan-500" />
             <div className="flex flex-col items-center">
                 <span className="text-sm font-medium text-slate-700">Preparando documento</span>
-                <span className="text-xs text-slate-400">Esto puede tardar unos segundos en archivos pesados</span>
+                <span className="text-xs text-slate-400">
+                    Esto puede tardar unos segundos en archivos pesados
+                </span>
             </div>
         </div>
     );
 }
 
-function ThumbPage({ url, pageNumber, isActive, onClick }: { url: string; pageNumber: number; isActive: boolean; onClick: () => void; }) {
+function ThumbPage({
+    url,
+    pageNumber,
+    isActive,
+    onClick,
+}: {
+    url: string;
+    pageNumber: number;
+    isActive: boolean;
+    onClick: () => void;
+}) {
     return (
         <button
             onClick={onClick}
-            className={`relative group flex flex-col items-center gap-1 p-1 rounded-md transition-all duration-150 cursor-pointer ${isActive ? "bg-cyan-500/20 ring-1 ring-cyan-400" : "hover:bg-slate-800"}`}
+            className={`relative group flex flex-col items-center gap-1 p-1 rounded-md transition-all duration-150 cursor-pointer ${isActive
+                ? "bg-cyan-500/20 ring-1 ring-cyan-400"
+                : "hover:bg-slate-800"
+                }`}
         >
-            <div className={`overflow-hidden rounded-sm border transition-all duration-150 ${isActive ? "border-cyan-400" : "border-slate-700"}`}>
-                <Document file={url} loading={<div className="w-24 h-32 bg-slate-800 animate-pulse" />}>
-                    <Page pageNumber={pageNumber} scale={0.13} renderAnnotationLayer={false} renderTextLayer={false} loading={null} />
+            <div
+                className={`overflow-hidden rounded-sm border transition-all duration-150 ${isActive ? "border-cyan-400" : "border-slate-700"
+                    }`}
+            >
+                <Document
+                    file={url}
+                    loading={<div className="w-24 h-32 bg-slate-800 animate-pulse" />}
+                >
+                    <Page
+                        pageNumber={pageNumber}
+                        scale={0.13}
+                        renderAnnotationLayer={false}
+                        renderTextLayer={false}
+                        loading={null}
+                    />
                 </Document>
             </div>
-            <span className={`text-[10px] font-medium ${isActive ? "text-cyan-400" : "text-slate-500"}`}>{pageNumber}</span>
+            <span
+                className={`text-[10px] font-medium ${isActive ? "text-cyan-400" : "text-slate-500"
+                    }`}
+            >
+                {pageNumber}
+            </span>
         </button>
     );
 }
 
 export default function PdfViewer({
-    url, onClose, onNext, onBack, mode = "single", collectionName, collectionDate, collectionType = "Documento"
+    url,
+    onClose,
+    onNext,
+    onBack,
+    mode = "single",
+    collectionName,
+    collectionDate,
+    collectionType = "Documento",
+    downloadUrl,
+    downloadName,
 }: {
-    url: string; onClose: () => void; onNext: () => void; onBack: () => void; mode?: "single" | "spread";
-    collectionName?: string; collectionDate?: string; collectionType?: string;
+    url: string;
+    onClose: () => void;
+    onNext: () => void;
+    onBack: () => void;
+    mode?: "single" | "spread";
+    collectionName?: string;
+    collectionDate?: string;
+    collectionType?: string;
+    downloadUrl?: string;
+    downloadName?: string;
 }) {
     const [numPages, setNumPages] = useState(0);
     const [visiblePages, setVisiblePages] = useState(15);
     const [page, setPage] = useState(1);
     const [docLoading, setDocLoading] = useState(true);
     const [jumpValue, setJumpValue] = useState("");
+
     const thumbsContainerRef = useRef<HTMLDivElement>(null);
     const viewerRef = useRef<HTMLDivElement>(null);
+
     const [viewport, setViewport] = useState(0);
     const isMobile = viewport < 768;
     const isSpread = mode === "spread";
 
-    const [zoom, setZoom] = useState(() => typeof window !== "undefined" && window.innerWidth < 768 ? 0.9 : 1);
+    const [zoom, setZoom] = useState(() =>
+        typeof window !== "undefined" && window.innerWidth < 768 ? 0.9 : 1
+    );
+
+    // 👉 DRAG STATES
+    const [isDragging, setIsDragging] = useState(false);
+    const dragStart = useRef({ x: 0, y: 0 });
+    const scrollStart = useRef({ x: 0, y: 0 });
 
     const scale = useMemo(() => {
         const vw = viewport || (typeof window !== "undefined" ? window.innerWidth : 800);
         const vh = typeof window !== "undefined" ? window.innerHeight : 600;
+
         const sidebarWidth = vw >= 1024 ? 384 : 0;
         const horizontalPadding = vw > 768 ? 80 : 20;
+
         const availableWidth = vw - sidebarWidth - horizontalPadding;
         const availableHeight = vh - 180;
+
         const docBaseWidth = isSpread ? 1200 : 600;
         const docBaseHeight = 800;
+
         const widthScale = availableWidth / docBaseWidth;
         const heightScale = availableHeight / docBaseHeight;
-        const baseScale = isSpread ? Math.min(widthScale, heightScale * 1.2) : Math.min(widthScale, heightScale);
+
+        const baseScale = isSpread
+            ? Math.min(widthScale, heightScale * 1.2)
+            : Math.min(widthScale, heightScale);
+
         return Math.max(0.4, Math.min(baseScale * zoom, 4));
     }, [zoom, viewport, isSpread]);
 
     const handleJump = () => {
         const target = parseInt(jumpValue, 10);
-        if (!isNaN(target) && target >= 1 && target <= numPages) { setPage(target); setJumpValue(""); }
+        if (!isNaN(target) && target >= 1 && target <= numPages) {
+            setPage(target);
+            setJumpValue("");
+        }
     };
 
     const nextPage = () => {
         setPage((p) => {
             const next = Math.min(p + (isSpread ? 2 : 1), numPages);
-            if (next >= visiblePages - 2 && visiblePages < numPages) setVisiblePages((prev) => Math.min(prev + 10, numPages));
+            if (next >= visiblePages - 2 && visiblePages < numPages) {
+                setVisiblePages((prev) => Math.min(prev + 10, numPages));
+            }
             return next;
         });
     };
 
-    const prevPage = () => setPage((p) => Math.max(p - (isSpread ? 2 : 1), 1));
+    const prevPage = () =>
+        setPage((p) => Math.max(p - (isSpread ? 2 : 1), 1));
 
     useEffect(() => {
         const onResize = () => setViewport(window.innerWidth);
@@ -95,21 +177,88 @@ export default function PdfViewer({
 
     useEffect(() => {
         if (!thumbsContainerRef.current) return;
-        const active = thumbsContainerRef.current.querySelector("[data-active='true']") as HTMLElement | null;
+        const active = thumbsContainerRef.current.querySelector(
+            "[data-active='true']"
+        ) as HTMLElement | null;
         if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }, [page]);
+
+    // 👉 DRAG HANDLERS
+    const handleMouseDown = (e: React.MouseEvent) => {
+        if (!viewerRef.current) return;
+        if (scale <= 1) return; // opcional: solo con zoom
+
+        setIsDragging(true);
+        dragStart.current = { x: e.clientX, y: e.clientY };
+        scrollStart.current = {
+            x: viewerRef.current.scrollLeft,
+            y: viewerRef.current.scrollTop,
+        };
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging || !viewerRef.current) return;
+
+        const dx = e.clientX - dragStart.current.x;
+        const dy = e.clientY - dragStart.current.y;
+
+        viewerRef.current.scrollLeft = scrollStart.current.x - dx;
+        viewerRef.current.scrollTop = scrollStart.current.y - dy;
+    };
+
+    const handleMouseUp = () => setIsDragging(false);
 
     return (
         <div className="fixed inset-0 z-50 bg-black flex flex-col font-sans select-none">
             <div className="flex flex-1 overflow-hidden">
                 <div className="flex-1 overflow-auto bg-slate-300/50 flex flex-col">
-                    <div ref={viewerRef} className={`flex-1 relative flex min-h-full overflow-auto ${isMobile || scale > 1.3 ? "justify-start items-start" : "justify-center items-center"}`}>
-                        {docLoading && <div className="absolute inset-0 flex items-center justify-center bg-slate-200 z-50"><Loader /></div>}
-                        <Document key={url} file={url} onLoadSuccess={({ numPages }) => { setNumPages(numPages); setVisiblePages(Math.min(15, numPages)); setPage(1); setDocLoading(false); }} onLoadStart={() => setDocLoading(true)} loading={null}>
-                            <div className={`flex ${isSpread ? 'flex-row' : 'flex-col'} items-center justify-center shadow-2xl transition-opacity duration-300 ${docLoading ? 'opacity-0' : 'opacity-100'}`}>
-                                <div className="relative bg-white border-r border-slate-100 shrink-0"><Page pageNumber={page} scale={scale} loading={null} /></div>
+                    <div
+                        ref={viewerRef}
+                        onMouseDown={handleMouseDown}
+                        onMouseMove={handleMouseMove}
+                        onMouseUp={handleMouseUp}
+                        onMouseLeave={handleMouseUp}
+                        className={`flex-1 relative flex min-h-full overflow-auto ${isDragging ? "cursor-grabbing" : "cursor-grab"
+                            } ${isMobile || scale > 1.3
+                                ? "justify-start items-start"
+                                : "justify-center items-center"
+                            }`}
+                    >
+                        {docLoading && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-slate-200 z-50">
+                                <Loader />
+                            </div>
+                        )}
+
+                        <Document
+                            key={url}
+                            file={url}
+                            onLoadSuccess={({ numPages }) => {
+                                setNumPages(numPages);
+                                setVisiblePages(Math.min(15, numPages));
+                                setPage(1);
+                                setDocLoading(false);
+                            }}
+                            onLoadStart={() => setDocLoading(true)}
+                            loading={null}
+                        >
+                            <div
+                                className={`flex ${isSpread ? "flex-row" : "flex-col"
+                                    } items-center justify-center shadow-2xl transition-opacity duration-300 ${docLoading ? "opacity-0" : "opacity-100"
+                                    }`}
+                            >
+                                <div className="relative bg-white border-r border-slate-100 shrink-0">
+                                    <Page pageNumber={page} scale={scale} loading={null} />
+                                </div>
+
                                 {isSpread && page + 1 <= numPages && (
-                                    <div className="relative bg-white border-l border-slate-100 shrink-0"><Page pageNumber={page + 1} scale={scale} loading={null} /></div>
+                                    <div className="relative bg-white border-l border-slate-100 shrink-0">
+                                        <Page
+                                            pageNumber={page + 1}
+                                            scale={scale}
+                                            loading={null}
+                                        />
+                                    </div>
                                 )}
                             </div>
                         </Document>
@@ -175,8 +324,28 @@ export default function PdfViewer({
                     </div>
                 </div>
                 <div className="flex gap-2 justify-center">
-                    <button onClick={onBack} className="cursor-pointer bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white text-xs px-4 py-2 rounded-md transition">Anterior Publicación</button>
-                    <button onClick={onNext} className="cursor-pointer bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-4 py-2 rounded-md transition font-medium">Siguiente Publicación</button>
+                    {downloadUrl && (
+                        <button>
+                            <a
+                                href={downloadUrl}
+                                download={downloadName || "documento.pdf"}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-4 py-2 rounded-md transition font-medium flex items-center gap-2"
+                            >
+
+                                Descargar PDF
+                            </a>
+                        </button>
+                    )}
+
+                    <button onClick={onBack} className="cursor-pointer bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white text-xs px-4 py-2 rounded-md transition">
+                        Anterior Publicación
+                    </button>
+
+                    <button onClick={onNext} className="cursor-pointer bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-4 py-2 rounded-md transition font-medium">
+                        Siguiente Publicación
+                    </button>
                 </div>
             </div>
         </div>
