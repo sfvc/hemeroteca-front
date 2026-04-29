@@ -8,6 +8,7 @@ import {
 } from "../../services/koha-service";
 import { formatFecha } from "../../util/formatFecha";
 import { BookMarked, Info, CalendarCheck } from "lucide-react";
+import LoaderDigital from "../extras/LoaderDigital";
 
 type Boton = {
   id: number;
@@ -32,6 +33,7 @@ export default function EditorialHero() {
   const [botonDerecho, setBotonDerecho] = useState<Boton | null>(null);
   const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showDigitalLoader, setShowDigitalLoader] = useState(false);
   const [hora, setHora] = useState("");
 
   const location = useLocation();
@@ -116,8 +118,19 @@ export default function EditorialHero() {
     return horarios;
   };
 
+  const handleHemerotecaDigital = () => {
+    setShowDigitalLoader(true);
+
+    sessionStorage.setItem("skipGlobalLoader", "true");
+
+    setTimeout(() => {
+      navigate("/hemeroteca-digital");
+    }, 1500);
+  };
+
   return (
     <header className="w-full bg-white">
+      {showDigitalLoader && <LoaderDigital />}
       {/* HEADER SUPERIOR */}
       <div className="border-b border-slate-200">
         <div className="flex w-full items-center justify-between px-4 py-3 text-xs sm:px-6 lg:px-8">
@@ -255,9 +268,13 @@ export default function EditorialHero() {
               <Link to="/" className={navClass("/")}>
                 Inicio
               </Link>
-              {/* <Link to="/login" className={navClass("/login")}>
+              <button
+                type="button"
+                onClick={handleHemerotecaDigital}
+                className={`cursor-pointer ${navClass("/hemeroteca-digital")}`}
+              >
                 Hemeroteca Digital
-              </Link> */}
+              </button>
               <Link to="/catalogo" className={navClass("/catalogo")}>
                 Catalogo
               </Link>
@@ -368,7 +385,7 @@ export default function EditorialHero() {
                   Teléfono
                 </label>
                 <input
-                  type="tel"
+                  type="number"
                   placeholder="Tu número de teléfono"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />

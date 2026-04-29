@@ -22,15 +22,15 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // const skipLoader = sessionStorage.getItem("skipGlobalLoader");
+    const skipLoader = sessionStorage.getItem("skipGlobalLoader");
 
-    // if (skipLoader === "true") {
-    //   sessionStorage.removeItem("skipGlobalLoader");
-    //   setLoading(false);
-    //   return;
-    // }
+    if (skipLoader === "true") {
+      sessionStorage.removeItem("skipGlobalLoader");
+      setLoading(false);
+      return;
+    }
 
-    // setLoading(true);
+    setLoading(true);
 
     const timeout = setTimeout(() => {
       setLoading(false);

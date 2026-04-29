@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { Eye } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EditorialHero from "../../components/extras/EditorialNavbar";
 import KohaApi from "../../api/kohaApi";
 import {
@@ -79,6 +79,18 @@ const mapPublicacion = (
           : "Colección"),
 });
 
+const isActive = (route: string) => {
+  if (route === "/") return location.pathname === "/";
+  return location.pathname.startsWith(route);
+};
+
+const navClass = (route: string) =>
+  `transition ${
+    isActive(route)
+      ? "text-cyan-600 font-bold"
+      : "text-slate-700 hover:text-slate-950"
+  }`;
+
 const toArray = (
   data: PublicacionAPI | PublicacionAPI[] | null,
 ): PublicacionAPI[] => {
@@ -116,7 +128,7 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
               DISPONIBLE
             </span>
             <span className="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-cyan-700">
-              En digital
+              DIGITAL
             </span>
           </div>
 
@@ -150,12 +162,11 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
             {item.numeroEdicion && <span>Edición N° {item.numeroEdicion}</span>}
             {item.tipoReal && <span>{item.tipoReal}</span>}
           </div>
-          <button
-            // onClick={() => navigate("/catalogo-digital")}
-            className="cursor-pointer inline-flex min-w-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-600 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-700 hover:text-white mt-5"
-          >
-            Ver Digital
-          </button>
+          <Link to="/catalogo-digital" className={navClass("/")}>
+            <div className="cursor-pointer inline-flex min-w-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-600 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-700 hover:text-white mt-5">
+              Ver Digital
+            </div>
+          </Link>
         </div>
       </div>
     </article>

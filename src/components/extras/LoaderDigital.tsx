@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function LoaderTech() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-800 px-6 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-700 px-6 overflow-hidden">
       {/* GRID */}
       <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,#22d3ee_1px,transparent_1px)] bg-size-[20px_20px]" />
 
@@ -22,7 +22,7 @@ export default function LoaderTech() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="relative w-full max-w-3xl text-center px-8 py-10 border border-cyan-400/20 bg-slate-900/40 backdrop-blur-sm rounded-md"
+        className="relative w-full max-w-3xl text-center px-8 py-10 border border-cyan-400/20 bg-slate-800 backdrop-blur-sm rounded-md"
       >
         {/* LINEA */}
         <motion.div
@@ -56,7 +56,7 @@ export default function LoaderTech() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mt-4 text-[11px] uppercase tracking-[0.4em] text-slate-400 font-mono"
+          className="mt-4 text-[11px] uppercase tracking-[0.4em] text-white font-mono"
         >
           initializing digital hemeroteca...
         </motion.p>
@@ -94,7 +94,7 @@ export default function LoaderTech() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mt-10 text-[10px] tracking-[0.3em] text-slate-500 font-mono"
+          className="mt-10 text-[10px] tracking-[0.3em] text-white font-mono"
         >
           Municipalidad de Catamarca · Digital Hemeroteca v1.0
         </motion.p>
