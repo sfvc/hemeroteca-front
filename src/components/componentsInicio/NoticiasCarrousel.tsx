@@ -64,7 +64,7 @@ export default function NoticiasCarousel() {
       </div>
 
       {/* Contenedor SOLO del carrusel */}
-      <div className="relative w-full h-105 overflow-hidden rounded-xl">
+      <div className="relative w-full h-105 overflow-hidden">
         <div
           className="flex h-full transition-transform duration-700 ease-in-out"
           style={{

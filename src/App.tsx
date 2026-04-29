@@ -13,13 +13,18 @@ import VideoPage from "./components/extras/Video";
 import Catalogo from "./pages/HemerotecaMunicipal/CatalogoMunicipal";
 import DetallesPublicacion from "./pages/HemerotecaMunicipal/DetallesPublicacion";
 import LoaderEditorial from "./components/extras/LoaderEditorial";
+import LoaderDigital from "./components/extras/LoaderDigital";
 import HemerotecaDigital from "./pages/HemerotecaDigital/HemerotecaDigital";
 import BlogPage from "./pages/BlogPage";
 import CatalogoDigital from "./pages/HemerotecaDigital/CatalogoDigital";
 
+const RUTAS_DIGITALES = ["/hemeroteca-digital", "/catalogo-digital"];
+
 function App() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+
+  const esRutaDigital = RUTAS_DIGITALES.includes(location.pathname);
 
   useEffect(() => {
     const skipLoader = sessionStorage.getItem("skipGlobalLoader");
@@ -32,18 +37,20 @@ function App() {
 
     setLoading(true);
 
+    const duracion = esRutaDigital ? 700 : 1600;
+
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 1600);
+    }, duracion);
 
     return () => clearTimeout(timeout);
-  }, [location]);
+  }, [location.pathname]); // solo pathname, no el objeto entero
 
   return (
     <div className="min-h-dvh bg-white text-slate-900">
-      {loading && <LoaderEditorial />}
+      {loading && (esRutaDigital ? <LoaderDigital /> : <LoaderEditorial />)}
 
-      <main>
+      <main style={{ visibility: loading ? "hidden" : "visible" }}>
         <ScrollToTop />
 
         <Routes>
@@ -59,16 +66,12 @@ function App() {
             path="/detalles-publicacion"
             element={<DetallesPublicacion />}
           />
-
-          {/* EXTRAS */}
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/equipo" element={<Equipo />} />
 
           {/* HEMEROTECA DIGITAL */}
           <Route path="/hemeroteca-digital" element={<HemerotecaDigital />} />
           <Route path="/catalogo-digital" element={<CatalogoDigital />} />
-          {/* <Route path="/detalles-general" element={<DetallesGeneral />} /> */}
-          {/* <Route path="/detalles-particular" element={<DetallesParticular />} /> */}
         </Routes>
       </main>
 

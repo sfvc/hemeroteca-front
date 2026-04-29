@@ -20,9 +20,6 @@ interface ItemColeccion {
   tipoReal?: string;
 }
 
-
-
-
 const ITEMS_ESTATICOS: ItemColeccion[] = [
   // ── COLECCIONES (2 items) ──────────────────────────────────────────────────
   {
@@ -141,7 +138,8 @@ const filtros: FiltroCard[] = [
   {
     id: "especiales",
     titulo: "Colecciones Especiales",
-    descripcion: "Colecciones con Material patrimonial y publicaciones destacadas.",
+    descripcion:
+      "Colecciones con Material patrimonial y publicaciones destacadas.",
     imagen: "/ColeccionesEsp.jpg",
     badge: "Especial",
   },
@@ -180,11 +178,12 @@ function formatearFecha(fecha?: string) {
 }
 
 function HeroHemerotecaDigital({
-  navigate,
+  onGoHome,
+  onGoCatalogo,
 }: {
-  navigate: ReturnType<typeof useNavigate>;
+  onGoHome: () => void;
+  onGoCatalogo: () => void;
 }) {
-
   return (
     <div className="relative overflow-hidden rounded-4xl bg-[#06124a] px-6 py-12 shadow-2xl md:px-10 md:py-16">
       <div className="absolute inset-0 opacity-90">
@@ -230,8 +229,6 @@ function HeroHemerotecaDigital({
         </svg>
       </div>
 
-      {/* CONTENIDO HERO NAVBAR */}
-
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
           Archivo patrimonial
@@ -246,14 +243,13 @@ function HeroHemerotecaDigital({
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <button
-            onClick={() => navigate("/")}
+            onClick={onGoHome}
             className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md transition hover:bg-white hover:text-slate-900"
           >
             Hemeroteca Municipal
           </button>
-
           <button
-            onClick={() => navigate("/catalogo-digital")}
+            onClick={onGoCatalogo}
             className="cursor-pointer inline-flex min-w-55 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-400/20 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-500 hover:text-slate-950"
           >
             Catálogo Digital
@@ -262,10 +258,6 @@ function HeroHemerotecaDigital({
       </div>
     </div>
   );
-}
-
-{
-  /* FILTRO PRINCIPAL CARDS */
 }
 
 function FiltroPrincipalCard({
@@ -323,10 +315,6 @@ function FiltroPrincipalCard({
   );
 }
 
-{
-  /* CARDS DE RESULTADO */
-}
-
 function PublicacionCard({
   item,
 }: {
@@ -349,11 +337,9 @@ function PublicacionCard({
         </div>
       </div>
       <div className="space-y-3 p-4">
-        <div>
-          <h3 className="line-clamp-2 font-serif text-lg font-black leading-tight text-slate-900">
-            {item.titulo}
-          </h3>
-        </div>
+        <h3 className="line-clamp-2 font-serif text-lg font-black leading-tight text-slate-900">
+          {item.titulo}
+        </h3>
         <div className="space-y-2 border-t border-slate-100 pt-3 text-sm text-slate-500">
           <div className="flex items-center gap-2">
             <CalendarDays className="h-4 w-4 text-cyan-600" />
@@ -373,10 +359,6 @@ function PublicacionCard({
   );
 }
 
-{
-  /* SECCION DE CARDS RESULTADO */
-}
-
 export default function HemerotecaDigital() {
   const navigate = useNavigate();
   const [filtroActivo, setFiltroActivo] = useState<Categoria>("colecciones");
@@ -388,9 +370,11 @@ export default function HemerotecaDigital() {
   return (
     <section className="min-h-screen bg-[#f7f8fb] pb-12 text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 lg:px-8">
-        <HeroHemerotecaDigital navigate={navigate} />
+        <HeroHemerotecaDigital
+          onGoHome={() => navigate("/")}
+          onGoCatalogo={() => navigate("/catalogo-digital")}
+        />
 
-        {/* Tarjetas de filtro */}
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {filtros.map((filtro) => (
             <FiltroPrincipalCard
@@ -413,7 +397,6 @@ export default function HemerotecaDigital() {
           </div>
         </div>
 
-        {/* Grid de publicaciones */}
         {itemsFiltrados.length > 0 ? (
           <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {itemsFiltrados.map((item) => (

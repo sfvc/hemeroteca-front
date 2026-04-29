@@ -135,8 +135,6 @@ function HeroCatalogoDigital({
         </svg>
       </div>
 
-      {/* HERO NAVBAR */}
-
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
           Archivo patrimonial
@@ -166,10 +164,6 @@ function HeroCatalogoDigital({
       </div>
     </div>
   );
-}
-
-{
-  /* CARDS DE RESULTADO */
 }
 
 function MiniCard({
@@ -226,15 +220,6 @@ export default function CatalogoDigital() {
   const [itemsDigital, setItemsDigital] = useState<ItemColeccion[]>([]);
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState("");
-  const [, setLoadingColeccionDigital] = useState(false);
-
-  const irConLoaderColeccionDigital = (ruta: string) => {
-    setLoadingColeccionDigital(true);
-
-    setTimeout(() => {
-      navigate(ruta);
-    }, 300);
-  };
 
   const cargarItems = async (): Promise<ItemColeccion[]> => {
     try {
@@ -295,12 +280,8 @@ export default function CatalogoDigital() {
       <div className="mx-auto max-w-7xl py-6">
         <HeroCatalogoDigital
           onGoHome={() => navigate("/")}
-          onGoColeccionDigital={() =>
-            irConLoaderColeccionDigital("/hemeroteca-digital")
-          }
+          onGoColeccionDigital={() => navigate("/hemeroteca-digital")}
         />
-
-        {/* FILTRO DE BUSQUEDA */}
 
         <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:items-end">
@@ -339,8 +320,6 @@ export default function CatalogoDigital() {
           </div>
         </div>
 
-        {/* SECCION DE RESULTADOS */}
-
         <header className="mb-1 mt-8">
           <div className="border-t border-slate-300 pt-6" />
           <span className="text-[13px] font-bold uppercase text-cyan-700">
@@ -359,6 +338,8 @@ export default function CatalogoDigital() {
         </header>
 
         {loading ? (
+          // Spinner interno pequeño mientras la API responde
+          // (el LoaderDigital principal ya pasó, esto cubre el fetch extra)
           <div className="flex justify-center py-20">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent" />
           </div>
