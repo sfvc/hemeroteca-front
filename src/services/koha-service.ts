@@ -98,6 +98,7 @@ export interface ColeccionGeneralAPI {
   id: number;
   titulo: string;
   titulo_alternativo?: string | null;
+  descripcion_general?: string | null;
   subtitulo?: string | null;
   fecha_publicacion?: string;
   volumen_publicacion?: string;
@@ -115,6 +116,10 @@ export interface ColeccionConPublicaciones {
   imagen: string;
   tipo?: string;
   destino: string[];
+  descripcion_general?: string;
+  fecha?: string;
+  numero_publicacion?: string;
+  volumen_publicacion?: string;
   publicaciones: {
     id: number;
     titulo: string;
@@ -123,6 +128,9 @@ export interface ColeccionConPublicaciones {
     imagen: string;
     archivoPdf?: string;
     fecha?: string;
+    numero_publicacion?: string;
+    volumen_publicacion?: string;
+    cantidad_paginas?: string;
   }[];
 }
 
@@ -386,8 +394,12 @@ export const fetchColeccionesConPublicaciones = async (): Promise<ColeccionConPu
         id: coleccion.id,
         titulo: coleccion.titulo,
         subtitulo: coleccion.subtitulo ?? undefined,
+        descripcion_general: coleccion.descripcion_general ?? undefined,
         tipo: coleccion.tipo,
         destino: coleccion.destino ?? [],
+        fecha: coleccion.fecha_publicacion ?? undefined,
+        numero_publicacion: coleccion.numero_publicacion ?? undefined,
+        volumen_publicacion: coleccion.volumen_publicacion ?? undefined,
         imagen: coleccion.portada
           ? `${apiUrl}/assets/${coleccion.portada}`
           : "/placeholder.jpg",
@@ -404,6 +416,9 @@ export const fetchColeccionesConPublicaciones = async (): Promise<ColeccionConPu
             ? `${apiUrl}/assets/${pub.archivo_df}`
             : undefined,
           fecha: pub.fecha_publicacion ?? undefined,
+          numero_publicacion: pub.numero_publicacion ?? undefined,
+          volumen_publicacion: pub.volumen_publicacion ?? undefined,
+          cantidad_paginas: pub.cantidad_paginas ?? undefined,
         })),
       };
     });

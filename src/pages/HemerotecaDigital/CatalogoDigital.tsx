@@ -12,7 +12,7 @@ interface ItemColeccion {
   titulo: string;
   categoria: Categoria;
   imagen: string;
-  descripcion?: string;
+  descripcion_general?: string;
   subtitulo?: string;
   archivoPdf?: string;
   fecha?: string;
@@ -24,7 +24,7 @@ interface ItemColeccion {
     id: number;
     titulo: string;
     subtitulo?: string;
-    descripcion?: string;
+    descripcion_general?: string;
     imagen: string;
     archivoPdf?: string;
     fecha?: string;
@@ -154,9 +154,9 @@ function MiniCard({
         <h4 className="line-clamp-2 font-serif text-lg font-black text-slate-900">
           {item.titulo}
         </h4>
-        {item.descripcion && (
+        {item.subtitulo && (
           <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
-            {item.descripcion}
+            {item.subtitulo}
           </p>
         )}
         {item.fecha && (
@@ -190,9 +190,13 @@ export default function CatalogoDigital() {
         titulo: col.titulo,
         categoria: "colecciones" as const,
         imagen: col.imagen,
-        descripcion: col.subtitulo,
+        subtitulo: col.subtitulo,
+        descripcion_general: col.descripcion_general,
         tipoReal: col.tipo,
         destino: col.destino,
+        fecha: col.fecha,
+        numero_publicacion: col.numero_publicacion,
+        volumen_publicacion: col.volumen_publicacion,
         publicaciones: col.publicaciones,
       }));
     } catch (e) {
@@ -314,9 +318,8 @@ export default function CatalogoDigital() {
                 onOpen={() => {
                   navigate("/detalles-publicacion", {
                     state: {
-                      item,
-                      relacionados: item.publicaciones,
-                      initialPublicacionId: item.publicaciones?.find(p => p.archivoPdf)?.id
+                      item: { ...item },
+                      relacionados: item.publicaciones ?? [],
                     },
                   });
                 }}

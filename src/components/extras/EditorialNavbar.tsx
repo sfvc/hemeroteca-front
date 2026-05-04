@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoMunicipalidad from "/LOGO MUNI PNG.png";
 import { useState, useEffect } from "react";
 import {
+  createSolicitudTurno,
   fetchBotonDerecho,
   fetchBotonIzquierdo,
   fetchEncabezado,
@@ -34,7 +35,65 @@ export default function EditorialHero() {
   const [encabezado, setEncabezado] = useState<Encabezado | null>(null);
   const [loading, setLoading] = useState(true);
   const [showDigitalLoader, setShowDigitalLoader] = useState(false);
-  const [hora, setHora] = useState("");
+  const today = new Date().toISOString().split("T")[0];
+
+  const [form, setForm] = useState({
+    dia: "",
+    hora: "",
+    nombreCompleto: "",
+    telefono: "",
+    email: "",
+    pedido: "",
+  });
+
+  const [toast, setToast] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  const [sending, setSending] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      setSending(true);
+
+      await createSolicitudTurno(form);
+
+      setToast({
+        type: "success",
+        message: "Turno solicitado correctamente",
+      });
+
+      setForm({
+        dia: "",
+        hora: "",
+        nombreCompleto: "",
+        telefono: "",
+        email: "",
+        pedido: "",
+      });
+
+      setOpenModal(false);
+    } catch (error) {
+      console.error(error);
+
+      setToast({
+        type: "error",
+        message: "Error al enviar la solicitud",
+      });
+    } finally {
+      setSending(false);
+    }
+  };
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -64,16 +123,25 @@ export default function EditorialHero() {
     loadAll();
   }, []);
 
+  useEffect(() => {
+    if (!toast) return;
+
+    const timer = setTimeout(() => {
+      setToast(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [toast]);
+
   const isActive = (route: string) => {
     if (route === "/") return location.pathname === "/";
     return location.pathname.startsWith(route);
   };
 
   const navClass = (route: string) =>
-    `transition ${
-      isActive(route)
-        ? "text-cyan-600 font-bold"
-        : "text-slate-700 hover:text-slate-950"
+    `transition ${isActive(route)
+      ? "text-cyan-600 font-bold"
+      : "text-slate-700 hover:text-slate-950"
     }`;
 
   const handleNavigation = (link: string) => {
@@ -327,7 +395,7 @@ export default function EditorialHero() {
             </div>
 
             {/* FORMULARIO */}
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* DIA */}
                 <div>
@@ -336,6 +404,10 @@ export default function EditorialHero() {
                   </label>
                   <input
                     type="date"
+                    name="dia"
+                    value={form.dia}
+                    onChange={handleChange}
+                    min={today}
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                   />
                 </div>
@@ -346,8 +418,10 @@ export default function EditorialHero() {
                     Hora
                   </label>
                   <select
-                    value={hora}
-                    onChange={(e) => setHora(e.target.value)}
+                    name="hora"
+                    value={form.hora}
+                    onChange={handleChange}
+                    disabled={!form.dia}
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                   >
                     <option value="">Seleccionar horario</option>
@@ -371,6 +445,9 @@ export default function EditorialHero() {
                 </label>
                 <input
                   type="text"
+                  name="nombreCompleto"
+                  value={form.nombreCompleto}
+                  onChange={handleChange}
                   placeholder="Tu nombre y apellido"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
@@ -386,6 +463,9 @@ export default function EditorialHero() {
                 </label>
                 <input
                   type="number"
+                  name="telefono"
+                  value={form.telefono}
+                  onChange={handleChange}
                   placeholder="Tu número de teléfono"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
@@ -401,6 +481,9 @@ export default function EditorialHero() {
                 </label>
                 <input
                   type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
                   placeholder="tuemail@ejemplo.com"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
                 />
@@ -415,6 +498,9 @@ export default function EditorialHero() {
                   ¿Qué solicita?
                 </label>
                 <textarea
+                  name="pedido"
+                  value={form.pedido}
+                  onChange={handleChange}
                   placeholder="Detalle brevemente el pedido"
                   rows={5}
                   className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-cyan-700 focus:ring-2 focus:ring-orange-100"
@@ -425,12 +511,27 @@ export default function EditorialHero() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full cursor-pointer bg-cyan-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-cyan-600 hover:shadow-lg"
+                  disabled={sending}
+                  className="w-full cursor-pointer bg-cyan-500 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-cyan-600 hover:shadow-lg disabled:opacity-70"
                 >
-                  Enviar solicitud
+                  {sending ? "Enviando..." : "Enviar solicitud"}
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {toast && (
+        <div className="fixed top-5 right-5 z-999 animate-fade-in">
+          <div
+            className={`flex items-center gap-3 rounded-xl px-5 py-4 shadow-lg border
+        ${toast.type === "success"
+                ? "bg-green-50 border-green-200 text-green-800"
+                : "bg-red-50 border-red-200 text-red-800"
+              }`}
+          >
+            <span className="font-medium">{toast.message}</span>
           </div>
         </div>
       )}

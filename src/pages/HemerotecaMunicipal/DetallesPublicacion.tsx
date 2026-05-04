@@ -9,6 +9,7 @@ import {
   ChevronRight,
   FileText,
   Eye,
+  BookOpen,
 } from "lucide-react";
 import PdfViewer from "../../components/extras/PdfViewer";
 import EditorialHero from "../../components/extras/EditorialNavbar";
@@ -22,10 +23,13 @@ interface ItemColeccion {
   categoria: Categoria;
   imagen: string;
   descripcion?: string;
+  descripcion_general?: string;
   archivoPdf?: string;
   fecha?: string;
   destino?: string[];
-  numeroEdicion?: string;
+  numero_publicacion?: string;
+  volumen_publicacion?: string;
+  cantidad_paginas?: string;
   tipoReal?: string;
   medio_publicador?: number;
 }
@@ -35,6 +39,7 @@ interface LocationState {
   relacionados: ItemColeccion[];
   categoriaNombre?: string;
   tipoHemeroteca?: "municipal" | "digital";
+  initialPublicacionId?: number;
 }
 
 const nombresCategoria: Record<Categoria, string> = {
@@ -75,10 +80,10 @@ function obtenerRangoAnios(items: ItemColeccion[]) {
 
 function buildCollectionDate(item: ItemColeccion) {
   if (item.fecha) {
-    return `${formatearFecha(item.fecha)}${item.numeroEdicion ? ` • Edición N°${item.numeroEdicion}` : ""
+    return `${formatearFecha(item.fecha)}${item.numero_publicacion ? ` • Edición N°${item.numero_publicacion}` : ""
       }`;
   }
-  return item.numeroEdicion ? `Edición N°${item.numeroEdicion}` : "Sin fecha";
+  return item.numero_publicacion ? `Edición N°${item.numero_publicacion}` : "Sin fecha";
 }
 
 function EjemplarCard({
@@ -137,9 +142,9 @@ function EjemplarCard({
           <h3 className="line-clamp-2 font-serif text-sm font-black leading-tight text-slate-900">
             {ejemplar.titulo}
           </h3>
-          {ejemplar.numeroEdicion && (
+          {ejemplar.numero_publicacion && (
             <p className="mt-1 text-[11px] font-semibold text-cyan-700">
-              N° {ejemplar.numeroEdicion}
+              N° {ejemplar.numero_publicacion}
             </p>
           )}
         </div>
@@ -168,7 +173,8 @@ export default function DetallesPublicacion() {
   const [indexActual, setIndexActual] = useState(0);
   const [paginaActual, setPaginaActual] = useState(0);
   const ITEMS_POR_PAGINA = 10;
-  const { item, relacionados = [] } = state || {};
+  const { item, relacionados = [], initialPublicacionId } = state || {};
+  const esColeccion = !item?.archivoPdf;
 
   const itemsOrdenados = useMemo(() => {
     return [...relacionados].sort((a, b) => {
@@ -183,13 +189,19 @@ export default function DetallesPublicacion() {
   }, [location.key]);
 
   const indexDelItem = useMemo(() => {
-    return itemsOrdenados.findIndex((i) => !!i.archivoPdf);
-  }, [itemsOrdenados]);
+    if (initialPublicacionId != null) {
+      const idx = itemsOrdenados.findIndex(i => i.id === initialPublicacionId);
+      if (idx !== -1) return idx;
+    }
+    return itemsOrdenados.findIndex(i => !!i.archivoPdf);
+  }, [itemsOrdenados, initialPublicacionId]);
 
   const rangoAnios = useMemo(
     () => obtenerRangoAnios(itemsOrdenados),
     [itemsOrdenados]
   );
+
+  const [publicacionActivaId, setPublicacionActivaId] = useState<number | undefined>(() => initialPublicacionId);
 
   if (!state?.item) {
     return (
@@ -217,26 +229,30 @@ export default function DetallesPublicacion() {
     (paginaActual + 1) * ITEMS_POR_PAGINA,
   );
 
-  const abrirPdf = (indexGlobal: number) => {
-    const seleccionado = itemsOrdenados[indexGlobal];
+  const abrirPdfPorId = (id: number) => {
+    const index = itemsOrdenados.findIndex(i => i.id === id);
+    if (index === -1) return;
+    const seleccionado = itemsOrdenados[index];
     if (!seleccionado?.archivoPdf) return;
-    setIndexActual(indexGlobal);
+    setPublicacionActivaId(id);
+    setIndexActual(index);
     setPdfActivo(seleccionado.archivoPdf);
   };
 
-  const hayPublicacionesConPdf = itemsOrdenados.some(i => !!i.archivoPdf);
-
   const irAEjemplar = (ejemplar: ItemColeccion) => {
-    const index = itemsOrdenados.findIndex(i => i.id === ejemplar.id);
+    setPublicacionActivaId(ejemplar.id);
 
-    if (ejemplar.archivoPdf) {
-      setIndexActual(index);
-      setPdfActivo(ejemplar.archivoPdf);
-    }
+    navigate("/detalles-publicacion", {
+      state: {
+        item: ejemplar,
+        relacionados: itemsOrdenados,
+        initialPublicacionId: ejemplar.id,
+      },
+    });
   };
 
   /* ── Vista PDF ───────────────────────────────────────────────── */
-  if (pdfActivo) {
+  if (pdfActivo && !esColeccion) {
     const itemData = itemsOrdenados[indexActual];
     return (
       <PdfViewer
@@ -304,8 +320,7 @@ export default function DetallesPublicacion() {
                 </p>
                 <div className="mt-4 space-y-4 text-[15px] leading-7 text-slate-600">
                   <p>
-                    {item?.descripcion ||
-                      "Esta publicación forma parte del catálogo de la hemeroteca y reúne ejemplares conservados para consulta, investigación y difusión patrimonial."}
+                    {item?.descripcion_general || item?.descripcion}
                   </p>
                 </div>
               </div>
@@ -316,6 +331,7 @@ export default function DetallesPublicacion() {
                   Datos rápidos
                 </p>
                 <div className="space-y-3 text-sm text-slate-600">
+
                   <div className="flex items-start gap-3">
                     <Newspaper className="mt-0.5 h-4 w-4 text-cyan-700" />
                     <div>
@@ -323,6 +339,7 @@ export default function DetallesPublicacion() {
                       <p>{item?.titulo}</p>
                     </div>
                   </div>
+
                   <div className="flex items-start gap-3">
                     <CalendarDays className="mt-0.5 h-4 w-4 text-cyan-700" />
                     <div>
@@ -330,17 +347,36 @@ export default function DetallesPublicacion() {
                       <p>{formatearFecha(item?.fecha)}</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Search className="mt-0.5 h-4 w-4 text-cyan-700" />
-                    <div>
-                      <p className="font-semibold text-slate-900">Edición</p>
-                      <p>
-                        {item?.numeroEdicion
-                          ? `N° ${item?.numeroEdicion}`
-                          : "Sin número"}
-                      </p>
+
+                  {item?.numero_publicacion && (
+                    <div className="flex items-start gap-3">
+                      <Search className="mt-0.5 h-4 w-4 text-cyan-700" />
+                      <div>
+                        <p className="font-semibold text-slate-900">N° Publicación</p>
+                        <p>{item.numero_publicacion}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
+                  {item?.volumen_publicacion && (
+                    <div className="flex items-start gap-3">
+                      <BookOpen className="mt-0.5 h-4 w-4 text-cyan-700" />
+                      <div>
+                        <p className="font-semibold text-slate-900">Volumen</p>
+                        <p>{item.volumen_publicacion}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {!esColeccion && item?.cantidad_paginas && (
+                    <div className="flex items-start gap-3">
+                      <FileText className="mt-0.5 h-4 w-4 text-cyan-700" />
+                      <div>
+                        <p className="font-semibold text-slate-900">Páginas</p>
+                        <p>{item.cantidad_paginas}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -364,11 +400,13 @@ export default function DetallesPublicacion() {
                   Acciones
                 </p>
                 <div className="space-y-3">
-                  {hayPublicacionesConPdf ? (
+                  {!esColeccion && item?.archivoPdf ? (
                     <>
-                      {/* Abrir visor */}
                       <button
-                        onClick={() => abrirPdf(indexDelItem)}
+                        onClick={() => {
+                          const id = itemsOrdenados[indexDelItem]?.id;
+                          if (id != null) abrirPdfPorId(id);
+                        }}
                         className="flex w-full items-center justify-between rounded-none border border-cyan-700 bg-cyan-700 px-4 py-3 text-left text-sm font-semibold text-white transition hover:bg-cyan-800 cursor-pointer"
                       >
                         <span className="inline-flex items-center gap-2">
@@ -377,10 +415,8 @@ export default function DetallesPublicacion() {
                         </span>
                         <ChevronRight className="h-4 w-4" />
                       </button>
-
-                      {/* Descargar PDF */}
                       <a
-                        href={itemsOrdenados[indexDelItem]?.archivoPdf || "#"}
+                        href={item.archivoPdf}
                         download
                         target="_blank"
                         rel="noopener noreferrer"
@@ -396,7 +432,9 @@ export default function DetallesPublicacion() {
                   ) : (
                     <div className="flex w-full items-center gap-2 border border-slate-200 px-4 py-3 text-sm text-slate-400">
                       <FileText className="h-4 w-4" />
-                      Sin PDF disponible
+                      {itemsOrdenados.length > 0
+                        ? "Seleccioná una publicación para abrir su PDF"
+                        : "Sin PDF disponible"}
                     </div>
                   )}
                 </div>
@@ -467,7 +505,7 @@ export default function DetallesPublicacion() {
                     <EjemplarCard
                       key={`${ejemplar.id}-${indexGlobal}`}
                       ejemplar={ejemplar}
-                      esActivo={ejemplar.id === item?.id}
+                      esActivo={ejemplar.id === publicacionActivaId}
                       onClick={() => irAEjemplar(ejemplar)}
                     />
                   );

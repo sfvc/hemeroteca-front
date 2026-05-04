@@ -46,7 +46,7 @@ function App() {
     }, duracion);
 
     return () => clearTimeout(timeout);
-  }, [location.pathname]); 
+  }, [location.pathname]);
 
   return (
     <div className="min-h-dvh bg-white text-slate-900">
