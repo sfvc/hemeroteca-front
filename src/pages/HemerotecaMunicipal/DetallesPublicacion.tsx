@@ -171,25 +171,20 @@ export default function DetallesPublicacion() {
   const { item, relacionados = [] } = state || {};
 
   const itemsOrdenados = useMemo(() => {
-    if (!item?.medio_publicador) return [];
-
-    return relacionados
-      .filter((rel) => rel.medio_publicador === item.medio_publicador)
-      .sort((a, b) => {
-        const fa = a.fecha ? new Date(a.fecha).getTime() : 0;
-        const fb = b.fecha ? new Date(b.fecha).getTime() : 0;
-        return fa - fb;
-      });
-  }, [relacionados, item]);
+    return [...relacionados].sort((a, b) => {
+      const fa = a.fecha ? new Date(a.fecha).getTime() : 0;
+      const fb = b.fecha ? new Date(b.fecha).getTime() : 0;
+      return fa - fb;
+    });
+  }, [relacionados]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.key]);
 
-  const indexDelItem = useMemo(
-    () => itemsOrdenados.findIndex((i) => i.id === item?.id),
-    [itemsOrdenados, item]
-  );
+  const indexDelItem = useMemo(() => {
+    return itemsOrdenados.findIndex((i) => !!i.archivoPdf);
+  }, [itemsOrdenados]);
 
   const rangoAnios = useMemo(
     () => obtenerRangoAnios(itemsOrdenados),
@@ -229,17 +224,15 @@ export default function DetallesPublicacion() {
     setPdfActivo(seleccionado.archivoPdf);
   };
 
-  const primerIndexConPdf = itemsOrdenados.findIndex((i) => !!i.archivoPdf);
+  const hayPublicacionesConPdf = itemsOrdenados.some(i => !!i.archivoPdf);
 
   const irAEjemplar = (ejemplar: ItemColeccion) => {
-    navigate("/detalles-publicacion", {
-      state: {
-        item: ejemplar,
-        relacionados: relacionados, // el array original del state
-        categoriaNombre: nombresCategoria[ejemplar.categoria],
-        tipoHemeroteca: state?.tipoHemeroteca,
-      },
-    });
+    const index = itemsOrdenados.findIndex(i => i.id === ejemplar.id);
+
+    if (ejemplar.archivoPdf) {
+      setIndexActual(index);
+      setPdfActivo(ejemplar.archivoPdf);
+    }
   };
 
   /* ── Vista PDF ───────────────────────────────────────────────── */
@@ -299,10 +292,10 @@ export default function DetallesPublicacion() {
             {/* COLUMNA IZQUIERDA */}
             <div>
               <h1 className="font-serif text-4xl font-black uppercase tracking-tight text-slate-950 md:text-6xl">
-                {item?.titulo || item?.subtitulo}
+                {item?.titulo}
               </h1>
               <p className="mt-4 max-w-3xl text-lg text-slate-500">
-                {item?.subtitulo || "Subtítulo o lema del ejemplar"}
+                {item?.subtitulo || "Colección histórica digitalizada"}
               </p>
 
               <div className="mt-4 border border-slate-200 bg-white p-6 shadow-sm">
@@ -371,7 +364,7 @@ export default function DetallesPublicacion() {
                   Acciones
                 </p>
                 <div className="space-y-3">
-                  {primerIndexConPdf >= 0 ? (
+                  {hayPublicacionesConPdf ? (
                     <>
                       {/* Abrir visor */}
                       <button

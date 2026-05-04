@@ -77,6 +77,55 @@ export interface SolicitudTurnoPayload {
   pedido?: string;
 }
 
+export interface PublicacionGeneralAPI {
+  id: number;
+  titulo: string;
+  titulo_alternativo?: string | null;
+  subtitulo?: string | null;
+  descripcion?: string | null;
+  fecha_publicacion?: string;
+  cantidad_paginas?: string;
+  volumen_publicacion?: string;
+  numero_publicacion?: string;
+  destino?: string[];
+  medio_publicador?: number;
+  portada?: string;
+  archivo_df?: string;
+  coleccion: number;
+}
+
+export interface ColeccionGeneralAPI {
+  id: number;
+  titulo: string;
+  titulo_alternativo?: string | null;
+  subtitulo?: string | null;
+  fecha_publicacion?: string;
+  volumen_publicacion?: string;
+  numero_publicacion?: string;
+  destino?: string[];
+  medio_publicador?: number;
+  tipo?: string;
+  portada?: string;
+}
+
+export interface ColeccionConPublicaciones {
+  id: number;
+  titulo: string;
+  subtitulo?: string;
+  imagen: string;
+  tipo?: string;
+  destino: string[];
+  publicaciones: {
+    id: number;
+    titulo: string;
+    subtitulo?: string;
+    descripcion?: string;
+    imagen: string;
+    archivoPdf?: string;
+    fecha?: string;
+  }[];
+}
+
 /* ─── Constantes ────────────────────────────────────────── */
 
 const IMAGE_FIELDS =
@@ -270,28 +319,28 @@ export const fetchQueHacemos = async (): Promise<QueHacemos | null> => {
 
     const quienesSomos =
       item.quienes_somos ||
-      item.quienes_somos_titulo ||
-      item.quienes_somos_imagen
+        item.quienes_somos_titulo ||
+        item.quienes_somos_imagen
         ? {
-            titulo: item.quienes_somos_titulo ?? "",
-            descripcion: item.quienes_somos ?? "",
-            imagenUrl: item.quienes_somos_imagen
-              ? `${apiUrl}/assets/${item.quienes_somos_imagen}`
-              : "", // 👈 importante
-          }
+          titulo: item.quienes_somos_titulo ?? "",
+          descripcion: item.quienes_somos ?? "",
+          imagenUrl: item.quienes_somos_imagen
+            ? `${apiUrl}/assets/${item.quienes_somos_imagen}`
+            : "", // 👈 importante
+        }
         : null;
 
     const queHacemos =
       item.que_hacemos ||
-      item.que_hacemos_titulo ||
-      item.que_hacemos_imagen
+        item.que_hacemos_titulo ||
+        item.que_hacemos_imagen
         ? {
-            titulo: item.que_hacemos_titulo ?? "",
-            descripcion: item.que_hacemos ?? "",
-            imagenUrl: item.que_hacemos_imagen
-              ? `${apiUrl}/assets/${item.que_hacemos_imagen}`
-              : "",
-          }
+          titulo: item.que_hacemos_titulo ?? "",
+          descripcion: item.que_hacemos ?? "",
+          imagenUrl: item.que_hacemos_imagen
+            ? `${apiUrl}/assets/${item.que_hacemos_imagen}`
+            : "",
+        }
         : null;
 
     return {
@@ -313,5 +362,53 @@ export const createSolicitudTurno = async (
   } catch (error) {
     console.error("Error creando solicitud de turno:", error);
     throw error;
+  }
+};
+
+export const fetchColeccionesConPublicaciones = async (): Promise<ColeccionConPublicaciones[]> => {
+  try {
+    const apiUrl = KohaApi.defaults.baseURL || "";
+
+    const [coleccionesRes, publicacionesRes] = await Promise.all([
+      KohaApi.get<{ data: ColeccionGeneralAPI[] }>("/items/coleccion_general"),
+      KohaApi.get<{ data: PublicacionGeneralAPI[] }>("/items/publicaciones_generales"),
+    ]);
+
+    const colecciones = coleccionesRes.data.data ?? [];
+    const publicaciones = publicacionesRes.data.data ?? [];
+
+    return colecciones.map((coleccion) => {
+      const publicacionesRelacionadas = publicaciones.filter(
+        (p) => p.coleccion === coleccion.id
+      );
+
+      return {
+        id: coleccion.id,
+        titulo: coleccion.titulo,
+        subtitulo: coleccion.subtitulo ?? undefined,
+        tipo: coleccion.tipo,
+        destino: coleccion.destino ?? [],
+        imagen: coleccion.portada
+          ? `${apiUrl}/assets/${coleccion.portada}`
+          : "/placeholder.jpg",
+
+        publicaciones: publicacionesRelacionadas.map((pub) => ({
+          id: pub.id,
+          titulo: pub.titulo,
+          subtitulo: pub.subtitulo ?? undefined,
+          descripcion: pub.descripcion ?? undefined,
+          imagen: pub.portada
+            ? `${apiUrl}/assets/${pub.portada}`
+            : "/placeholder.jpg",
+          archivoPdf: pub.archivo_df
+            ? `${apiUrl}/assets/${pub.archivo_df}`
+            : undefined,
+          fecha: pub.fecha_publicacion ?? undefined,
+        })),
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching colecciones con publicaciones:", error);
+    return [];
   }
 };

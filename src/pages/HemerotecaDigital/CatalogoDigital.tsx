@@ -1,27 +1,9 @@
 import { useMemo, useState, useEffect } from "react";
 import { ChevronRight, Search, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import KohaApi from "../../api/kohaApi";
 import {
-  fetchPublicacion_1,
-  fetchPublicacion_2,
-  fetchPublicacion_3,
-  fetchPublicacion_4,
+  fetchColeccionesConPublicaciones,
 } from "../../services/koha-service";
-
-interface PublicacionAPI {
-  id: number;
-  titulo: string;
-  subtitulo?: string | null;
-  descripcion?: string | null;
-  portada_publicacion?: string | null;
-  archivo_pdf?: string | null;
-  nombre?: string;
-  fecha_publicacion?: string;
-  numero_publicacion?: string;
-  destino?: string[];
-  medio_publicador?: number;
-}
 
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
 
@@ -38,43 +20,16 @@ interface ItemColeccion {
   numeroEdicion?: string;
   tipoReal?: string;
   medio_publicador?: number;
+  publicaciones?: {
+    id: number;
+    titulo: string;
+    subtitulo?: string;
+    descripcion?: string;
+    imagen: string;
+    archivoPdf?: string;
+    fecha?: string;
+  }[];
 }
-
-const getAssetUrl = (fileId: string): string => {
-  const apiUrl = KohaApi.defaults.baseURL ?? "";
-  return `${apiUrl}/assets/${fileId}`;
-};
-
-const mapPublicacion = (
-  item: PublicacionAPI,
-  categoria: Categoria,
-): ItemColeccion => ({
-  id: item.id,
-  titulo: item.titulo,
-  categoria,
-  imagen: item.portada_publicacion
-    ? getAssetUrl(item.portada_publicacion)
-    : "/placeholder.jpg",
-  descripcion: item.descripcion ?? undefined,
-  subtitulo: item.subtitulo ?? undefined,
-  archivoPdf: item.archivo_pdf ? getAssetUrl(item.archivo_pdf) : undefined,
-  fecha: item.fecha_publicacion ?? undefined,
-  destino: item.destino
-    ? Array.isArray(item.destino)
-      ? item.destino
-      : [item.destino]
-    : undefined,
-  numeroEdicion: item.numero_publicacion,
-  medio_publicador: item.medio_publicador,
-  tipoReal: item.nombre || (categoria === "revistas" ? "Revista" : "Periódico"),
-});
-
-const toArray = (
-  data: PublicacionAPI | PublicacionAPI[] | null,
-): PublicacionAPI[] => {
-  if (!data) return [];
-  return Array.isArray(data) ? data : [data];
-};
 
 const nombresCategoria: Record<Categoria, string> = {
   revistas: "Revistas",
@@ -236,21 +191,19 @@ export default function CatalogoDigital() {
     }, 300);
   };
 
-  const cargarItems = async (): Promise<ItemColeccion[]> => {
+  const cargarItems = async () => {
     try {
-      const [pub1, pub2, pub3, pub4] = await Promise.all([
-        fetchPublicacion_1(),
-        fetchPublicacion_2(),
-        fetchPublicacion_3(),
-        fetchPublicacion_4(),
-      ]);
-
-      return [
-        ...toArray(pub1).map((i) => mapPublicacion(i, "revistas")),
-        ...toArray(pub2).map((i) => mapPublicacion(i, "periodicos")),
-        ...toArray(pub3).map((i) => mapPublicacion(i, "especiales")),
-        ...toArray(pub4).map((i) => mapPublicacion(i, "especiales")),
-      ];
+      const colecciones = await fetchColeccionesConPublicaciones();
+      return colecciones.map((col) => ({
+        id: col.id,
+        titulo: col.titulo,
+        categoria: "colecciones" as const,
+        imagen: col.imagen,
+        descripcion: col.subtitulo,
+        tipoReal: col.tipo,
+        destino: col.destino,
+        publicaciones: col.publicaciones,
+      }));
     } catch (e) {
       console.error(e);
       return [];
@@ -352,9 +305,8 @@ export default function CatalogoDigital() {
           <p className="mt-2 text-sm text-slate-500">
             {loading
               ? "Cargando..."
-              : `${itemsFiltrados.length} resultado${
-                  itemsFiltrados.length === 1 ? "" : "s"
-                }${busqueda.trim() ? ` para "${busqueda.trim()}"` : ""}`}
+              : `${itemsFiltrados.length} resultado${itemsFiltrados.length === 1 ? "" : "s"
+              }${busqueda.trim() ? ` para "${busqueda.trim()}"` : ""}`}
           </p>
         </header>
 
@@ -372,9 +324,8 @@ export default function CatalogoDigital() {
                   navigate("/detalles-publicacion", {
                     state: {
                       item,
-                      relacionados: itemsFiltrados,
-                      categoriaNombre: nombresCategoria[item.categoria],
-                      tipoHemeroteca: "digital",
+                      relacionados: item.publicaciones,
+                      initialPublicacionId: item.publicaciones?.find(p => p.archivoPdf)?.id
                     },
                   });
                 }}
