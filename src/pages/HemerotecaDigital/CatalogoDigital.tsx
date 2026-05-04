@@ -90,7 +90,7 @@ function HeroCatalogoDigital({
         </svg>
       </div>
 
-      {/* HERO NAVBAR */}
+      {/* HEADER */}
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.28em] text-cyan-100 backdrop-blur-sm">
@@ -124,7 +124,7 @@ function HeroCatalogoDigital({
 }
 
 {
-  /* CARDS DE RESULTADO */
+  /* CARDS RESULTADO */
 }
 
 function MiniCard({
@@ -181,15 +181,6 @@ export default function CatalogoDigital() {
   const [itemsDigital, setItemsDigital] = useState<ItemColeccion[]>([]);
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState("");
-  const [, setLoadingColeccionDigital] = useState(false);
-
-  const irConLoaderColeccionDigital = (ruta: string) => {
-    setLoadingColeccionDigital(true);
-
-    setTimeout(() => {
-      navigate(ruta);
-    }, 300);
-  };
 
   const cargarItems = async () => {
     try {
@@ -243,17 +234,19 @@ export default function CatalogoDigital() {
     });
   }, [itemsDigital, busqueda]);
 
+  {
+    /* CONTENIDO */
+  }
+
   return (
     <section className="min-h-screen bg-[#f7f8fb] px-4 pb-10 pt-2 md:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl py-6">
         <HeroCatalogoDigital
           onGoHome={() => navigate("/")}
-          onGoColeccionDigital={() =>
-            irConLoaderColeccionDigital("/hemeroteca-digital")
-          }
+          onGoColeccionDigital={() => navigate("/hemeroteca-digital")}
         />
 
-        {/* FILTRO DE BUSQUEDA */}
+        {/* FILTRO BUSQUEDA */}
 
         <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_auto] md:items-end">
@@ -291,8 +284,6 @@ export default function CatalogoDigital() {
             </div>
           </div>
         </div>
-
-        {/* SECCION DE RESULTADOS */}
 
         <header className="mb-1 mt-8">
           <div className="border-t border-slate-300 pt-6" />

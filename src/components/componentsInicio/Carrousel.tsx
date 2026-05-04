@@ -164,7 +164,7 @@ export default function Carrousel() {
 
             <img
               src={imageUrl}
-              className="w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+              className="w-full max-h-[85vh] object-contain shadow-2xl"
             />
           </div>
         </div>

@@ -28,7 +28,8 @@ const CATEGORIAS: Record<number, string> = {
 
 const RUTAS_INTERNAS: Record<number, (link?: string) => string> = {
   0: () => "/catalogo",
-  1: (link: string | undefined) => `/video?section=2&url=${encodeURIComponent(link ?? "")}`,
+  1: (link: string | undefined) =>
+    `/video?section=2&url=${encodeURIComponent(link ?? "")}`,
   2: () => `/blog`,
 };
 
@@ -45,7 +46,12 @@ const SkeletonCard = () => (
 );
 
 export default function SeccionesSecundarias() {
-  const [secciones, setSecciones] = useState<(Seccion | null)[]>([null, null, null, null]);
+  const [secciones, setSecciones] = useState<(Seccion | null)[]>([
+    null,
+    null,
+    null,
+    null,
+  ]);
   const [loading, setLoading] = useState(true);
   const [showDigitalLoader, setShowDigitalLoader] = useState(false);
   const navigate = useNavigate();
@@ -106,9 +112,12 @@ export default function SeccionesSecundarias() {
 
   const visibles = secciones.filter(Boolean).length;
   const colsClass =
-    visibles === 4 ? "sm:grid-cols-2 xl:grid-cols-4"
-      : visibles === 3 ? "sm:grid-cols-2 xl:grid-cols-3"
-        : visibles === 2 ? "sm:grid-cols-2"
+    visibles === 4
+      ? "sm:grid-cols-2 xl:grid-cols-4"
+      : visibles === 3
+        ? "sm:grid-cols-2 xl:grid-cols-3"
+        : visibles === 2
+          ? "sm:grid-cols-2"
           : "grid-cols-1";
 
   return (
@@ -122,52 +131,54 @@ export default function SeccionesSecundarias() {
           {loading
             ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
             : secciones.map((item, index) => {
-              if (!item) return null;
+                if (!item) return null;
 
-              const imagenUrl = item.imagen ? `${apiUrl}/assets/${item.imagen}` : null;
-              const categoria = CATEGORIAS[index] ?? "Sección";
+                const imagenUrl = item.imagen
+                  ? `${apiUrl}/assets/${item.imagen}`
+                  : null;
+                const categoria = CATEGORIAS[index] ?? "Sección";
 
-              return (
-                <article
-                  key={`${index}-${item.id}`}
-                  onClick={() => handleNavegar(index, item.link)}
-                  className="group cursor-pointer overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)]"
-                >
-                  <div className="relative aspect-4/3 overflow-hidden">
-                    {imagenUrl ? (
-                      <img
-                        src={imagenUrl}
-                        alt={item.titulo}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-slate-200 text-sm text-slate-400">
-                        Sin imagen
+                return (
+                  <article
+                    key={`${index}-${item.id}`}
+                    onClick={() => handleNavegar(index, item.link)}
+                    className="group cursor-pointer overflow-hidden bg-white shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition duration-300 hover:scale-[1.02] hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)]"
+                  >
+                    <div className="relative aspect-4/3 overflow-hidden">
+                      {imagenUrl ? (
+                        <img
+                          src={imagenUrl}
+                          alt={item.titulo}
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-slate-200 text-sm text-slate-400">
+                          Sin imagen
+                        </div>
+                      )}
+
+                      <div className="absolute left-0 top-0 m-5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-700 backdrop-blur">
+                        {categoria}
                       </div>
-                    )}
-
-                    <div className="absolute left-0 top-0 m-5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-slate-700 backdrop-blur">
-                      {categoria}
                     </div>
-                  </div>
 
-                  <div className="p-5">
-                    <h4 className="font-serif text-xl font-black text-slate-900">
-                      {item.titulo}
-                    </h4>
+                    <div className="p-5">
+                      <h4 className="font-serif text-xl font-black text-slate-900">
+                        {item.titulo}
+                      </h4>
 
-                    <p className="mt-3 text-sm leading-6 text-slate-600 line-clamp-3">
-                      {item.descripcion.replace(/<[^>]+>/g, "")}
-                    </p>
+                      <p className="mt-3 text-sm leading-6 text-slate-600 line-clamp-3">
+                        {item.descripcion.replace(/<[^>]+>/g, "")}
+                      </p>
 
-                    <span className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3">
-                      Ver más
-                      <ChevronRight className="h-5 w-5" />
-                    </span>
-                  </div>
-                </article>
-              );
-            })}
+                      <span className="mt-5 inline-flex items-center gap-2 text-md font-semibold text-slate-800 transition group-hover:gap-3">
+                        Ver más
+                        <ChevronRight className="h-5 w-5" />
+                      </span>
+                    </div>
+                  </article>
+                );
+              })}
         </div>
       </section>
     </>

@@ -35,7 +35,7 @@ export default function GaleriaHome() {
 
   return (
     <>
-      <section className="group bg-white border border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-md transition">
+      <section className="group bg-white border border-gray-100 p-6 shadow-sm hover:shadow-md transition">
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -59,7 +59,7 @@ export default function GaleriaHome() {
         {/* IMAGEN */}
         <div
           onClick={() => setOpen(true)}
-          className="relative cursor-pointer overflow-hidden rounded-2xl group"
+          className="relative cursor-pointer overflow-hidden group"
         >
           <img
             key={images[current]}

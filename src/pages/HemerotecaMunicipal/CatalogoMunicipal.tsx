@@ -1,6 +1,4 @@
 import { useMemo, useState, useEffect } from "react";
-import { Eye } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
 import EditorialHero from "../../components/extras/EditorialNavbar";
 import KohaApi from "../../api/kohaApi";
 import {
@@ -25,7 +23,6 @@ interface PublicacionAPI {
 }
 
 type Categoria = "revistas" | "periodicos" | "colecciones" | "especiales";
-type TipoHemeroteca = "municipal" | "digital";
 
 interface ItemCatalogo {
   id: number;
@@ -79,18 +76,6 @@ const mapPublicacion = (
           : "Colección"),
 });
 
-const isActive = (route: string) => {
-  if (route === "/") return location.pathname === "/";
-  return location.pathname.startsWith(route);
-};
-
-const navClass = (route: string) =>
-  `transition ${
-    isActive(route)
-      ? "text-cyan-600 font-bold"
-      : "text-slate-700 hover:text-slate-950"
-  }`;
-
 const toArray = (
   data: PublicacionAPI | PublicacionAPI[] | null,
 ): PublicacionAPI[] => {
@@ -102,10 +87,12 @@ const nombresCategoria: Record<Categoria, string> = {
   revistas: "Revistas",
   periodicos: "Periódicos",
   colecciones: "Colecciones",
-  especiales: "Edicion Especial",
+  especiales: "Edición Especial",
 };
 
-function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
+  {/* CARDS DE RESULTADO FISICO */}
+
+  function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
   return (
     <article className="overflow-hidden bg-white shadow-lg border border-slate-200">
       <div className="grid md:grid-cols-[180px_1fr]">
@@ -114,7 +101,9 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
             src={item.imagen}
             alt={item.titulo}
             className="h-full w-full object-cover"
-            onError={(e) => (e.currentTarget.src = "/placeholder.jpg")}
+            onError={(e) => {
+              e.currentTarget.src = "/placeholder.jpg";
+            }}
           />
 
           <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-700 backdrop-blur">
@@ -126,9 +115,6 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-emerald-700">
               DISPONIBLE
-            </span>
-            <span className="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-cyan-700">
-              DIGITAL
             </span>
           </div>
 
@@ -160,85 +146,22 @@ function ResultadoMunicipalCard({ item }: { item: ItemCatalogo }) {
             )}
 
             {item.numeroEdicion && <span>Edición N° {item.numeroEdicion}</span>}
+
             {item.tipoReal && <span>{item.tipoReal}</span>}
           </div>
-          <Link to="/catalogo-digital" className={navClass("/")}>
-            <div className="cursor-pointer inline-flex min-w-12 items-center justify-center rounded-full border border-cyan-300/40 bg-cyan-600 px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-cyan-50 backdrop-blur-md transition hover:bg-cyan-700 hover:text-white mt-5">
-              Ver Digital
-            </div>
-          </Link>
         </div>
-      </div>
-    </article>
-  );
-}
-
-function ResultadoDigitalCard({
-  item,
-  onOpen,
-}: {
-  item: ItemCatalogo;
-  onOpen: () => void;
-}) {
-  return (
-    <article
-      onClick={onOpen}
-      className="group overflow-hidden bg-white shadow-lg cursor-pointer"
-    >
-      <div className="relative aspect-3/4 overflow-hidden bg-slate-200">
-        <img
-          src={item.imagen}
-          alt={item.titulo}
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          onError={(e) => (e.currentTarget.src = "/placeholder.jpg")}
-        />
-
-        <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-700 backdrop-blur">
-          {nombresCategoria[item.categoria]}
-        </div>
-      </div>
-
-      <div className="p-4">
-        <h4 className="line-clamp-2 font-serif text-lg font-black text-slate-900">
-          {item.titulo}
-        </h4>
-
-        {item.descripcion && (
-          <p className="mt-2 text-sm leading-6 text-slate-600 line-clamp-2">
-            {item.descripcion}
-          </p>
-        )}
-
-        {item.fecha && (
-          <p className="mt-1 text-xs text-slate-500">
-            {new Date(item.fecha).toLocaleDateString("es-AR", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-        )}
-
-        <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-slate-800">
-          Ver resultado <Eye className="h-4 w-4" />
-        </span>
       </div>
     </article>
   );
 }
 
 export default function Catalogo() {
-  const [tipoActivo] = useState<TipoHemeroteca>("municipal");
-
   const [itemsMunicipal, setItemsMunicipal] = useState<ItemCatalogo[]>([]);
-  const [itemsDigital, setItemsDigital] = useState<ItemCatalogo[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [busquedaTitulo, setBusquedaTitulo] = useState("");
   const [busquedaDescripcion, setBusquedaDescripcion] = useState("");
   const [busquedaAnio, setBusquedaAnio] = useState("");
-
-  const navigate = useNavigate();
 
   const cargarItems = async (): Promise<ItemCatalogo[]> => {
     try {
@@ -264,19 +187,16 @@ export default function Catalogo() {
   useEffect(() => {
     const init = async () => {
       setLoading(true);
+
       const items = await cargarItems();
 
       setItemsMunicipal(items.filter((i) => i.destino?.includes("1")));
-      setItemsDigital(items.filter((i) => i.destino?.includes("2")));
 
       setLoading(false);
     };
 
     init();
   }, []);
-
-  const listaActual =
-    tipoActivo === "municipal" ? itemsMunicipal : itemsDigital;
 
   const hayBusqueda =
     busquedaTitulo.trim() !== "" ||
@@ -296,7 +216,7 @@ export default function Catalogo() {
     const descripcion = busquedaDescripcion.toLowerCase().trim();
     const anio = busquedaAnio.trim();
 
-    return listaActual.filter((item) => {
+    return itemsMunicipal.filter((item) => {
       const coincideTitulo =
         titulo === "" || item.titulo.toLowerCase().includes(titulo);
 
@@ -312,25 +232,27 @@ export default function Catalogo() {
       return coincideTitulo && coincideDescripcion && coincideAnio;
     });
   }, [
-    listaActual,
+    itemsMunicipal,
     busquedaTitulo,
     busquedaDescripcion,
     busquedaAnio,
     hayBusqueda,
   ]);
 
+  {/* CONTENIDO */}
+
   return (
     <section className="min-h-screen bg-white px-4 pb-6 pt-2 md:px-6 lg:px-8">
       <EditorialHero />
 
       <div className="mt-10">
-        <h2 className="mt-2 mb-6 font-serif text-3xl font-black text-slate-700 justify-center flex">
+        <h2 className="mt-2 mb-6 flex justify-center font-serif text-3xl font-black text-slate-700">
           BUSCAR CONTENIDO:
         </h2>
 
-        <div className="mb-4 flex flex-wrap items-end gap-4 justify-center">
+        <div className="mb-4 flex flex-wrap items-end justify-center gap-4">
           <div>
-            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700 italic">
+            <label className="mb-2 block text-[13px] font-bold uppercase italic text-cyan-700">
               Título
             </label>
 
@@ -344,7 +266,7 @@ export default function Catalogo() {
           </div>
 
           <div>
-            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700 italic">
+            <label className="mb-2 block text-[13px] font-bold uppercase italic text-cyan-700">
               Descripción
             </label>
 
@@ -358,7 +280,7 @@ export default function Catalogo() {
           </div>
 
           <div>
-            <label className="mb-2 block text-[13px] font-bold uppercase text-cyan-700 italic">
+            <label className="mb-2 block text-[13px] font-bold uppercase italic text-cyan-700">
               Año
             </label>
 
@@ -383,7 +305,10 @@ export default function Catalogo() {
             </div>
           )}
         </div>
-        {(!hayBusqueda || (hayBusqueda && itemsFiltrados.length === 0)) && (
+
+  {/* FILTROS */}
+
+        {!hayBusqueda && (
           <div className="mt-10 rounded-xl border-2 border-dashed border-slate-300 py-20 text-center">
             <p className="font-serif text-xl font-bold text-slate-500">
               Filtra para ver resultados aquí
@@ -399,35 +324,14 @@ export default function Catalogo() {
               <div className="h-10 w-10 animate-spin rounded-full border-4 border-cyan-600 border-t-transparent" />
             </div>
           ) : itemsFiltrados.length > 0 ? (
-            tipoActivo === "municipal" ? (
-              <div className="grid grid-cols-1 gap-6">
-                {itemsFiltrados.map((item) => (
-                  <ResultadoMunicipalCard
-                    key={`${item.categoria}-${item.id}`}
-                    item={item}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                {itemsFiltrados.map((item) => (
-                  <ResultadoDigitalCard
-                    key={`${item.categoria}-${item.id}`}
-                    item={item}
-                    onOpen={() => {
-                      navigate("/detalles-publicacion", {
-                        state: {
-                          item,
-                          relacionados: itemsFiltrados,
-                          categoriaNombre: nombresCategoria[item.categoria],
-                          tipoHemeroteca: tipoActivo,
-                        },
-                      });
-                    }}
-                  />
-                ))}
-              </div>
-            )
+            <div className="grid grid-cols-1 gap-6">
+              {itemsFiltrados.map((item) => (
+                <ResultadoMunicipalCard
+                  key={`${item.categoria}-${item.id}`}
+                  item={item}
+                />
+              ))}
+            </div>
           ) : (
             <div className="mt-10 rounded-xl border-2 border-dashed border-slate-300 py-20 text-center">
               <p className="font-serif text-xl font-bold text-slate-400">
